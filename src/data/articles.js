@@ -4,7 +4,7 @@ export const articles = [
     title: "Revolutionizing Music Creation with AI",
     subtitle: "How artificial intelligence is transforming the music industry",
     readTime: "5 min read",
-    date: "March 20, 2024",
+    date: "June 24, 2026",
     author: {
       name: "Dr. Emily Harmony",
       title: "Music Technology Researcher",
@@ -52,7 +52,7 @@ export const articles = [
     title: "The Future of Healthcare: AI-Powered Diagnostics",
     subtitle: "Transforming medical diagnosis with artificial intelligence",
     readTime: "7 min read",
-    date: "March 18, 2024",
+    date: "June 18, 2026",
     author: {
       name: "Dr. Sarah Chen",
       title: "Medical AI Specialist",
@@ -92,7 +92,7 @@ export const articles = [
     title: "Smart Cities: AI-Driven Urban Development",
     subtitle: "Building the cities of tomorrow with artificial intelligence",
     readTime: "6 min read",
-    date: "March 15, 2024",
+    date: "June 11, 2026",
     author: {
       name: "Alex Rivera",
       title: "Urban Technology Expert",
@@ -132,7 +132,7 @@ export const articles = [
     title: "AI in Financial Trading: The New Era",
     subtitle: "How artificial intelligence is reshaping financial markets",
     readTime: "8 min read",
-    date: "March 12, 2024",
+    date: "June 3, 2026",
     author: {
       name: "Michael Chang",
       title: "FinTech Analyst",
@@ -172,7 +172,7 @@ export const articles = [
     title: "AI-Powered Cybersecurity: The Future of Digital Defense",
     subtitle: "How artificial intelligence is revolutionizing cybersecurity",
     readTime: "6 min read",
-    date: "March 10, 2024",
+    date: "May 27, 2026",
     author: {
       name: "David Chen",
       title: "Chief Security Architect",
@@ -220,7 +220,7 @@ export const articles = [
     title: "Revolutionizing Manufacturing with AI and IoT",
     subtitle: "The convergence of artificial intelligence and industrial IoT",
     readTime: "7 min read",
-    date: "March 8, 2024",
+    date: "May 19, 2026",
     author: {
       name: "Dr. Robert Miller",
       title: "Industrial Innovation Director",

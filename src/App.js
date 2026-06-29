@@ -8,27 +8,32 @@ import ArticlesSection from './components/sections/ArticlesSection';
 import ContactSection from './components/sections/ContactSection';
 import ArticlePage from './components/pages/ArticlePage';
 import Footer from './components/layout/Footer';
+import FloatingWhatsApp from './components/ui/FloatingWhatsApp';
 import './App.css';
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gradient-to-b from-primary to-secondary">
+      <div className="min-h-screen bg-canvas text-slate-700 font-sans antialiased selection:bg-brand-violet/25">
         <Navbar />
         <Routes>
-          <Route path="/" element={
-            <>
-              <HeroSection />
-              <ServicesSection />
-              <AISolutionsSection />
-              <PartnersSection />
-              <ArticlesSection />
-              <ContactSection />
-            </>
-          } />
+          <Route
+            path="/"
+            element={
+              <>
+                <HeroSection />
+                <ServicesSection />
+                <AISolutionsSection />
+                <PartnersSection />
+                <ArticlesSection />
+                <ContactSection />
+              </>
+            }
+          />
           <Route path="/article/:id" element={<ArticlePage />} />
         </Routes>
         <Footer />
+        <FloatingWhatsApp />
       </div>
     </Router>
   );

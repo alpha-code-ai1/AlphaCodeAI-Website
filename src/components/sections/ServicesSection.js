@@ -1,55 +1,83 @@
+import {
+  ChatBubbleLeftRightIcon,
+  PresentationChartLineIcon,
+  CircleStackIcon,
+  CloudIcon,
+  CreditCardIcon,
+  BuildingOffice2Icon
+} from '@heroicons/react/24/outline';
 import ServiceCard from '../ui/ServiceCard';
+import SectionHeading from '../ui/SectionHeading';
+
+const services = [
+  {
+    title: 'AI Chatbots & Web Apps',
+    description:
+      'Custom AI-powered chatbots and web applications, built end-to-end and tailored to how your business actually works.',
+    icon: ChatBubbleLeftRightIcon,
+    gradient: 'linear-gradient(135deg,#8B5CF6,#6366F1)',
+    glow: 'rgba(139,92,246,0.5)'
+  },
+  {
+    title: 'Trading Platforms',
+    description:
+      'Advanced trading platforms with AI-driven insights, real-time data, and automated execution strategies.',
+    icon: PresentationChartLineIcon,
+    gradient: 'linear-gradient(135deg,#22D3EE,#3B82F6)',
+    glow: 'rgba(34,211,238,0.5)'
+  },
+  {
+    title: 'AI Custom Datastores',
+    description:
+      'Scalable, secure data storage optimized for AI workloads — embeddings, retrieval, and everything in between.',
+    icon: CircleStackIcon,
+    gradient: 'linear-gradient(135deg,#6366F1,#22D3EE)',
+    glow: 'rgba(99,102,241,0.5)'
+  },
+  {
+    title: 'Cloud Solutions',
+    description:
+      'Enterprise-grade cloud infrastructure with AI-powered optimization, monitoring, and cost control.',
+    icon: CloudIcon,
+    gradient: 'linear-gradient(135deg,#3B82F6,#8B5CF6)',
+    glow: 'rgba(59,130,246,0.5)'
+  },
+  {
+    title: 'Payments & eCommerce',
+    description:
+      'Secure payment flows and AI-enhanced eCommerce experiences that convert and scale.',
+    icon: CreditCardIcon,
+    gradient: 'linear-gradient(135deg,#E879F9,#8B5CF6)',
+    glow: 'rgba(232,121,249,0.5)'
+  },
+  {
+    title: 'Enterprise Digitization',
+    description:
+      'Complete digital transformation — turning manual, legacy workflows into modern, intelligent systems.',
+    icon: BuildingOffice2Icon,
+    gradient: 'linear-gradient(135deg,#22D3EE,#6366F1)',
+    glow: 'rgba(34,211,238,0.5)'
+  }
+];
 
 const ServicesSection = () => {
-  const services = [
-    {
-      title: "AI Chatbots & Web Solutions",
-      description: "Custom AI-powered chatbots and web applications tailored to your business needs.",
-      image: "https://cdn-icons-gif.flaticon.com/11184/11184177.gif",
-      icon: "https://img.icons8.com/fluency/96/chatbot.png"
-    },
-    {
-      title: "Trading Platforms",
-      description: "Advanced trading platforms with AI-driven insights and automated trading capabilities.",
-      image: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWFqbWxvYnBxbWd1ZWJyeXd6ZnF4ZDV5Y2JnOWF5ZmN0aXBzaXR6eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JtBZm3Getg3dqxK0zP/giphy-downsized-large.gif",
-      icon: "https://img.icons8.com/fluency/96/stocks-growth.png"
-    },
-    {
-      title: "AI Custom Datastores",
-      description: "Scalable and secure data storage solutions optimized for AI applications.",
-      image: "https://cdn.dribbble.com/users/707433/screenshots/6654057/comp_4.gif",
-      icon: "https://img.icons8.com/fluency/96/database.png"
-    },
-    {
-      title: "Cloud Solutions",
-      description: "Enterprise-grade cloud infrastructure with AI-powered optimization.",
-      image: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWRyZXJyMmN0ZWxwdmRwbWJnbmJxNmRyeWRpbm1samZyZzlicG5kciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT9IgzoKnwFNmISR8I/giphy.gif",
-      icon: "https://img.icons8.com/fluency/96/cloud-sync.png"
-    },
-    {
-      title: "Payments & eCommerce",
-      description: "Secure payment solutions and AI-enhanced eCommerce platforms.",
-      image: "https://i.giphy.com/TDyxBGZcViZnoye8iN.webp",
-      icon: "https://img.icons8.com/fluency/96/card-security.png"
-    },
-    {
-      title: "Enterprise Digitization",
-      description: "Complete digital transformation solutions for modern enterprises.",
-      image: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcmliYmRwd2RwbWJnbmJxNmRyeWRpbm1samZyZzlicG5kcmliYmR5dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26tn33aiTi1jkl6H6/giphy.gif",
-      icon: "https://img.icons8.com/fluency/96/organization.png"
-    }
-  ];
-
   return (
-    <div id="services" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <h2 className="text-3xl font-bold text-center mb-12 text-white">Our Services</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {services.map((service, index) => (
-          <ServiceCard key={index} service={service} index={index} />
-        ))}
+    <section id="services" className="relative py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <SectionHeading
+          eyebrow="What we do"
+          title="Services built to"
+          highlight="ship"
+          subtitle="Full-stack AI product engineering — from the first prototype to the system running in production."
+        />
+        <div className="grid grid-cols-2 gap-4 sm:gap-6">
+          {services.map((service, index) => (
+            <ServiceCard key={service.title} service={service} index={index} />
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default ServicesSection; 
+export default ServicesSection;

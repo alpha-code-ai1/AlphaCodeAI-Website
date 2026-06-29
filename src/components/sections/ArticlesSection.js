@@ -1,44 +1,58 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { ClockIcon } from '@heroicons/react/24/outline';
 import { articles } from '../../data/articles';
+import SectionHeading from '../ui/SectionHeading';
 
-const ArticleCard = ({ article }) => {
+const ArticleCard = ({ article, index }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 26 }}
       whileInView={{ opacity: 1, y: 0 }}
-      className="bg-secondary/30 backdrop-blur-sm rounded-2xl overflow-hidden group hover:bg-secondary/40 transition-all duration-300"
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.5, delay: (index % 3) * 0.09, ease: 'easeOut' }}
+      whileHover={{ y: -8 }}
+      className="group"
     >
-      <Link to={`/article/${article.id}`}>
+      <Link
+        to={`/article/${article.id}`}
+        className="gradient-border flex h-full flex-col overflow-hidden rounded-2xl glass transition-shadow duration-300 hover:shadow-glow"
+      >
         <div className="relative h-48 overflow-hidden">
-          <img 
-            src={article.coverImage} 
+          <img
+            src={article.coverImage}
             alt={article.title}
-            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent" />
         </div>
-        <div className="p-6">
-          <div className="flex items-center space-x-2 text-sm text-gray-400 mb-3">
+
+        <div className="flex flex-1 flex-col p-6">
+          <div className="mb-3 flex items-center gap-2 text-xs text-slate-400">
             <span>{article.date}</span>
-            <span>•</span>
+            <span className="h-1 w-1 rounded-full bg-slate-300" />
+            <ClockIcon className="h-3.5 w-3.5" />
             <span>{article.readTime}</span>
           </div>
-          <h3 className="text-xl font-bold text-white mb-2 group-hover:text-highlight transition-colors">
+
+          <h3 className="mb-2 font-display text-lg font-semibold text-slate-900 transition-colors group-hover:text-brand-ink">
             {article.title}
           </h3>
-          <p className="text-gray-300 truncate line-clamp-2 mb-4">
+          <p className="mb-5 line-clamp-2 flex-1 text-sm leading-relaxed text-slate-500">
             {article.content[0].text}
           </p>
-          <div className="flex items-center space-x-3">
-            <img 
-              src={article.author.image} 
+
+          <div className="flex items-center gap-3 border-t border-slate-900/5 pt-4">
+            <img
+              src={article.author.image}
               alt={article.author.name}
-              className="w-10 h-10 rounded-full object-cover"
+              loading="lazy"
+              className="h-9 w-9 rounded-full object-cover ring-1 ring-slate-900/10"
             />
             <div>
-              <p className="text-white font-semibold">{article.author.name}</p>
-              <p className="text-gray-400 text-sm">{article.author.title}</p>
+              <p className="text-sm font-medium text-slate-900">{article.author.name}</p>
+              <p className="text-xs text-slate-400">{article.author.title}</p>
             </div>
           </div>
         </div>
@@ -49,20 +63,22 @@ const ArticleCard = ({ article }) => {
 
 const ArticlesSection = () => {
   return (
-    <div id="articles" className="py-20 bg-primary/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-white mb-4">Latest Articles</h2>
-          <p className="text-gray-300">Explore the latest insights in AI technology and innovation</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {articles.map((article) => (
-            <ArticleCard key={article.id} article={article} />
+    <section id="articles" className="relative bg-canvas-soft py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <SectionHeading
+          eyebrow="Insights"
+          title="Latest from the"
+          highlight="blog"
+          subtitle="Perspectives on AI technology, engineering, and where the industry is heading."
+        />
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {articles.map((article, index) => (
+            <ArticleCard key={article.id} article={article} index={index} />
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default ArticlesSection; 
+export default ArticlesSection;
