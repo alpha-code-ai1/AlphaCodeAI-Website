@@ -11,8 +11,8 @@ import {
 import SectionHeading from '../ui/SectionHeading';
 
 // tileBg matches each logo's own baked-in background so it blends seamlessly.
+// `color` is each logo's brand color, deep enough for white text to stay legible.
 // Fanizm intentionally placed last.
-// `color` is each logo's dominant brand color — used to tint its card.
 const partners = [
   {
     name: 'Terracon India',
@@ -20,7 +20,7 @@ const partners = [
     logo: 'https://www.terraconindia.com/wp-content/uploads/2023/09/Terracon-nature-based-solution-logo-Copy-1-1-1536x1216.jpg',
     link: 'https://www.terraconindia.com/',
     tileBg: '#FFFFFF',
-    color: '#3E6E30'
+    color: '#35602A'
   },
   {
     name: 'Skillocraft',
@@ -28,7 +28,7 @@ const partners = [
     logo: '/partners/skillocraft.jpg',
     link: 'https://skillocraft.com',
     tileBg: '#FFFFFF',
-    color: '#B05B23'
+    color: '#9A4E1E'
   },
   {
     name: 'Opro Maldives',
@@ -36,7 +36,7 @@ const partners = [
     logo: '/partners/opro.jpg',
     link: 'https://OproMaldives.com',
     tileBg: '#F7F6F2',
-    color: '#3A4882'
+    color: '#35427C'
   },
   {
     name: 'Shapotools',
@@ -44,7 +44,7 @@ const partners = [
     logo: '/partners/shapotools.jpg',
     link: 'https://Shapotools.com',
     tileBg: '#333333',
-    color: '#3A424E'
+    color: '#333B47'
   },
   {
     name: 'Proofit',
@@ -52,7 +52,7 @@ const partners = [
     logo: '/partners/proofit.jpg',
     link: 'https://Proofitcompany.com',
     tileBg: '#FFFFFF',
-    color: '#C0722A'
+    color: '#9E5B1E'
   },
   {
     name: 'Fanizm',
@@ -94,19 +94,15 @@ const PartnerCard = ({ partner }) => (
     target="_blank"
     rel="noopener noreferrer"
     draggable={false}
-    style={{
-      background: `linear-gradient(160deg, ${rgba(partner.color, 0.22)} 0%, ${rgba(
-        partner.color,
-        0.07
-      )} 70%)`,
-      borderColor: rgba(partner.color, 0.38),
-      '--c-glow': rgba(partner.color, 0.55)
-    }}
-    className="group relative flex w-[17rem] flex-shrink-0 select-none flex-col overflow-hidden rounded-2xl border p-5 shadow-soft backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_55px_-18px_var(--c-glow)]"
+    style={{ backgroundColor: partner.color, '--c-glow': rgba(partner.color, 0.6) }}
+    className="group relative flex w-[17rem] flex-shrink-0 select-none flex-col overflow-hidden rounded-2xl border border-white/10 p-5 shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_55px_-16px_var(--c-glow)]"
   >
+    {/* Soft top sheen */}
+    <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/10 to-transparent" />
+
     <div
-      className="flex h-24 w-full items-center justify-center overflow-hidden rounded-xl p-4 ring-1"
-      style={{ backgroundColor: partner.tileBg, '--tw-ring-color': rgba(partner.color, 0.25) }}
+      className="relative flex h-24 w-full items-center justify-center overflow-hidden rounded-xl p-4 ring-1 ring-white/25"
+      style={{ backgroundColor: partner.tileBg }}
     >
       <img
         src={partner.logo}
@@ -116,17 +112,14 @@ const PartnerCard = ({ partner }) => (
         className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-110"
       />
     </div>
-    <div className="mt-4 flex items-start justify-between gap-3">
+    <div className="relative mt-4 flex items-start justify-between gap-3">
       <div>
-        <h3 className="font-display text-base font-semibold text-slate-900">
+        <h3 className="font-display text-base font-semibold text-white">
           {partner.name}
         </h3>
-        <p className="mt-1 text-sm text-slate-500">{partner.description}</p>
+        <p className="mt-1 text-sm text-white/85">{partner.description}</p>
       </div>
-      <ArrowTopRightOnSquareIcon
-        className="mt-1 h-5 w-5 flex-shrink-0 transition-colors"
-        style={{ color: rgba(partner.color, 0.7) }}
-      />
+      <ArrowTopRightOnSquareIcon className="mt-1 h-5 w-5 flex-shrink-0 text-white/85" />
     </div>
   </a>
 );

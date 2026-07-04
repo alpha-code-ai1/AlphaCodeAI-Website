@@ -22,9 +22,9 @@ function App() {
             element={
               <>
                 <HeroSection />
+                <PartnersSection />
                 <ServicesSection />
                 <AISolutionsSection />
-                <PartnersSection />
                 <ArticlesSection />
                 <ContactSection />
               </>

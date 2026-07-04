@@ -1,159 +1,144 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import { ArrowRightIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
-import AuroraBackground from '../ui/AuroraBackground';
+import { motion } from 'framer-motion';
+import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
 import { scrollToSection } from '../../utils/scrollUtils';
 
-// Concrete capabilities — doubles as a teaser for the Services section
-const rotatingWords = [
-  'chatbots',
-  'trading platforms',
-  'data platforms',
-  'cloud systems',
-  'payment flows'
+const ACCENT = '#6D28D9';
+const EASE = [0.22, 1, 0.36, 1];
+
+// Swap this URL for your own hosted clip anytime.
+const VIDEO_SRC =
+  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260517_222138_3e3205be-3364-417b-a64a-bfe087acbec4.mp4';
+
+const STATS = [
+  { value: '6', label: 'Partner\nBrands' },
+  { value: '10', label: 'AI Products\nShipped' },
+  { value: '8', label: 'Industries\nServed' }
 ];
 
-const partners = [
-  'Terracon India',
-  'Skillocraft',
-  'Opro',
-  'Shapotools',
-  'Proofit',
-  'Fanizm'
-];
+const HEADING_WORDS = ['Intelligent', 'Software', 'Delivered'];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 32 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.12, duration: 0.6, ease: EASE }
+  })
+};
 
 const HeroSection = () => {
-  const [wordIndex, setWordIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setWordIndex((prev) => (prev + 1) % rotatingWords.length);
-    }, 2400);
-    return () => clearInterval(interval);
-  }, []);
-
-  const container = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } }
-  };
-  const item = {
-    hidden: { opacity: 0, y: 22 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
-  };
-
   return (
-    <section id="home" className="relative flex min-h-screen items-center overflow-hidden">
-      <AuroraBackground />
+    <section
+      id="home"
+      className="relative flex min-h-screen flex-col overflow-hidden uppercase"
+    >
+      {/* Light fallback behind the video (keeps black text readable if the video is slow/unavailable) */}
+      <div className="absolute inset-0 bg-gradient-to-br from-canvas-muted via-white to-canvas-deep" />
 
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-24 pt-32 sm:px-6 lg:px-8"
-      >
-        <div className="mx-auto max-w-4xl text-center">
-          {/* Eyebrow badge */}
-          <motion.div
-            variants={item}
-            className="mb-7 inline-flex items-center gap-2 rounded-full border border-slate-900/5 bg-white/70 px-4 py-1.5 text-sm font-medium text-slate-600 shadow-soft backdrop-blur-md"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-cyan opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-indigo" />
-            </span>
-            AI engineering studio
-          </motion.div>
+      {/* Background video */}
+      <video
+        className="absolute inset-0 h-full w-full object-cover"
+        src={VIDEO_SRC}
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
 
-          {/* Headline */}
-          <motion.h1
-            variants={item}
-            className="font-display text-4xl font-bold leading-[1.08] tracking-tight text-slate-900 sm:text-6xl lg:text-7xl"
-          >
-            We build production-grade
-            <br className="hidden sm:block" /> AI{' '}
-            <span className="relative inline-block min-w-[1ch] align-bottom">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={wordIndex}
-                  initial={{ opacity: 0, y: 18, rotateX: -40 }}
-                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                  exit={{ opacity: 0, y: -18, rotateX: 40 }}
-                  transition={{ duration: 0.4 }}
-                  className="text-gradient inline-block"
-                >
-                  {rotatingWords[wordIndex]}
-                </motion.span>
-              </AnimatePresence>
-            </span>
-          </motion.h1>
+      {/* Subtle veil to guarantee text contrast over any frame */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/10 to-white/45" />
 
-          {/* Subhead */}
+      {/* Stats row */}
+      <div className="relative z-10 flex flex-1 items-center justify-end px-5 pt-24 sm:px-8 md:px-12 md:pt-28">
+        <div className="flex gap-6 sm:gap-8 md:gap-12">
+          {STATS.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              custom={i + 1}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              className="text-right"
+            >
+              <div
+                className="font-semibold text-slate-900"
+                style={{ fontSize: 'clamp(1.75rem, 5vw, 3.5rem)' }}
+              >
+                <span style={{ color: ACCENT, fontSize: '0.5em' }}>+</span>
+                {stat.value}
+              </div>
+              <p className="whitespace-pre-line text-[10px] font-semibold leading-tight tracking-widest text-slate-700 sm:text-xs md:text-sm">
+                {stat.label}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom section */}
+      <div className="relative z-10 flex flex-col gap-6 px-5 pb-10 sm:px-8 md:gap-12 md:px-12 md:pb-14">
+        {/* Row A: tagline + CTA */}
+        <div className="flex items-center justify-between gap-4">
           <motion.p
-            variants={item}
-            className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-slate-500 sm:text-xl"
+            custom={5}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="max-w-[140px] text-[10px] font-semibold tracking-widest text-slate-800 sm:max-w-[180px] sm:text-xs md:max-w-xs md:text-sm"
           >
-            From AI chatbots and trading systems to cloud infrastructure and
-            payments — we design, engineer, and ship intelligent software that
-            actually goes to production.
+            Turning Bold
+            <br />
+            Ideas Into
+            <br />
+            Production AI
           </motion.p>
 
-          {/* CTAs */}
-          <motion.div
-            variants={item}
-            className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+          <motion.button
+            custom={6}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            onClick={() => scrollToSection('contact')}
+            className="inline-flex items-center gap-1.5 whitespace-nowrap text-base font-semibold tracking-wide sm:text-xl md:text-2xl"
+            style={{ color: ACCENT }}
           >
-            <button
-              onClick={() => scrollToSection('contact')}
-              className="group inline-flex items-center gap-2 rounded-full bg-brand-gradient bg-[length:200%_auto] px-8 py-3.5 text-base font-semibold text-white shadow-glow transition-all hover:scale-[1.03] hover:bg-[position:right_center]"
-            >
-              Start a project
-              <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </button>
-            <button
-              onClick={() => scrollToSection('services')}
-              className="inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-8 py-3.5 text-base font-semibold text-slate-700 shadow-soft backdrop-blur-md transition-all hover:scale-[1.03] hover:text-slate-900"
-            >
-              Explore what we do
-            </button>
-          </motion.div>
-
-          {/* Trust row */}
-          <motion.div
-            variants={item}
-            className="mt-16 flex flex-col items-center gap-4"
-          >
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-              Trusted by teams building the future
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-2 text-sm font-semibold text-slate-500">
-              {partners.map((p, i) => (
-                <span key={p} className="flex items-center gap-x-7">
-                  {i > 0 && <span className="h-1 w-1 rounded-full bg-slate-300" />}
-                  <span>{p}</span>
-                </span>
-              ))}
-            </div>
-          </motion.div>
+            Start A Project
+            <ArrowUpRightIcon className="h-[18px] w-[18px] sm:h-[22px] sm:w-[22px]" />
+          </motion.button>
         </div>
-      </motion.div>
 
-      {/* Scroll cue */}
-      <motion.button
-        onClick={() => scrollToSection('services')}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.1 }}
-        className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-slate-400 hover:text-slate-600"
-        aria-label="Scroll down"
-      >
-        <motion.span
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-          className="block"
-        >
-          <ChevronDownIcon className="h-6 w-6" />
-        </motion.span>
-      </motion.button>
+        {/* Row B: description + giant heading */}
+        <div className="flex items-end justify-between gap-3 sm:gap-4">
+          <motion.div
+            custom={7}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="w-[130px] shrink-0 sm:w-[200px] md:w-[300px]"
+          >
+            <p className="text-left text-[9px] font-semibold tracking-widest text-slate-800 sm:text-xs md:text-right md:text-sm">
+              AI Engineering Studio Building Production-Grade Software From Idea
+              To Deployment
+            </p>
+          </motion.div>
+
+          <h1 className="text-right">
+            {HEADING_WORDS.map((word, i) => (
+              <span key={word} className="block overflow-hidden">
+                <motion.span
+                  className="block font-semibold text-slate-900"
+                  style={{ fontSize: 'clamp(2rem, 9vw, 9rem)', lineHeight: 0.88 }}
+                  initial={{ y: '110%' }}
+                  animate={{ y: 0 }}
+                  transition={{ delay: 0.4 + i * 0.14, duration: 0.7, ease: EASE }}
+                >
+                  {word}
+                </motion.span>
+              </span>
+            ))}
+          </h1>
+        </div>
+      </div>
     </section>
   );
 };
