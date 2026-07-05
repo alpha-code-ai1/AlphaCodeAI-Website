@@ -1,13 +1,11 @@
 import { motion } from 'framer-motion';
-import {
-  ChatBubbleLeftRightIcon,
-  PresentationChartLineIcon,
-  CircleStackIcon,
-  CloudIcon,
-  CreditCardIcon,
-  BuildingOffice2Icon
-} from '@heroicons/react/24/outline';
 import { scrollToSection } from '../../utils/scrollUtils';
+import chatbotsIcon from '../../assets/icons/chatbots-web-apps.png';
+import tradingIcon from '../../assets/icons/trading-platforms.png';
+import datastoresIcon from '../../assets/icons/ai-datastores.png';
+import cloudIcon from '../../assets/icons/cloud-solutions.png';
+import paymentsIcon from '../../assets/icons/payments-ecommerce.png';
+import enterpriseIcon from '../../assets/icons/enterprise-digitization.png';
 import SectionHeading from '../ui/SectionHeading';
 import TiltCard from '../ui/TiltCard';
 
@@ -18,7 +16,7 @@ const services = [
     title: 'AI Chatbots & Web Apps',
     description:
       'Custom AI-powered chatbots and web applications, built end-to-end and tailored to how your business actually works.',
-    icon: ChatBubbleLeftRightIcon,
+    image: chatbotsIcon,
     gradient: 'linear-gradient(135deg,#8B5CF6,#6366F1)',
     glow: 'rgba(139,92,246,0.5)'
   },
@@ -26,7 +24,7 @@ const services = [
     title: 'Trading Platforms',
     description:
       'Advanced trading platforms with AI-driven insights, real-time data, and automated execution strategies.',
-    icon: PresentationChartLineIcon,
+    image: tradingIcon,
     gradient: 'linear-gradient(135deg,#22D3EE,#3B82F6)',
     glow: 'rgba(34,211,238,0.5)'
   },
@@ -34,7 +32,7 @@ const services = [
     title: 'AI Custom Datastores',
     description:
       'Scalable, secure data storage optimized for AI workloads — embeddings, retrieval, and everything in between.',
-    icon: CircleStackIcon,
+    image: datastoresIcon,
     gradient: 'linear-gradient(135deg,#6366F1,#22D3EE)',
     glow: 'rgba(99,102,241,0.5)'
   },
@@ -42,7 +40,7 @@ const services = [
     title: 'Cloud Solutions',
     description:
       'Enterprise-grade cloud infrastructure with AI-powered optimization, monitoring, and cost control.',
-    icon: CloudIcon,
+    image: cloudIcon,
     gradient: 'linear-gradient(135deg,#3B82F6,#8B5CF6)',
     glow: 'rgba(59,130,246,0.5)'
   },
@@ -50,7 +48,7 @@ const services = [
     title: 'Payments & eCommerce',
     description:
       'Secure payment flows and AI-enhanced eCommerce experiences that convert and scale.',
-    icon: CreditCardIcon,
+    image: paymentsIcon,
     gradient: 'linear-gradient(135deg,#E879F9,#8B5CF6)',
     glow: 'rgba(232,121,249,0.5)'
   },
@@ -58,14 +56,13 @@ const services = [
     title: 'Enterprise Digitization',
     description:
       'Complete digital transformation — turning manual, legacy workflows into modern, intelligent systems.',
-    icon: BuildingOffice2Icon,
+    image: enterpriseIcon,
     gradient: 'linear-gradient(135deg,#22D3EE,#6366F1)',
     glow: 'rgba(34,211,238,0.5)'
   }
 ];
 
 const ServiceCard = ({ service, index }) => {
-  const Icon = service.icon;
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -95,13 +92,15 @@ const ServiceCard = ({ service, index }) => {
           />
 
           {/* Icon tile with orbiting spark */}
-          <div className="relative mb-12 h-12 w-12 sm:mb-14">
-            <div
-              className="flex h-full w-full items-center justify-center rounded-xl text-white shadow-glow transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110"
-              style={{ backgroundImage: service.gradient }}
-            >
-              <Icon className="h-6 w-6" />
-            </div>
+          <div className="relative mb-12 h-14 w-14 sm:mb-14">
+            <img
+              src={service.image}
+              alt=""
+              aria-hidden
+              draggable={false}
+              className="h-full w-full select-none rounded-xl object-cover transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110"
+              style={{ filter: `drop-shadow(0 0 14px ${service.glow})` }}
+            />
             <div className="pointer-events-none absolute -inset-2 animate-orbit opacity-0 transition-opacity duration-500 group-hover:opacity-100 [animation-duration:4s]">
               <span className="absolute -top-0.5 left-1/2 h-1.5 w-1.5 rounded-full bg-brand-cyan shadow-[0_0_8px_#22d3ee]" />
             </div>
