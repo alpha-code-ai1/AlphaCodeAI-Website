@@ -192,9 +192,10 @@ const PartnersSection = () => {
   };
 
   return (
-    <section className="relative overflow-hidden py-24">
+    <section className="relative overflow-hidden py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
+          index="00"
           eyebrow="Who we work with"
           title="Trusted by ambitious"
           highlight="teams"
@@ -208,14 +209,14 @@ const PartnersSection = () => {
         <button
           onClick={() => scrollByAmount(-1)}
           aria-label="Scroll left"
-          className="absolute left-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-slate-900/10 bg-white/90 p-2.5 text-slate-700 shadow-soft backdrop-blur transition-all hover:scale-110 hover:text-brand-ink sm:flex"
+          className="absolute left-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-brand-violet/25 bg-canvas-soft/80 p-2.5 text-slate-300 shadow-glow backdrop-blur transition-all hover:scale-110 hover:text-brand-cyan sm:flex"
         >
           <ChevronLeftIcon className="h-5 w-5" />
         </button>
         <button
           onClick={() => scrollByAmount(1)}
           aria-label="Scroll right"
-          className="absolute right-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-slate-900/10 bg-white/90 p-2.5 text-slate-700 shadow-soft backdrop-blur transition-all hover:scale-110 hover:text-brand-ink sm:flex"
+          className="absolute right-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-brand-violet/25 bg-canvas-soft/80 p-2.5 text-slate-300 shadow-glow backdrop-blur transition-all hover:scale-110 hover:text-brand-cyan sm:flex"
         >
           <ChevronRightIcon className="h-5 w-5" />
         </button>
@@ -244,13 +245,13 @@ const PartnersSection = () => {
         </div>
       </div>
 
-      <p className="mt-4 text-center text-xs text-slate-400">
+      <p className="mt-4 text-center text-xs text-slate-500">
         Drag, scroll, or use the arrows to explore
       </p>
 
-      {/* Partnership benefits */}
-      <div className="mx-auto mt-14 max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+      {/* Partnership benefits strip */}
+      <div className="mx-auto mt-10 max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="gradient-border grid grid-cols-1 divide-y divide-white/10 rounded-3xl glass sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           {benefits.map((b, index) => {
             const Icon = b.icon;
             return (
@@ -260,15 +261,17 @@ const PartnersSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.12 }}
-                className="text-center"
+                className="group flex items-center gap-4 p-5 sm:p-7"
               >
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-gradient-soft text-brand-ink ring-1 ring-brand-indigo/15">
-                  <Icon className="h-7 w-7" />
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-gradient-soft text-brand-ink shadow-neon-ring ring-1 ring-brand-violet/25 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                  <Icon className="h-6 w-6" />
                 </div>
-                <h3 className="font-display text-lg font-semibold text-slate-900">
-                  {b.title}
-                </h3>
-                <p className="mt-1.5 text-sm text-slate-500">{b.text}</p>
+                <div>
+                  <h3 className="font-display text-sm font-semibold uppercase tracking-wide text-white sm:text-base">
+                    {b.title}
+                  </h3>
+                  <p className="mt-0.5 text-xs text-slate-400 sm:text-sm">{b.text}</p>
+                </div>
               </motion.div>
             );
           })}

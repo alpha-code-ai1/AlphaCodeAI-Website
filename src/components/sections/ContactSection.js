@@ -2,9 +2,13 @@ import { motion } from 'framer-motion';
 import {
   EnvelopeIcon,
   ChatBubbleLeftRightIcon,
-  MapPinIcon
+  MapPinIcon,
+  ArrowUpRightIcon
 } from '@heroicons/react/24/outline';
 import SectionHeading from '../ui/SectionHeading';
+import MagneticButton from '../ui/MagneticButton';
+
+const EASE = [0.22, 1, 0.36, 1];
 
 const LinkedInIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -23,74 +27,105 @@ const contactMethods = [
     icon: EnvelopeIcon,
     label: 'Email us',
     value: 'aryanchandwani@gmail.com',
-    href: 'mailto:aryanchandwani@gmail.com'
+    href: 'mailto:aryanchandwani@gmail.com',
+    accent: '#A78BFA'
   },
   {
     icon: ChatBubbleLeftRightIcon,
     label: 'WhatsApp',
     value: '+91 8850313109',
-    href: 'https://wa.me/918850313109'
+    href: 'https://wa.me/918850313109',
+    accent: '#22D3EE'
   },
   {
     icon: LinkedInIcon,
     label: 'LinkedIn',
     value: 'Aryan Chandwani',
-    href: 'https://www.linkedin.com/in/aryanchandwani/'
+    href: 'https://www.linkedin.com/in/aryanchandwani/',
+    accent: '#60A5FA'
   },
   {
     icon: MapPinIcon,
     label: 'Based in',
     value: 'Mumbai, India',
-    href: null
+    href: null,
+    accent: '#E879F9'
   }
 ];
 
+const ContactRow = ({ method, index }) => {
+  const Icon = method.icon;
+  const Wrapper = method.href ? 'a' : 'div';
+  const wrapperProps = method.href
+    ? { href: method.href, target: '_blank', rel: 'noopener noreferrer' }
+    : {};
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -40 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.55, delay: index * 0.06, ease: EASE }}
+    >
+      <Wrapper
+        {...wrapperProps}
+        className="group relative block overflow-hidden border-t border-white/10 py-5 sm:py-7"
+      >
+        {/* Hover wash */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{
+            background: `linear-gradient(90deg, transparent, ${method.accent}14, transparent)`
+          }}
+        />
+        <div className="relative flex items-center gap-4 sm:gap-8">
+          <span
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-white shadow-glow transition-transform duration-300 group-hover:-rotate-12 group-hover:scale-110 sm:h-12 sm:w-12"
+            style={{ background: `linear-gradient(135deg, ${method.accent}, #6366F1)` }}
+          >
+            <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+          </span>
+
+          <span className="min-w-0 flex-1">
+            <span className="block text-[10px] font-semibold uppercase tracking-[0.25em] text-slate-500 sm:text-xs">
+              {method.label}
+            </span>
+            <span
+              className="block truncate font-display font-semibold text-white transition-colors duration-300 group-hover:text-brand-cyan"
+              style={{ fontSize: 'clamp(1rem, 3.4vw, 1.8rem)' }}
+            >
+              {method.value}
+            </span>
+          </span>
+
+          {method.href && (
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 text-slate-300 transition-all duration-300 group-hover:rotate-45 group-hover:border-brand-cyan/60 group-hover:text-brand-cyan sm:h-12 sm:w-12">
+              <ArrowUpRightIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+            </span>
+          )}
+        </div>
+      </Wrapper>
+    </motion.div>
+  );
+};
+
 const ContactSection = () => {
   return (
-    <section id="contact" className="relative overflow-hidden py-24">
-      <div className="pointer-events-none absolute left-1/2 top-1/4 h-80 w-[40rem] -translate-x-1/2 rounded-full bg-radial-glow opacity-60" />
+    <section id="contact" className="relative overflow-hidden py-12 sm:py-16">
+      <div className="pointer-events-none absolute left-1/2 top-1/4 h-80 w-[40rem] -translate-x-1/2 rounded-full bg-radial-glow opacity-50" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
+          index="04"
           eyebrow="Get in touch"
           title="Let's build something"
           highlight="intelligent"
           subtitle="Have a project in mind? Reach out on any channel below — we usually reply within a day."
         />
 
-        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-5 sm:grid-cols-2">
-          {contactMethods.map((m, index) => {
-            const Icon = m.icon;
-            const Wrapper = m.href ? 'a' : 'div';
-            const wrapperProps = m.href
-              ? { href: m.href, target: '_blank', rel: 'noopener noreferrer' }
-              : {};
-            return (
-              <motion.div
-                key={m.label}
-                initial={{ opacity: 0, y: 22 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: (index % 2) * 0.1 }}
-              >
-                <Wrapper
-                  {...wrapperProps}
-                  className={`gradient-border group flex h-full items-center gap-4 rounded-2xl glass p-6 transition-all ${
-                    m.href ? 'hover:-translate-y-1 hover:shadow-glow' : ''
-                  }`}
-                >
-                  <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-brand-gradient text-white shadow-glow transition-transform group-hover:scale-110">
-                    <Icon className="h-6 w-6" />
-                  </span>
-                  <span>
-                    <span className="block text-sm text-slate-400">{m.label}</span>
-                    <span className="block font-medium text-slate-900 transition-colors group-hover:text-brand-ink">
-                      {m.value}
-                    </span>
-                  </span>
-                </Wrapper>
-              </motion.div>
-            );
-          })}
+        <div className="border-b border-white/10">
+          {contactMethods.map((m, index) => (
+            <ContactRow key={m.label} method={m} index={index} />
+          ))}
         </div>
 
         {/* Primary CTA */}
@@ -99,17 +134,20 @@ const ContactSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mt-10 flex justify-center"
+          className="mt-12 flex justify-center sm:mt-16"
         >
-          <a
-            href="https://wa.me/918850313109"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2.5 rounded-full bg-[#25D366] px-8 py-3.5 text-base font-semibold text-white shadow-[0_12px_30px_-8px_rgba(37,211,102,0.7)] transition-all hover:scale-[1.03] hover:bg-[#1ebe5d]"
-          >
-            <WhatsAppGlyph className="h-5 w-5 transition-transform group-hover:scale-110" />
-            Start a conversation
-          </a>
+          <MagneticButton strength={0.25}>
+            <a
+              href="https://wa.me/918850313109"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center gap-3 rounded-full bg-[#25D366] px-8 py-4 text-base font-semibold text-white shadow-[0_12px_40px_-8px_rgba(37,211,102,0.8)] transition-all hover:scale-[1.04] hover:bg-[#1ebe5d] sm:px-10 sm:py-5 sm:text-lg"
+            >
+              <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-[#25D366] opacity-25 [animation-duration:2.2s]" />
+              <WhatsAppGlyph className="h-5 w-5 transition-transform group-hover:scale-110 group-hover:rotate-12 sm:h-6 sm:w-6" />
+              Start a conversation
+            </a>
+          </MagneticButton>
         </motion.div>
       </div>
     </section>

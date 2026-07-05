@@ -31,6 +31,14 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll while the full-screen menu is open
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
+
   const handleNavClick = (itemId) => {
     setIsMenuOpen(false);
     const element = document.getElementById(itemId);
@@ -49,7 +57,7 @@ const Navbar = () => {
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'border-b border-slate-900/5 bg-white/70 shadow-soft backdrop-blur-xl'
+          ? 'border-b border-brand-violet/15 bg-canvas/70 shadow-soft backdrop-blur-xl'
           : 'border-b border-transparent bg-transparent'
       }`}
     >
@@ -58,14 +66,17 @@ const Navbar = () => {
           {/* Logo */}
           <button
             onClick={() => handleNavClick('home')}
-            className="group flex items-center gap-2.5"
+            className="group relative z-[75] flex items-center gap-2.5"
           >
-            <img
-              src={`${process.env.PUBLIC_URL}/alpha.png`}
-              alt="AlphaCodeAI"
-              className="h-9 w-9 object-contain transition-transform group-hover:scale-110 group-hover:rotate-6"
-            />
-            <span className="font-display text-lg font-bold tracking-tight text-slate-900">
+            <span className="relative">
+              <img
+                src={`${process.env.PUBLIC_URL}/alpha.png`}
+                alt="AlphaCodeAI"
+                className="h-9 w-9 object-contain transition-transform duration-500 group-hover:rotate-[360deg]"
+              />
+              <span className="absolute inset-0 -z-10 animate-neon-pulse rounded-full bg-brand-violet/40 blur-lg" />
+            </span>
+            <span className="font-display text-lg font-bold tracking-tight text-white">
               Alpha<span className="text-gradient">Code</span>AI
             </span>
           </button>
@@ -80,13 +91,13 @@ const Navbar = () => {
                   key={item}
                   onClick={() => handleNavClick(id)}
                   className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                    isActive ? 'text-slate-900' : 'text-slate-500 hover:text-slate-900'
+                    isActive ? 'text-white' : 'text-slate-400 hover:text-white'
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="navActive"
-                      className="absolute inset-0 rounded-full bg-brand-gradient-soft ring-1 ring-brand-indigo/20"
+                      className="absolute inset-0 rounded-full bg-brand-gradient-soft ring-1 ring-brand-violet/40 shadow-[0_0_18px_-4px_rgba(139,92,246,0.7)]"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -106,44 +117,66 @@ const Navbar = () => {
             </button>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-slate-600 hover:text-slate-900 md:hidden"
+              className="relative z-[75] text-slate-300 transition-colors hover:text-white md:hidden"
             >
               <span className="sr-only">Toggle menu</span>
               {isMenuOpen ? (
-                <XMarkIcon className="h-6 w-6" />
+                <XMarkIcon className="h-7 w-7" />
               ) : (
-                <Bars3Icon className="h-6 w-6" />
+                <Bars3Icon className="h-7 w-7" />
               )}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Full-screen mobile menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-t border-slate-900/5 bg-white/90 backdrop-blur-xl md:hidden"
+            initial={{ clipPath: 'circle(0% at calc(100% - 2.5rem) 2rem)' }}
+            animate={{ clipPath: 'circle(150% at calc(100% - 2.5rem) 2rem)' }}
+            exit={{ clipPath: 'circle(0% at calc(100% - 2.5rem) 2rem)' }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-[70] flex h-[100svh] flex-col justify-center overflow-hidden bg-canvas/95 backdrop-blur-2xl md:hidden"
           >
-            <div className="space-y-1 px-4 py-4">
-              {navItems.map((item) => (
-                <button
-                  key={item}
-                  onClick={() => handleNavClick(item.toLowerCase())}
-                  className="block w-full rounded-xl px-4 py-3 text-left text-slate-600 transition-colors hover:bg-canvas-muted hover:text-slate-900"
-                >
-                  {item}
-                </button>
-              ))}
-              <button
+            {/* Menu backdrop deco */}
+            <div className="orb pointer-events-none h-80 w-80 -left-20 top-10 animate-wobble bg-brand-violet/25" />
+            <div className="orb pointer-events-none h-72 w-72 -right-16 bottom-10 animate-aurora bg-brand-cyan/20" />
+
+            <div className="relative space-y-2 px-8">
+              {navItems.map((item, i) => {
+                const id = item.toLowerCase();
+                const isActive = activeSection === id;
+                return (
+                  <motion.button
+                    key={item}
+                    initial={{ opacity: 0, x: 60, rotate: 3 }}
+                    animate={{ opacity: 1, x: 0, rotate: 0 }}
+                    exit={{ opacity: 0, x: 40 }}
+                    transition={{ delay: 0.08 + i * 0.07, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    onClick={() => handleNavClick(id)}
+                    className={`block w-full text-left font-display text-4xl font-bold tracking-tight transition-colors ${
+                      isActive ? 'text-gradient' : 'text-white/85'
+                    }`}
+                  >
+                    <span className="mr-3 text-base font-semibold text-brand-cyan/70">
+                      0{i + 1}
+                    </span>
+                    {item}
+                  </motion.button>
+                );
+              })}
+              <motion.button
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: 0.5, duration: 0.4 }}
                 onClick={() => handleNavClick('contact')}
-                className="mt-2 block w-full rounded-xl bg-brand-gradient px-4 py-3 text-center font-semibold text-white"
+                className="!mt-10 block w-full rounded-2xl bg-brand-gradient bg-[length:200%_auto] px-4 py-4 text-center font-semibold text-white shadow-glow animate-gradient-x"
               >
                 Let's talk
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         )}
