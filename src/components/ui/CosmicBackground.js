@@ -107,7 +107,7 @@ const CosmicBackground = () => {
   }, []);
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-0">
+    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
       {/* Deep space base wash */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,#12063a_0%,#050014_55%,#020009_100%)]" />
 

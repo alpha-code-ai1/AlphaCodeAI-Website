@@ -5,7 +5,9 @@ const MarqueeBand = ({ items, reverse = false, angle = 0 }) => {
   return (
     <div
       className="relative z-10 overflow-hidden border-y border-brand-violet/15 bg-canvas-soft/60 py-3 backdrop-blur-sm sm:py-4"
-      style={{ transform: `rotate(${angle}deg) scale(1.05)` }}
+      // Only scale up when tilted (to cover the corners); a straight band at
+      // scale 1.05 would be wider than the screen and cause horizontal scroll.
+      style={angle ? { transform: `rotate(${angle}deg) scale(1.05)` } : undefined}
     >
       <div
         className={`flex w-max items-center gap-6 whitespace-nowrap sm:gap-10 ${
