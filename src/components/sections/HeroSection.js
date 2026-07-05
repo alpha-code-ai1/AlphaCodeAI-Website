@@ -140,8 +140,8 @@ const HeroSection = () => {
             </motion.div>
           </div>
 
-          {/* Row B: giant heading — one justified line */}
-          <h1 className="flex w-full items-end justify-between gap-2 sm:gap-4">
+          {/* Row B: giant heading — one single line */}
+          <h1 className="flex w-full items-end justify-end gap-x-3 sm:gap-x-4">
             {HEADING_WORDS.map((word, i) => (
               <span key={word} className="block overflow-hidden pb-1">
                 <motion.span

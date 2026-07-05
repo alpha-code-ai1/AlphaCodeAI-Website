@@ -79,7 +79,7 @@ const SolutionRow = ({ solution, index }) => {
             alt=""
             aria-hidden
             draggable={false}
-            className="h-11 w-11 shrink-0 select-none rounded-xl object-cover transition-all duration-500 group-hover:-rotate-12 group-hover:scale-110 sm:h-14 sm:w-14"
+            className="h-11 w-11 shrink-0 select-none transition-all duration-500 group-hover:-rotate-12 group-hover:scale-110 sm:h-14 sm:w-14"
             style={{ filter: `drop-shadow(0 0 12px ${solution.glow})` }}
           />
 

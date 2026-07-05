@@ -98,7 +98,7 @@ const ServiceCard = ({ service, index }) => {
               alt=""
               aria-hidden
               draggable={false}
-              className="h-full w-full select-none rounded-xl object-cover transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110"
+              className="h-full w-full select-none transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110"
               style={{ filter: `drop-shadow(0 0 14px ${service.glow})` }}
             />
             <div className="pointer-events-none absolute -inset-2 animate-orbit opacity-0 transition-opacity duration-500 group-hover:opacity-100 [animation-duration:4s]">
