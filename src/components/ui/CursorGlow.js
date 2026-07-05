@@ -98,7 +98,10 @@ const CursorGlow = () => {
 
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (reduce.matches) return undefined;
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+    // Desktop pointers only — on touch devices this repainted on every scroll
+    // touch and caused visible flicker.
+    if (reduce.matches || !finePointer.matches) return undefined;
     setEnabled(true);
     // Mouse: follows the cursor. Touch: jumps to the last touched location
     // (pointerdown) and rides along while dragging (pointermove).

@@ -135,7 +135,7 @@ const ServicesSection = () => {
 
       {/* Mobile: swipeable snap carousel · Desktop: grid */}
       <div className="relative mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 lg:grid-cols-3">
+        <div className="no-scrollbar flex touch-pan-x snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden overscroll-x-contain px-4 pb-2 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 lg:grid-cols-3">
           {services.map((service, index) => (
             <ServiceCard key={service.title} service={service} index={index} />
           ))}

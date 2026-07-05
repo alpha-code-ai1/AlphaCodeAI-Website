@@ -140,40 +140,25 @@ const HeroSection = () => {
             </motion.div>
           </div>
 
-          {/* Row B: description + giant heading */}
-          <div className="flex items-end justify-between gap-3 sm:gap-4">
-            <motion.div
-              custom={7}
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              className="w-[130px] shrink-0 sm:w-[200px] md:w-[300px]"
-            >
-              <p className="text-left text-[9px] font-semibold tracking-widest text-slate-300 sm:text-xs md:text-right md:text-sm">
-                AI Engineering Studio Building Production-Grade Software From
-                Idea To Deployment
-              </p>
-            </motion.div>
-
-            <h1 className="text-right">
-              {HEADING_WORDS.map((word, i) => (
-                <span key={word} className="block overflow-hidden">
-                  <motion.span
-                    className={`glitch-text block font-semibold ${
-                      i === HEADING_WORDS.length - 1 ? 'text-gradient' : 'text-white'
-                    }`}
-                    data-text={word}
-                    style={{ fontSize: 'clamp(2rem, 9vw, 9rem)', lineHeight: 0.88 }}
-                    initial={{ y: '110%' }}
-                    animate={{ y: 0 }}
-                    transition={{ delay: 0.4 + i * 0.14, duration: 0.7, ease: EASE }}
-                  >
-                    {word}
-                  </motion.span>
-                </span>
-              ))}
-            </h1>
-          </div>
+          {/* Row B: giant heading — one justified line */}
+          <h1 className="flex w-full items-end justify-between gap-2 sm:gap-4">
+            {HEADING_WORDS.map((word, i) => (
+              <span key={word} className="block overflow-hidden pb-1">
+                <motion.span
+                  className={`glitch-text block font-semibold ${
+                    i === HEADING_WORDS.length - 1 ? 'text-gradient' : 'text-white'
+                  }`}
+                  data-text={word}
+                  style={{ fontSize: 'clamp(0.85rem, 4.4vw, 4.5rem)', lineHeight: 0.95 }}
+                  initial={{ y: '110%' }}
+                  animate={{ y: 0 }}
+                  transition={{ delay: 0.4 + i * 0.14, duration: 0.7, ease: EASE }}
+                >
+                  {word}
+                </motion.span>
+              </span>
+            ))}
+          </h1>
         </div>
 
         {/* Scroll hint */}

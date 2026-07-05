@@ -187,6 +187,20 @@ code {
   90%, 100% { transform: rotateX(90deg); }
 }
 
+/* Cut the heaviest fixed/animated effects on phones — they caused flicker */
+@media (max-width: 768px) {
+  .noise-overlay {
+    display: none;
+  }
+  .text-gradient {
+    animation: none;
+  }
+  .glitch-text::before,
+  .glitch-text::after {
+    display: none;
+  }
+}
+
 /* Calm everything down for users who ask for it */
 @media (prefers-reduced-motion: reduce) {
   *,
