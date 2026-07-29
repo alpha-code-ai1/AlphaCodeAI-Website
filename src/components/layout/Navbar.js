@@ -1,6 +1,9 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useTheme } from '../../context/ThemeContext';
+import ThemeSwitch from '../ui/ThemeSwitch';
 
 const navItems = ['Home', 'Services', 'Solutions', 'Articles', 'Contact'];
 
@@ -8,30 +11,33 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [scrolled, setScrolled] = useState(false);
+  const { isLight } = useTheme();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 12);
+      if (location.pathname !== '/') return;
 
-      const sections = navItems.map((item) => ({
-        id: item.toLowerCase(),
-        offset: document.getElementById(item.toLowerCase())?.offsetTop - 120
-      }));
+      const scrollPosition = window.scrollY + 150;
+      const visibleSections = navItems
+        .map((item) => document.getElementById(item.toLowerCase()))
+        .filter(Boolean);
 
-      const scrollPosition = window.scrollY;
-      for (let i = sections.length - 1; i >= 0; i--) {
-        if (sections[i].offset && scrollPosition >= sections[i].offset) {
-          setActiveSection(sections[i].id);
+      for (let index = visibleSections.length - 1; index >= 0; index -= 1) {
+        if (scrollPosition >= visibleSections[index].offsetTop) {
+          setActiveSection(visibleSections[index].id);
           break;
         }
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [location.pathname, isLight]);
 
-  // Lock body scroll while the full-screen menu is open
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : '';
     return () => {
@@ -39,15 +45,27 @@ const Navbar = () => {
     };
   }, [isMenuOpen]);
 
+  useEffect(() => setIsMenuOpen(false), [isLight, location.pathname]);
+
   const handleNavClick = (itemId) => {
     setIsMenuOpen(false);
-    const element = document.getElementById(itemId);
-    if (element) {
-      const headerOffset = 90;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    const scrollToTarget = () => {
+      const element = document.getElementById(itemId);
+      if (!element) return;
+      const headerOffset = isLight ? 104 : 90;
+      const offsetPosition =
+        element.getBoundingClientRect().top + window.pageYOffset - headerOffset;
       window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    };
+
+    if (location.pathname !== '/') {
+      navigate('/');
+      window.setTimeout(scrollToTarget, 120);
+      return;
     }
+
+    scrollToTarget();
   };
 
   return (
@@ -55,128 +73,100 @@ const Navbar = () => {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'border-b border-brand-violet/15 bg-canvas/70 shadow-soft backdrop-blur-xl'
-          : 'border-b border-transparent bg-transparent'
+      className={`site-nav ${isLight ? 'site-nav--light' : 'site-nav--dark'} ${
+        scrolled ? 'site-nav--scrolled' : ''
       }`}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
+      <div className="site-nav__inner">
+        <button
+          type="button"
+          onClick={() => handleNavClick('home')}
+          className="site-nav__brand"
+          aria-label="AlphaCodeAI home"
+        >
+          <span className="site-nav__mark">
+            <img src={`${process.env.PUBLIC_URL}/alpha.png`} alt="" />
+          </span>
+          <span className="site-nav__wordmark">
+            Alpha<span>Code</span>AI
+          </span>
+        </button>
+
+        <div className="site-nav__links">
+          {navItems.map((item, index) => {
+            const id = item.toLowerCase();
+            const isActive = activeSection === id && location.pathname === '/';
+            return (
+              <button
+                type="button"
+                key={item}
+                onClick={() => handleNavClick(id)}
+                className={isActive ? 'is-active' : ''}
+              >
+                {isLight && <span>0{index + 1}</span>}
+                {item}
+                {isActive && !isLight && (
+                  <motion.i
+                    layoutId="navActive"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="site-nav__actions">
+          <ThemeSwitch />
           <button
-            onClick={() => handleNavClick('home')}
-            className="group relative z-[75] flex items-center gap-2.5"
+            type="button"
+            onClick={() => handleNavClick('contact')}
+            className="site-nav__cta"
           >
-            <span className="relative">
-              <img
-                src={`${process.env.PUBLIC_URL}/alpha.png`}
-                alt="AlphaCodeAI"
-                className="h-9 w-9 object-contain transition-transform duration-500 group-hover:rotate-[360deg]"
-              />
-              <span className="absolute inset-0 -z-10 animate-neon-pulse rounded-full bg-brand-violet/40 blur-lg" />
-            </span>
-            <span className="font-display text-lg font-bold tracking-tight text-white">
-              Alpha<span className="text-gradient">Code</span>AI
-            </span>
+            Let's talk
           </button>
-
-          {/* Desktop nav */}
-          <div className="hidden items-center gap-1 md:flex">
-            {navItems.map((item) => {
-              const id = item.toLowerCase();
-              const isActive = activeSection === id;
-              return (
-                <button
-                  key={item}
-                  onClick={() => handleNavClick(id)}
-                  className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                    isActive ? 'text-white' : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  {isActive && (
-                    <motion.span
-                      layoutId="navActive"
-                      className="absolute inset-0 rounded-full bg-brand-gradient-soft ring-1 ring-brand-violet/40 shadow-[0_0_18px_-4px_rgba(139,92,246,0.7)]"
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                  <span className="relative z-10">{item}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* CTA + mobile toggle */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => handleNavClick('contact')}
-              className="hidden rounded-full bg-brand-gradient bg-[length:200%_auto] px-5 py-2 text-sm font-semibold text-white shadow-glow transition-all hover:scale-105 hover:bg-[position:right_center] md:block"
-            >
-              Let's talk
-            </button>
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="relative z-[75] text-slate-300 transition-colors hover:text-white md:hidden"
-            >
-              <span className="sr-only">Toggle menu</span>
-              {isMenuOpen ? (
-                <XMarkIcon className="h-7 w-7" />
-              ) : (
-                <Bars3Icon className="h-7 w-7" />
-              )}
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen((open) => !open)}
+            className="site-nav__menu-button"
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation"
+          >
+            <span className="sr-only">Toggle menu</span>
+            {isMenuOpen ? <XMarkIcon /> : <Bars3Icon />}
+          </button>
         </div>
       </div>
 
-      {/* Full-screen mobile menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
+            id="mobile-navigation"
             initial={{ clipPath: 'circle(0% at calc(100% - 2.5rem) 2rem)' }}
             animate={{ clipPath: 'circle(150% at calc(100% - 2.5rem) 2rem)' }}
             exit={{ clipPath: 'circle(0% at calc(100% - 2.5rem) 2rem)' }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[70] flex h-[100svh] flex-col justify-center overflow-hidden bg-canvas/95 backdrop-blur-2xl md:hidden"
+            transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
+            className="site-nav__mobile"
           >
-            {/* Menu backdrop deco */}
-            <div className="orb pointer-events-none h-80 w-80 -left-20 top-10 animate-wobble bg-brand-violet/25" />
-            <div className="orb pointer-events-none h-72 w-72 -right-16 bottom-10 animate-aurora bg-brand-cyan/20" />
-
-            <div className="relative space-y-2 px-8">
-              {navItems.map((item, i) => {
-                const id = item.toLowerCase();
-                const isActive = activeSection === id;
-                return (
-                  <motion.button
-                    key={item}
-                    initial={{ opacity: 0, x: 60, rotate: 3 }}
-                    animate={{ opacity: 1, x: 0, rotate: 0 }}
-                    exit={{ opacity: 0, x: 40 }}
-                    transition={{ delay: 0.08 + i * 0.07, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                    onClick={() => handleNavClick(id)}
-                    className={`block w-full text-left font-display text-4xl font-bold tracking-tight transition-colors ${
-                      isActive ? 'text-gradient' : 'text-white/85'
-                    }`}
-                  >
-                    <span className="mr-3 text-base font-semibold text-brand-cyan/70">
-                      0{i + 1}
-                    </span>
-                    {item}
-                  </motion.button>
-                );
-              })}
-              <motion.button
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ delay: 0.5, duration: 0.4 }}
-                onClick={() => handleNavClick('contact')}
-                className="!mt-10 block w-full rounded-2xl bg-brand-gradient bg-[length:200%_auto] px-4 py-4 text-center font-semibold text-white shadow-glow animate-gradient-x"
-              >
-                Let's talk
-              </motion.button>
+            <div className="site-nav__mobile-list">
+              {navItems.map((item, index) => (
+                <motion.button
+                  type="button"
+                  key={item}
+                  initial={{ opacity: 0, x: 35 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ delay: 0.05 + index * 0.045 }}
+                  onClick={() => handleNavClick(item.toLowerCase())}
+                >
+                  <span>0{index + 1}</span>
+                  {item}
+                </motion.button>
+              ))}
+              <div className="site-nav__mobile-theme">
+                <span>Choose your experience</span>
+                <ThemeSwitch />
+              </div>
             </div>
           </motion.div>
         )}
