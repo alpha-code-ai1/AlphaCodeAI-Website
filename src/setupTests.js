@@ -18,6 +18,16 @@ class IntersectionObserverMock {
 
 global.IntersectionObserver = IntersectionObserverMock;
 
+HTMLCanvasElement.prototype.getContext = jest.fn(() => ({
+  drawImage: jest.fn(),
+  getImageData: jest.fn(() => ({
+    data: new Uint8ClampedArray(4),
+    width: 1,
+    height: 1
+  })),
+  putImageData: jest.fn()
+}));
+
 Object.defineProperty(window, 'matchMedia', {
   configurable: true,
   writable: true,

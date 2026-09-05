@@ -2,6 +2,7 @@
   "name": "alphacodeai",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://alpha-code-ai1.github.io/AlphaCodeAI-Website",
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "@material-tailwind/react": "^2.1.10",

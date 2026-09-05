@@ -261,7 +261,7 @@
 .theme-switch {
   position: relative;
   display: grid;
-  width: 118px;
+  width: 132px;
   height: 44px;
   grid-template-columns: 1fr 1fr;
   overflow: hidden;
@@ -286,6 +286,7 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
+  padding: 0 6px;
   color: #64748b;
   font-size: 10px;
   font-weight: 700;
@@ -307,10 +308,10 @@
 .theme-switch__thumb {
   position: absolute;
   z-index: 1;
-  top: 3px;
-  bottom: 3px;
-  left: 3px;
-  width: calc(50% - 3px);
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
   border-radius: 999px;
   background: linear-gradient(135deg, #7c3aed, #2563eb);
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.35);
@@ -332,9 +333,10 @@
 }
 
 .site-nav--light .theme-switch__thumb {
-  top: 2px;
-  bottom: 2px;
-  left: 2px;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
   border: 1px solid #101728;
   border-radius: 0;
   background: #ffc400;
@@ -556,7 +558,7 @@
   }
 
   .site-nav__actions > .theme-switch {
-    width: 74px;
+    width: 80px;
   }
 
   .site-nav__actions > .theme-switch .theme-switch__label {

@@ -8,15 +8,13 @@ beforeEach(() => {
   window.localStorage.clear();
 });
 
-test('switches from the dark site to the rebuilt light experience', async () => {
+test('defaults to the light experience and can switch themes', async () => {
   render(<App />);
 
   const themeSwitch = screen.getByRole('switch', {
-    name: /switch to light experience/i
+    name: /switch to dark experience/i
   });
-  expect(themeSwitch).toHaveAttribute('aria-checked', 'false');
-
-  fireEvent.click(themeSwitch);
+  expect(themeSwitch).toHaveAttribute('aria-checked', 'true');
 
   await waitFor(() => {
     expect(
@@ -26,6 +24,10 @@ test('switches from the dark site to the rebuilt light experience', async () => 
     ).toBeInTheDocument();
   });
 
-  expect(themeSwitch).toHaveAttribute('aria-checked', 'true');
-  expect(window.localStorage.getItem('alphacodeai-theme')).toBe('light');
+  fireEvent.click(themeSwitch);
+
+  await waitFor(() => {
+    expect(themeSwitch).toHaveAttribute('aria-checked', 'false');
+  });
+  expect(window.localStorage.getItem('alphacodeai-theme')).toBe('dark');
 });

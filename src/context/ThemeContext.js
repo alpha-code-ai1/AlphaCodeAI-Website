@@ -4,9 +4,9 @@ const ThemeContext = createContext(null);
 const STORAGE_KEY = 'alphacodeai-theme';
 
 const getInitialTheme = () => {
-  if (typeof window === 'undefined') return 'dark';
+  if (typeof window === 'undefined') return 'light';
   const savedTheme = window.localStorage.getItem(STORAGE_KEY);
-  return savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : 'dark';
+  return savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : 'light';
 };
 
 export const ThemeProvider = ({ children }) => {

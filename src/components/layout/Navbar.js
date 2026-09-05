@@ -5,7 +5,17 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 import ThemeSwitch from '../ui/ThemeSwitch';
 
-const navItems = ['Home', 'Services', 'Solutions', 'Articles', 'Contact'];
+const darkNavItems = [
+  { id: 'home', label: 'Home' },
+  { id: 'services', label: 'Services' },
+  { id: 'solutions', label: 'Solutions' },
+  { id: 'articles', label: 'Articles' },
+  { id: 'contact', label: 'Contact' }
+];
+
+const lightNavItems = darkNavItems.map((item) =>
+  item.id === 'articles' ? { id: 'case-studies', label: 'Case studies' } : item
+);
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,6 +24,7 @@ const Navbar = () => {
   const { isLight } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
+  const navItems = isLight ? lightNavItems : darkNavItems;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,7 +33,7 @@ const Navbar = () => {
 
       const scrollPosition = window.scrollY + 150;
       const visibleSections = navItems
-        .map((item) => document.getElementById(item.toLowerCase()))
+        .map((item) => document.getElementById(item.id))
         .filter(Boolean);
 
       for (let index = visibleSections.length - 1; index >= 0; index -= 1) {
@@ -36,7 +47,7 @@ const Navbar = () => {
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [location.pathname, isLight]);
+  }, [location.pathname, isLight, navItems]);
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : '';
@@ -94,17 +105,16 @@ const Navbar = () => {
 
         <div className="site-nav__links">
           {navItems.map((item, index) => {
-            const id = item.toLowerCase();
-            const isActive = activeSection === id && location.pathname === '/';
+            const isActive = activeSection === item.id && location.pathname === '/';
             return (
               <button
                 type="button"
-                key={item}
-                onClick={() => handleNavClick(id)}
+                key={item.id}
+                onClick={() => handleNavClick(item.id)}
                 className={isActive ? 'is-active' : ''}
               >
                 {isLight && <span>0{index + 1}</span>}
-                {item}
+                {item.label}
                 {isActive && !isLight && (
                   <motion.i
                     layoutId="navActive"
@@ -152,15 +162,15 @@ const Navbar = () => {
               {navItems.map((item, index) => (
                 <motion.button
                   type="button"
-                  key={item}
+                  key={item.id}
                   initial={{ opacity: 0, x: 35 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
                   transition={{ delay: 0.05 + index * 0.045 }}
-                  onClick={() => handleNavClick(item.toLowerCase())}
+                  onClick={() => handleNavClick(item.id)}
                 >
                   <span>0{index + 1}</span>
-                  {item}
+                  {item.label}
                 </motion.button>
               ))}
               <div className="site-nav__mobile-theme">
