@@ -20,12 +20,13 @@ const partners = [
     logo: 'https://www.terraconindia.com/wp-content/uploads/2023/09/Terracon-nature-based-solution-logo-Copy-1-1-1536x1216.jpg',
     link: 'https://www.terraconindia.com/',
     tileBg: '#FFFFFF',
-    color: '#35602A'
+    color: '#35602A',
+    cover: true
   },
   {
     name: 'Skillocraft',
     description: 'Where skills meet profession.',
-    logo: '/partners/skillocraft.jpg',
+    logo: '/partners/skillocraft.svg',
     link: 'https://skillocraft.com',
     tileBg: '#FFFFFF',
     color: '#9A4E1E'
@@ -60,7 +61,8 @@ const partners = [
     logo: '/partners/fanizm.jpg',
     link: 'https://fanizm.com',
     tileBg: '#1A1945',
-    color: '#141133'
+    color: '#141133',
+    cover: true
   }
 ];
 
@@ -101,7 +103,9 @@ const PartnerCard = ({ partner }) => (
     <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/10 to-transparent" />
 
     <div
-      className="relative flex h-24 w-full items-center justify-center overflow-hidden rounded-xl p-4 ring-1 ring-white/25"
+      className={`relative flex h-24 w-full items-center justify-center overflow-hidden rounded-xl ring-1 ring-white/25 ${
+        partner.cover ? 'p-0' : 'p-4'
+      }`}
       style={{ backgroundColor: partner.tileBg }}
     >
       <img
@@ -109,7 +113,11 @@ const PartnerCard = ({ partner }) => (
         alt={partner.name}
         loading="lazy"
         draggable={false}
-        className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-110"
+        className={`transition-transform duration-300 group-hover:scale-110 ${
+          partner.cover
+            ? 'h-full w-full object-cover'
+            : 'max-h-full max-w-full object-contain'
+        }`}
       />
     </div>
     <div className="relative mt-4 flex items-start justify-between gap-3">

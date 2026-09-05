@@ -111,7 +111,7 @@ const partners = [
   {
     name: 'Skillocraft',
     description: 'Where skills meet profession.',
-    logo: '/partners/skillocraft.jpg',
+    logo: '/partners/skillocraft.svg',
     link: 'https://skillocraft.com',
     tileBg: '#ffffff',
     color: '#9a4e1e'
@@ -162,7 +162,8 @@ const partners = [
     logo: '/partners/fanizm.jpg',
     link: 'https://fanizm.com',
     tileBg: '#1a1945',
-    color: '#141133'
+    color: '#141133',
+    cover: true
   },
   {
     name: 'Terracon India',
@@ -170,7 +171,8 @@ const partners = [
     logo: '/partners/terracon.jpg',
     link: 'https://www.terraconindia.com/',
     tileBg: '#ffffff',
-    color: '#35602a'
+    color: '#35602a',
+    cover: true
   }
 ];
 
@@ -187,6 +189,8 @@ const caseStudies = [
     imageAlt: 'A property inspector using a thermal camera inside a modern apartment.',
     logo: '/partners/proofit.jpg',
     logoBg: '#ffffff',
+    logoAspect: '416 / 138',
+    logoWidth: '174px',
     link: 'https://proofitcompany.com'
   },
   {
@@ -201,6 +205,8 @@ const caseStudies = [
     imageAlt: 'An island property project model arranged with schedule and cost-control tools.',
     logo: '/partners/opro.jpg',
     logoBg: '#ffffff',
+    logoAspect: '524 / 176',
+    logoWidth: '174px',
     link: 'https://opromaldives.com'
   },
   {
@@ -215,6 +221,8 @@ const caseStudies = [
     imageAlt: 'A modern modular home resting beside a river in a mountain valley.',
     logo: '/partners/okno.webp',
     logoBg: '#111111',
+    logoAspect: '800 / 226',
+    logoWidth: '188px',
     link: 'https://www.oknomodhomes.com/'
   },
   {
@@ -229,6 +237,8 @@ const caseStudies = [
     imageAlt: 'Industrial pump components arranged in a precise offer-production workflow.',
     logo: '/partners/shapotools.jpg',
     logoBg: '#333333',
+    logoAspect: '1086 / 150',
+    logoWidth: '232px',
     link: 'https://shapotools.com'
   }
 ];
@@ -597,7 +607,9 @@ const PartnerCarousel = () => {
               style={{ '--partner-color': partner.color }}
             >
               <div
-                className="light-partner-card__image"
+                className={`light-partner-card__image${
+                  partner.cover ? ' light-partner-card__image--cover' : ''
+                }`}
                 style={{ backgroundColor: partner.tileBg }}
               >
                 <img
@@ -931,7 +943,11 @@ const LightExperience = () => {
                     />
                     <div
                       className="light-case-study__logo"
-                      style={{ backgroundColor: study.logoBg }}
+                      style={{
+                        backgroundColor: study.logoBg,
+                        '--case-logo-aspect': study.logoAspect,
+                        '--case-logo-width': study.logoWidth
+                      }}
                     >
                       <img
                         src={`${process.env.PUBLIC_URL}${study.logo}`}

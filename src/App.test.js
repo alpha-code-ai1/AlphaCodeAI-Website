@@ -9,6 +9,7 @@ beforeEach(() => {
 });
 
 test('defaults to the light experience and can switch themes', async () => {
+  window.localStorage.setItem('alphacodeai-theme', 'dark');
   render(<App />);
 
   const themeSwitch = screen.getByRole('switch', {

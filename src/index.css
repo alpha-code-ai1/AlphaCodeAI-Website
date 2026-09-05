@@ -12,8 +12,8 @@
 
   body {
     margin: 0;
-    background-color: #050014;
-    color: #cbd5e1;
+    background-color: #f4f0e6;
+    color: #101728;
     font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -21,6 +21,11 @@
     overflow-x: hidden;
     width: 100%;
     max-width: 100%;
+  }
+
+  html[data-theme="dark"] body {
+    background-color: #050014;
+    color: #cbd5e1;
   }
 
   ::selection {
