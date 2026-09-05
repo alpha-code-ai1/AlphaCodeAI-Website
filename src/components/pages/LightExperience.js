@@ -316,8 +316,11 @@ const InteractiveRobot = () => {
       currentY: 0,
       frame: 0,
       mouthTimer: 0,
+      readyTimer: 0,
+      touchTimer: 0,
       reduceMotion: reduceMotionQuery.matches
     };
+    const loadingStartedAt = window.performance.now();
 
     const image = new Image();
     image.decoding = 'async';
@@ -327,7 +330,14 @@ const InteractiveRobot = () => {
       context.drawImage(image, 0, 0, ROBOT_WIDTH, ROBOT_HEIGHT);
       const imageData = context.getImageData(0, 0, ROBOT_WIDTH, ROBOT_HEIGHT);
       context.putImageData(removeConnectedCheckerboard(imageData), 0, 0);
-      mascot.classList.add('is-ready');
+      const remainingLoadTime = Math.max(
+        0,
+        650 - (window.performance.now() - loadingStartedAt)
+      );
+      motion.readyTimer = window.setTimeout(() => {
+        mascot.classList.add('is-ready');
+        mascot.setAttribute('aria-busy', 'false');
+      }, remainingLoadTime);
     });
     image.src = `${process.env.PUBLIC_URL}/robot-mascot-source.png`;
 
@@ -389,6 +399,16 @@ const InteractiveRobot = () => {
     };
 
     const handlePointerMove = (event) => pointAt(event.clientX, event.clientY);
+    const handleTouchPoint = (event) => {
+      const touch = event.touches?.[0] || event.changedTouches?.[0];
+      if (!touch) return;
+      window.clearTimeout(motion.touchTimer);
+      pointAt(touch.clientX, touch.clientY);
+    };
+    const handleTouchEnd = (event) => {
+      handleTouchPoint(event);
+      motion.touchTimer = window.setTimeout(centerGaze, 700);
+    };
     const handleKeyDown = (event) => {
       const keyMovement = {
         ArrowLeft: [-8, 0],
@@ -423,6 +443,10 @@ const InteractiveRobot = () => {
     };
 
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('touchstart', handleTouchPoint, { passive: true });
+    window.addEventListener('touchmove', handleTouchPoint, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    window.addEventListener('touchcancel', centerGaze, { passive: true });
     mascot.addEventListener('click', reactToClick);
     document.documentElement.addEventListener('pointerleave', centerGaze);
     mascot.addEventListener('keydown', handleKeyDown);
@@ -431,12 +455,18 @@ const InteractiveRobot = () => {
 
     return () => {
       window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('touchstart', handleTouchPoint);
+      window.removeEventListener('touchmove', handleTouchPoint);
+      window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('touchcancel', centerGaze);
       mascot.removeEventListener('click', reactToClick);
       document.documentElement.removeEventListener('pointerleave', centerGaze);
       mascot.removeEventListener('keydown', handleKeyDown);
       reduceMotionQuery.removeEventListener('change', handleMotionPreference);
       window.cancelAnimationFrame(motion.frame);
       window.clearTimeout(motion.mouthTimer);
+      window.clearTimeout(motion.readyTimer);
+      window.clearTimeout(motion.touchTimer);
     };
   }, []);
 
@@ -447,8 +477,15 @@ const InteractiveRobot = () => {
       className="light-mascot"
       role="img"
       tabIndex="0"
-      aria-label="Friendly AlphaCodeAI robot whose eyes and smile follow the pointer. Click the robot to see its surprised expression."
+      aria-busy="true"
+      aria-label="Friendly AlphaCodeAI robot whose eyes and smile follow your pointer or touch. Activate the robot to see its surprised expression."
     >
+      <div className="light-mascot__loader" aria-hidden="true">
+        <span>Loading mascot</span>
+        <div className="light-mascot__loader-track">
+          <span className="light-mascot__loader-fill" />
+        </div>
+      </div>
       <canvas ref={canvasRef} className="light-mascot__art" aria-hidden="true" />
       <svg
         className="light-mascot__face"

@@ -31,3 +31,32 @@ test('defaults to the light experience and can switch themes', async () => {
   });
   expect(window.localStorage.getItem('alphacodeai-theme')).toBe('dark');
 });
+
+test('moves the mascot gaze in response to touch movement', async () => {
+  render(<App />);
+
+  const mascot = await screen.findByRole('img', {
+    name: /friendly alphacodeai robot/i
+  });
+  const eyes = mascot.querySelector('.light-mascot__eyes');
+
+  Object.defineProperty(mascot, 'getBoundingClientRect', {
+    configurable: true,
+    value: () => ({
+      top: 0,
+      right: 600,
+      bottom: 500,
+      left: 0,
+      width: 600,
+      height: 500
+    })
+  });
+
+  fireEvent.touchMove(window, {
+    touches: [{ clientX: 1000, clientY: 120 }]
+  });
+
+  await waitFor(() => {
+    expect(eyes.style.transform).not.toBe('translate(0px, 0px)');
+  });
+});

@@ -297,13 +297,62 @@
   transition: opacity 220ms ease;
 }
 
-.light-mascot.is-ready .light-mascot__art {
+.light-mascot.is-ready .light-mascot__art,
+.light-mascot.is-ready .light-mascot__face {
   opacity: 1;
 }
 
 .light-mascot__face {
   overflow: visible;
+  opacity: 0;
   pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+.light-mascot__loader {
+  position: absolute;
+  z-index: 4;
+  top: 43%;
+  left: 50%;
+  width: min(56%, 280px);
+  padding: 13px 14px 14px;
+  border: 2px solid var(--light-ink);
+  background: var(--light-paper);
+  box-shadow: 5px 5px 0 var(--light-ink);
+  color: var(--light-ink);
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  transition: opacity 160ms ease, visibility 160ms ease;
+}
+
+.light-mascot__loader > span {
+  display: block;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.light-mascot__loader-track {
+  height: 10px;
+  margin-top: 9px;
+  overflow: hidden;
+  border: 2px solid var(--light-ink);
+  background: #fff;
+}
+
+.light-mascot__loader-fill {
+  display: block;
+  width: 45%;
+  height: 100%;
+  background: var(--light-blue);
+  animation: light-mascot-load 700ms ease-in-out infinite;
+}
+
+.light-mascot.is-ready .light-mascot__loader {
+  visibility: hidden;
+  opacity: 0;
 }
 
 .light-mascot__eyes,
@@ -336,6 +385,16 @@
 .light-mascot.is-clicked .light-mascot__x-eyes,
 .light-mascot.is-clicked .light-mascot__ooh {
   opacity: 1;
+}
+
+@keyframes light-mascot-load {
+  from {
+    transform: translateX(-110%);
+  }
+
+  to {
+    transform: translateX(245%);
+  }
 }
 
 .light-hero__rail {
@@ -1749,5 +1808,10 @@
   .light-mascot__eyes,
   .light-mascot__mouth {
     will-change: auto;
+  }
+
+  .light-mascot__loader-fill {
+    width: 100%;
+    animation: none;
   }
 }
