@@ -34,7 +34,7 @@ const capabilities = [
     description:
       'From the first architecture decision to a polished interface, we build the dependable software around the intelligence.',
     tags: ['Web', 'Mobile', 'APIs'],
-    visual: 'pinball'
+    visual: 'sorter'
   },
   {
     number: '03',
@@ -52,7 +52,7 @@ const capabilities = [
     description:
       'Production deployment, security, monitoring, and iteration—all handled as one continuous product practice.',
     tags: ['Cloud', 'MLOps', 'Security'],
-    visual: 'traffic'
+    visual: 'claw'
   }
 ];
 
@@ -729,198 +729,110 @@ const PachinkoCapability = () => {
   );
 };
 
-const PinballCapability = () => {
-  const canvasRef = useRef(null);
-  const launchRef = useRef(() => {});
-  const flipRef = useRef(() => {});
-  const [score, setScore] = useState(0);
+const SORTER_TYPES = [
+  { key: 'ui', label: 'UI', color: '#1347e8', top: '20%' },
+  { key: 'api', label: 'API', color: '#ff5b22', top: '50%' },
+  { key: 'data', label: 'DATA', color: '#ffc400', top: '80%' }
+];
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const board = prepareCanvas(canvas);
-    if (!board) return undefined;
-    const { context, width, height } = board;
-    const bumpers = [
-      { x: width * 0.3, y: height * 0.34, r: 25, lastHit: 0 },
-      { x: width * 0.68, y: height * 0.3, r: 27, lastHit: 0 },
-      { x: width * 0.51, y: height * 0.56, r: 30, lastHit: 0 }
-    ];
-    let frame = 0;
-    let active = true;
-    let kickUntil = 0;
-    let previousTime = window.performance.now();
-    let points = 0;
-    let ball;
+const SorterCapability = () => {
+  const timersRef = useRef([]);
+  const [items, setItems] = useState([]);
+  const [counts, setCounts] = useState({ ui: 0, api: 0, data: 0 });
+  const [activeGate, setActiveGate] = useState('');
+  const [running, setRunning] = useState(false);
 
-    const launch = (resetScore = true) => {
-      if (resetScore) {
-        points = 0;
-        setScore(0);
-      }
-      ball = {
-        x: width * (0.67 + Math.random() * 0.02),
-        y: height - 58,
-        vx: -20 + Math.random() * 40,
-        vy: -300 - Math.random() * 90,
-        r: 7,
-        lastFlipper: 0
-      };
-    };
-    const flip = () => {
-      kickUntil = window.performance.now() + 170;
-    };
-    launchRef.current = () => launch(true);
-    flipRef.current = flip;
+  useEffect(() => () => timersRef.current.forEach(window.clearTimeout), []);
 
-    const drawLine = (x1, y1, x2, y2, color, lineWidth = 5) => {
-      context.beginPath();
-      context.moveTo(x1, y1);
-      context.lineTo(x2, y2);
-      context.strokeStyle = color;
-      context.lineWidth = lineWidth;
-      context.lineCap = 'round';
-      context.stroke();
-    };
-    const collideWithFlipper = (flipper, time, kicked) => {
-      const segmentX = flipper.x2 - flipper.x1;
-      const segmentY = flipper.y2 - flipper.y1;
-      const segmentLengthSquared = segmentX * segmentX + segmentY * segmentY;
-      const position = clamp(
-        ((ball.x - flipper.x1) * segmentX + (ball.y - flipper.y1) * segmentY) /
-          segmentLengthSquared,
-        0,
-        1
-      );
-      const nearestX = flipper.x1 + segmentX * position;
-      const nearestY = flipper.y1 + segmentY * position;
-      const dx = ball.x - nearestX;
-      const dy = ball.y - nearestY;
-      const distance = Math.hypot(dx, dy) || 1;
-      const minimum = ball.r + 6;
-      if (distance >= minimum || time - ball.lastFlipper < 65) return;
-      const nx = dx / distance;
-      const ny = dy / distance;
-      ball.x += nx * (minimum - distance);
-      ball.y += ny * (minimum - distance);
-      const impact = ball.vx * nx + ball.vy * ny;
-      if (impact < 0) {
-        ball.vx -= 1.65 * impact * nx;
-        ball.vy -= 1.65 * impact * ny;
-      }
-      if (kicked) {
-        ball.vy -= 240 + Math.random() * 85;
-        ball.vx += flipper.direction * (55 + Math.random() * 70);
-        points += 25;
-        setScore(points);
-      }
-      ball.lastFlipper = time;
-    };
-    const tick = (time) => {
-      const delta = Math.min((time - previousTime) / 1000, 0.032);
-      previousTime = time;
-      const kicked = time < kickUntil;
-      const leftFlipper = {
-        x1: width * 0.18,
-        y1: height - 38,
-        x2: width * 0.43,
-        y2: height - (kicked ? 68 : 46),
-        direction: 1
-      };
-      const rightFlipper = {
-        x1: width * 0.82,
-        y1: height - 38,
-        x2: width * 0.57,
-        y2: height - (kicked ? 68 : 46),
-        direction: -1
-      };
-      ball.vy += 185 * delta;
-      ball.x += ball.vx * delta;
-      ball.y += ball.vy * delta;
-      if (ball.x < ball.r || ball.x > width - ball.r) {
-        ball.x = clamp(ball.x, ball.r, width - ball.r);
-        ball.vx *= -0.92;
-      }
-      if (ball.y < ball.r) {
-        ball.y = ball.r;
-        ball.vy *= -0.9;
-      }
-      collideWithFlipper(leftFlipper, time, kicked);
-      collideWithFlipper(rightFlipper, time, kicked);
-      bumpers.forEach((bumper) => {
-        const dx = ball.x - bumper.x;
-        const dy = ball.y - bumper.y;
-        const distance = Math.hypot(dx, dy) || 1;
-        if (distance >= ball.r + bumper.r) return;
-        const nx = dx / distance;
-        const ny = dy / distance;
-        ball.x = bumper.x + nx * (ball.r + bumper.r);
-        ball.y = bumper.y + ny * (ball.r + bumper.r);
-        const speed = 240 + Math.random() * 95;
-        ball.vx = nx * speed + (Math.random() - 0.5) * 45;
-        ball.vy = ny * speed;
-        if (time - bumper.lastHit > 180) {
-          bumper.lastHit = time;
-          points += 50 + Math.floor(Math.random() * 3) * 25;
-          setScore(points);
-        }
-      });
-      if (ball.y > height + 18) launch(false);
+  const schedule = (callback, delay) => {
+    const timer = window.setTimeout(callback, delay);
+    timersRef.current.push(timer);
+  };
 
-      context.clearRect(0, 0, width, height);
-      context.fillStyle = '#edf1ff';
-      context.fillRect(0, 0, width, height);
-      drawLine(10, 12, 10, height - 30, '#101728', 3);
-      drawLine(width - 10, 12, width - 10, height - 30, '#101728', 3);
-      drawLine(width * 0.08, height * 0.63, width * 0.24, height * 0.75, '#ffc400', 6);
-      drawLine(width * 0.92, height * 0.63, width * 0.76, height * 0.75, '#ffc400', 6);
-      bumpers.forEach((bumper, index) => {
-        context.beginPath();
-        context.arc(bumper.x, bumper.y, bumper.r, 0, Math.PI * 2);
-        context.fillStyle = index === 2 ? '#ffc400' : '#1347e8';
-        context.fill();
-        context.strokeStyle = '#101728';
-        context.lineWidth = 3;
-        context.stroke();
-      });
-      drawLine(leftFlipper.x1, leftFlipper.y1, leftFlipper.x2, leftFlipper.y2, '#ff5b22', 10);
-      drawLine(rightFlipper.x1, rightFlipper.y1, rightFlipper.x2, rightFlipper.y2, '#ff5b22', 10);
-      context.beginPath();
-      context.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
-      context.fillStyle = '#101728';
-      context.fill();
-      if (active) frame = window.requestAnimationFrame(tick);
-    };
-    launch();
-    frame = window.requestAnimationFrame(tick);
-    return () => {
-      active = false;
-      window.cancelAnimationFrame(frame);
-    };
-  }, []);
+  const runBatch = () => {
+    if (running) return;
+    timersRef.current.forEach(window.clearTimeout);
+    timersRef.current = [];
+    setItems([]);
+    setCounts({ ui: 0, api: 0, data: 0 });
+    setRunning(true);
+
+    Array.from({ length: 9 }, (_, index) => {
+      const type = SORTER_TYPES[Math.floor(Math.random() * SORTER_TYPES.length)];
+      const id = `${Date.now()}-${index}`;
+      schedule(() => {
+        setItems((current) => [...current, { id, type }]);
+        schedule(() => setActiveGate(type.key), 470);
+        schedule(() => {
+          setCounts((current) => ({ ...current, [type.key]: current[type.key] + 1 }));
+          setItems((current) => current.filter((item) => item.id !== id));
+          if (index === 8) {
+            setActiveGate('');
+            setRunning(false);
+          }
+        }, 1120);
+      }, index * 440);
+      return id;
+    });
+  };
 
   return (
-    <div className="light-capability-sim light-capability-sim--pinball">
-      <div className="light-capability-sim__head"><b>Product pinball</b><span>{score} pts</span></div>
-      <canvas
-        ref={canvasRef}
-        onPointerDown={() => flipRef.current()}
-        aria-label="Playable product pinball. Activate to fire the flippers."
-        role="button"
-        tabIndex="0"
-        onKeyDown={(event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            flipRef.current();
-          }
-        }}
-      />
-      <div className="light-capability-sim__result light-pinball-controls" aria-live="polite">
-        <span>Keep the ball above the drain</span>
-        <div>
-          <button type="button" onClick={() => flipRef.current()}>Fire flippers</button>
-          <button type="button" onClick={() => launchRef.current()}>New ball</button>
-        </div>
+    <div className="light-capability-sim light-capability-sim--sorter">
+      <div className="light-capability-sim__head">
+        <b>Automatic sorter</b><span>{running ? 'Batch running' : 'Gate routing'}</span>
       </div>
+      <div className="light-sorter-map" aria-hidden="true">
+        <svg viewBox="0 0 460 190" preserveAspectRatio="none">
+          <path d="M18 95 H202" />
+          <path d="M202 95 L398 38" />
+          <path d="M202 95 H398" />
+          <path d="M202 95 L398 152" />
+        </svg>
+        <div className={`light-sorter-scanner${activeGate ? ' is-reading' : ''}`}>SCAN</div>
+        {SORTER_TYPES.map((type, index) => (
+          <div
+            className={`light-sorter-gate light-sorter-gate--${index}${activeGate === type.key ? ' is-open' : ''}`}
+            key={type.key}
+            style={{ '--sort-color': type.color }}
+          >
+            <i />
+          </div>
+        ))}
+        {SORTER_TYPES.map((type) => (
+          <div
+            className={`light-sorter-bin${activeGate === type.key ? ' is-active' : ''}`}
+            key={type.key}
+            style={{ '--sort-color': type.color, top: type.top, color: type.key === 'ui' ? '#fff' : '#101728' }}
+          >
+            {type.label}
+          </div>
+        ))}
+        {items.map(({ id, type }) => (
+          <motion.i
+            className="light-sorter-item"
+            key={id}
+            style={{ '--sort-color': type.color }}
+            initial={{ left: '4%', top: '50%', scale: 0.65, opacity: 0 }}
+            animate={{
+              left: ['4%', '44%', '88%'],
+              top: ['50%', '50%', type.top],
+              scale: [0.65, 1, 0.75],
+              opacity: [0, 1, 1, 0]
+            }}
+            transition={{ duration: 1.1, ease: 'easeInOut' }}
+          />
+        ))}
+      </div>
+      <div className="light-sorter-result" aria-live="polite">
+        {SORTER_TYPES.map((type) => (
+          <div key={type.key} style={{ '--sort-color': type.color }}>
+            <strong>{counts[type.key]}</strong><span>{type.label}</span>
+          </div>
+        ))}
+      </div>
+      <button className="light-sim-action" type="button" onClick={runBatch} disabled={running}>
+        {running ? 'Sorting…' : 'Sort random batch'}
+      </button>
     </div>
   );
 };
@@ -970,61 +882,133 @@ const KnobCapability = () => {
   );
 };
 
-const TrafficCapability = () => {
-  const [packets, setPackets] = useState([]);
-  const [result, setResult] = useState({ passed: 0, total: 0, latency: 0 });
-  const runBurst = () => {
-    const burst = Array.from({ length: 12 }, (_, index) => ({
-      id: `${Date.now()}-${index}`,
-      node: Math.floor(Math.random() * 3),
-      delay: Math.random() * 0.55,
-      duration: 0.75 + Math.random() * 0.45,
-      ok: Math.random() > 0.08
-    }));
-    const latencies = burst.map(() => 76 + Math.round(Math.random() * 124)).sort((a, b) => a - b);
-    setPackets(burst);
-    setResult({
-      passed: burst.filter((packet) => packet.ok).length,
-      total: burst.length,
-      latency: latencies[Math.floor(latencies.length * 0.9)]
-    });
+const CLAW_PRIZE_TYPES = [
+  { label: 'SHIP', color: '#1347e8' },
+  { label: 'SCALE', color: '#ff5b22' },
+  { label: 'OBS', color: '#ffc400' },
+  { label: 'SAFE', color: '#70e6ff' },
+  { label: 'ITERATE', color: '#00a878' }
+];
+
+const createClawPrize = (index, x) => ({
+  id: `${Date.now()}-${index}-${Math.random()}`,
+  x,
+  ...CLAW_PRIZE_TYPES[index % CLAW_PRIZE_TYPES.length]
+});
+
+const ClawCapability = () => {
+  const timersRef = useRef([]);
+  const [clawX, setClawX] = useState(50);
+  const [phase, setPhase] = useState('idle');
+  const [result, setResult] = useState('Aim over a release, then drop');
+  const [wins, setWins] = useState(0);
+  const [caughtPrize, setCaughtPrize] = useState(null);
+  const [prizes, setPrizes] = useState(() =>
+    [17, 33, 50, 68, 84].map((x, index) => createClawPrize(index, x))
+  );
+
+  useEffect(() => () => timersRef.current.forEach(window.clearTimeout), []);
+
+  const schedule = (callback, delay) => {
+    const timer = window.setTimeout(callback, delay);
+    timersRef.current.push(timer);
+  };
+
+  const moveClaw = (direction) => {
+    if (phase !== 'idle') return;
+    setClawX((current) => clamp(current + direction * 11, 10, 90));
+    setResult(direction < 0 ? 'Claw moving left' : 'Claw moving right');
+  };
+
+  const dropClaw = () => {
+    if (phase !== 'idle') return;
+    setPhase('dropping');
+    setResult('Claw descending…');
+
+    schedule(() => {
+      const nearest = prizes.reduce((best, prize) => (
+        !best || Math.abs(prize.x - clawX) < Math.abs(best.x - clawX) ? prize : best
+      ), null);
+      const distance = nearest ? Math.abs(nearest.x - clawX) : 100;
+      const catchChance = distance < 7 ? 0.86 : distance < 14 ? 0.58 : 0.12;
+      const caught = nearest && Math.random() < catchChance ? nearest : null;
+
+      if (caught) {
+        setCaughtPrize(caught);
+        setPrizes((current) => current.filter((prize) => prize.id !== caught.id));
+        setResult(`Caught ${caught.label}`);
+      } else {
+        setResult('Missed—reposition and try again');
+      }
+      setPhase('rising');
+
+      schedule(() => {
+        setPhase('idle');
+        if (caught) {
+          setWins((current) => current + 1);
+          setPrizes((current) => {
+            const typeIndex = Math.floor(Math.random() * CLAW_PRIZE_TYPES.length);
+            const replacement = createClawPrize(typeIndex, 14 + Math.random() * 72);
+            return [...current, replacement];
+          });
+        }
+        setCaughtPrize(null);
+      }, 680);
+    }, 540);
   };
 
   return (
-    <div className="light-capability-sim light-capability-sim--traffic">
-      <div className="light-capability-sim__head"><b>Live workload</b><span>Random routing</span></div>
-      <div className="light-traffic-map" aria-hidden="true">
-        <span className="light-traffic-map__source">IN</span>
-        <div className="light-traffic-map__nodes"><i /><i /><i /></div>
-        <span className="light-traffic-map__target">OUT</span>
-        {packets.map((packet) => (
-          <motion.i
-            className={packet.ok ? 'is-ok' : 'is-retry'}
-            key={packet.id}
-            initial={{ left: '8%', top: '50%', opacity: 0 }}
-            animate={{
-              left: ['8%', '50%', '92%'],
-              top: ['50%', `${24 + packet.node * 26}%`, '50%'],
-              opacity: [0, 1, 1, 0]
-            }}
-            transition={{ duration: packet.duration, delay: packet.delay, ease: 'easeInOut' }}
-          />
-        ))}
+    <div className="light-capability-sim light-capability-sim--claw">
+      <div className="light-capability-sim__head"><b>Release claw</b><span>{wins} catches</span></div>
+      <div className="light-claw-machine" aria-hidden="true">
+        <div className="light-claw-machine__rail" style={{ '--claw-x': `${clawX}%` }}><i /></div>
+        <div
+          className={`light-claw light-claw--${phase}`}
+          style={{ '--claw-x': `${clawX}%` }}
+        >
+          <i className="light-claw__cable" />
+          <div className="light-claw__grip">
+            <span /><span />
+            {caughtPrize && (
+              <i
+                className="light-claw__caught"
+                style={{ '--prize-color': caughtPrize.color }}
+              />
+            )}
+          </div>
+        </div>
+        <div className="light-claw-prizes">
+          {prizes.map((prize, index) => (
+            <i
+              key={prize.id}
+              style={{ '--prize-x': `${prize.x}%`, '--prize-color': prize.color, '--prize-tilt': `${index % 2 ? 7 : -6}deg` }}
+            >
+              <span>{prize.label}</span>
+            </i>
+          ))}
+        </div>
       </div>
-      <div className="light-traffic-result" aria-live="polite">
-        <div><strong>{result.total ? `${result.passed}/${result.total}` : '—'}</strong><span>completed</span></div>
-        <div><strong>{result.latency || '—'}</strong><span>p90 ms</span></div>
+      <div className="light-claw-result" aria-live="polite">
+        <span>{result}</span><strong>{wins} secured</strong>
       </div>
-      <button className="light-sim-action" type="button" onClick={runBurst}>Send random burst</button>
+      <div className="light-claw-controls">
+        <button type="button" onClick={() => moveClaw(-1)} disabled={phase !== 'idle'} aria-label="Move claw left">
+          <ChevronLeftIcon aria-hidden="true" />
+        </button>
+        <button type="button" onClick={dropClaw} disabled={phase !== 'idle'}>Drop claw</button>
+        <button type="button" onClick={() => moveClaw(1)} disabled={phase !== 'idle'} aria-label="Move claw right">
+          <ChevronRightIcon aria-hidden="true" />
+        </button>
+      </div>
     </div>
   );
 };
 
 const CapabilityInteractive = ({ type }) => {
   if (type === 'pachinko') return <PachinkoCapability />;
-  if (type === 'pinball') return <PinballCapability />;
+  if (type === 'sorter') return <SorterCapability />;
   if (type === 'knob') return <KnobCapability />;
-  return <TrafficCapability />;
+  return <ClawCapability />;
 };
 
 const PartnerCarousel = () => {

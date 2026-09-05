@@ -80,13 +80,20 @@ test('renders distinct capability simulations and produces a tuned model result'
   expect(
     await screen.findByRole('button', { name: /pachinko routing simulation/i })
   ).toBeInTheDocument();
-  expect(
-    screen.getByRole('button', { name: /playable product pinball/i })
-  ).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /add ball/i })).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: /fire flippers/i })).toBeInTheDocument();
+  const sorterButton = screen.getByRole('button', { name: /sort random batch/i });
+  expect(sorterButton).toBeInTheDocument();
   expect(screen.getByRole('slider', { name: /model temperature/i })).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: /send random burst/i })).toBeInTheDocument();
+  const clawButton = screen.getByRole('button', { name: /drop claw/i });
+  expect(clawButton).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /move claw left/i })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /move claw right/i })).toBeInTheDocument();
+
+  fireEvent.click(sorterButton);
+  expect(screen.getByRole('button', { name: /sorting/i })).toBeDisabled();
+
+  fireEvent.click(clawButton);
+  expect(screen.getByText(/claw descending/i)).toBeInTheDocument();
 
   const randomSpy = jest.spyOn(Math, 'random').mockReturnValue(0.9);
   fireEvent.click(screen.getByRole('button', { name: /run inference/i }));
