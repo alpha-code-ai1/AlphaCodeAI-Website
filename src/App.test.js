@@ -74,15 +74,23 @@ test('moves the mascot gaze and keeps the last touch position', async () => {
   });
 });
 
-test('routes requests through the interactive AI pachinko', async () => {
+test('renders distinct capability simulations and produces a tuned model result', async () => {
   render(<App />);
 
-  const pachinko = await screen.findByRole('button', {
-    name: /current destination: rag/i
-  });
-  fireEvent.click(pachinko);
-
   expect(
-    screen.getByRole('button', { name: /current destination: llm/i })
+    await screen.findByRole('button', { name: /pachinko routing simulation/i })
   ).toBeInTheDocument();
+  expect(
+    screen.getByRole('button', { name: /playable product pinball/i })
+  ).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /add ball/i })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /fire flippers/i })).toBeInTheDocument();
+  expect(screen.getByRole('slider', { name: /model temperature/i })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /send random burst/i })).toBeInTheDocument();
+
+  const randomSpy = jest.spyOn(Math, 'random').mockReturnValue(0.9);
+  fireEvent.click(screen.getByRole('button', { name: /run inference/i }));
+
+  expect(screen.getByText('Adaptive')).toBeInTheDocument();
+  randomSpy.mockRestore();
 });

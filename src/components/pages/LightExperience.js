@@ -34,7 +34,7 @@ const capabilities = [
     description:
       'From the first architecture decision to a polished interface, we build the dependable software around the intelligence.',
     tags: ['Web', 'Mobile', 'APIs'],
-    visual: 'builder'
+    visual: 'pinball'
   },
   {
     number: '03',
@@ -43,7 +43,7 @@ const capabilities = [
     description:
       'Clean pipelines, purposeful models, and observability that make AI useful beyond the prototype and trustworthy in production.',
     tags: ['Pipelines', 'Models', 'Analytics'],
-    visual: 'pipeline'
+    visual: 'knob'
   },
   {
     number: '04',
@@ -52,7 +52,7 @@ const capabilities = [
     description:
       'Production deployment, security, monitoring, and iteration—all handled as one continuous product practice.',
     tags: ['Cloud', 'MLOps', 'Security'],
-    visual: 'deploy'
+    visual: 'traffic'
   }
 ];
 
@@ -547,155 +547,484 @@ const Reveal = ({ children, className = '', delay = 0 }) => (
   </motion.div>
 );
 
+const prepareCanvas = (canvas) => {
+  const context = canvas?.getContext('2d');
+  if (!context || typeof context.clearRect !== 'function') return null;
+  const bounds = canvas.getBoundingClientRect();
+  const width = Math.max(280, Math.round(bounds.width || 460));
+  const height = Math.max(210, Math.round(bounds.height || 300));
+  const ratio = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = width * ratio;
+  canvas.height = height * ratio;
+  context.setTransform(ratio, 0, 0, ratio, 0, 0);
+  return { context, width, height };
+};
+
 const PachinkoCapability = () => {
-  const routes = [
-    { label: 'RAG', x: '-34%' },
-    { label: 'LLM', x: '0%' },
-    { label: 'Agent', x: '34%' }
-  ];
-  const [run, setRun] = useState(0);
-  const route = routes[run % routes.length];
+  const canvasRef = useRef(null);
+  const dropRef = useRef(() => {});
+  const [result, setResult] = useState('Ready for a live request');
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const board = prepareCanvas(canvas);
+    if (!board) return undefined;
+    const { context, width, height } = board;
+    const bins = ['RAG', 'LLM', 'Agent'];
+    const pins = [];
+    const rows = 6;
+    const columns = 7;
+    for (let row = 0; row < rows; row += 1) {
+      for (let column = 0; column < columns; column += 1) {
+        pins.push({
+          x: ((column + 1) * width) / (columns + 1) + (row % 2 ? width / 18 : 0),
+          y: 48 + row * ((height - 116) / rows)
+        });
+      }
+    }
+
+    let balls = [];
+    const basketColors = ['#70e6ff', '#ffc400', '#ff5b22'];
+    const basketHits = [0, 0, 0];
+    const basketLights = [0, 0, 0];
+    let frame = 0;
+    let previousTime = window.performance.now();
+    let active = true;
+
+    const drop = () => {
+      if (balls.length >= 24) balls.shift();
+      balls.push({
+        x: width * (0.38 + Math.random() * 0.24),
+        y: 22,
+        vx: (Math.random() - 0.5) * 58,
+        vy: 24,
+        radius: 7,
+        color: basketColors[Math.floor(Math.random() * basketColors.length)]
+      });
+      setResult(`${balls.length} request${balls.length === 1 ? '' : 's'} in flight`);
+    };
+    dropRef.current = drop;
+
+    const draw = () => {
+      context.clearRect(0, 0, width, height);
+      context.fillStyle = '#101728';
+      context.fillRect(0, 0, width, height);
+      context.strokeStyle = 'rgba(112, 230, 255, 0.18)';
+      context.lineWidth = 1;
+      for (let x = 0; x < width; x += 28) {
+        context.beginPath();
+        context.moveTo(x, 0);
+        context.lineTo(x, height);
+        context.stroke();
+      }
+      pins.forEach((pin) => {
+        context.beginPath();
+        context.arc(pin.x, pin.y, 4, 0, Math.PI * 2);
+        context.fillStyle = '#fffdf7';
+        context.shadowColor = '#70e6ff';
+        context.shadowBlur = 8;
+        context.fill();
+      });
+      context.shadowBlur = 0;
+      bins.forEach((bin, index) => {
+        const binWidth = width / 3;
+        const isLit = window.performance.now() < basketLights[index];
+        context.fillStyle = isLit ? basketColors[index] : 'rgba(255,255,255,0.08)';
+        context.fillRect(index * binWidth + 3, height - 38, binWidth - 6, 35);
+        context.fillStyle = isLit ? '#101728' : basketColors[index];
+        context.font = '700 10px Space Grotesk, sans-serif';
+        context.textAlign = 'center';
+        context.fillText(
+          `${bin.toUpperCase()} · ${basketHits[index]}`,
+          index * binWidth + binWidth / 2,
+          height - 16
+        );
+      });
+      balls.forEach((ball) => {
+        context.beginPath();
+        context.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+        context.fillStyle = ball.color;
+        context.shadowColor = ball.color;
+        context.shadowBlur = 12;
+        context.fill();
+        context.shadowBlur = 0;
+      });
+    };
+
+    const tick = (time) => {
+      const delta = Math.min((time - previousTime) / 1000, 0.032);
+      previousTime = time;
+      const landed = [];
+      balls.forEach((ball) => {
+        ball.vy += 330 * delta;
+        ball.x += ball.vx * delta;
+        ball.y += ball.vy * delta;
+        if (ball.x < ball.radius || ball.x > width - ball.radius) {
+          ball.x = clamp(ball.x, ball.radius, width - ball.radius);
+          ball.vx *= -0.82;
+        }
+        pins.forEach((pin) => {
+          const dx = ball.x - pin.x;
+          const dy = ball.y - pin.y;
+          const distance = Math.hypot(dx, dy) || 1;
+          const minimum = ball.radius + 4;
+          if (distance >= minimum) return;
+          const nx = dx / distance;
+          const ny = dy / distance;
+          ball.x += nx * (minimum - distance);
+          ball.y += ny * (minimum - distance);
+          const impact = ball.vx * nx + ball.vy * ny;
+          if (impact < 0) {
+            ball.vx -= 1.72 * impact * nx;
+            ball.vy -= 1.72 * impact * ny;
+            ball.vx += (Math.random() - 0.5) * 54;
+          }
+        });
+        if (ball.y >= height - 38) {
+          const binIndex = clamp(Math.floor(ball.x / (width / 3)), 0, 2);
+          basketHits[binIndex] += 1;
+          basketLights[binIndex] = time + 650;
+          landed.push(ball);
+          setResult(
+            `Routed to ${bins[binIndex]} · ${Math.round(38 + Math.random() * 72)}ms`
+          );
+        }
+      });
+      if (landed.length) balls = balls.filter((ball) => !landed.includes(ball));
+      draw();
+      if (active) frame = window.requestAnimationFrame(tick);
+    };
+
+    drop();
+    frame = window.requestAnimationFrame(tick);
+    return () => {
+      active = false;
+      window.cancelAnimationFrame(frame);
+    };
+  }, []);
 
   return (
-    <button
-      type="button"
-      className="light-capability-play light-capability-play--pachinko"
-      onClick={() => setRun((current) => current + 1)}
-      aria-label={`Route another AI request. Current destination: ${route.label}.`}
-    >
-      <span className="light-capability-play__head">
-        <b>Live request</b>
-        <span>Tap to route</span>
-      </span>
-      <span className="light-pachinko" aria-hidden="true">
-        <i
-          key={run}
-          className="light-pachinko__ball"
-          style={{ '--pachinko-x': route.x }}
-        />
-        <span className="light-pachinko__pins">
-          {Array.from({ length: 18 }, (_, index) => (
-            <i key={index} />
-          ))}
-        </span>
-        <span className="light-pachinko__routes">
-          {routes.map((item) => (
-            <b className={item.label === route.label ? 'is-active' : ''} key={item.label}>
-              {item.label}
-            </b>
-          ))}
-        </span>
-      </span>
-    </button>
+    <div className="light-capability-sim light-capability-sim--pachinko">
+      <div className="light-capability-sim__head">
+        <b>Inference pachinko</b><span>Multi-ball physics</span>
+      </div>
+      <canvas
+        ref={canvasRef}
+        onClick={() => dropRef.current()}
+        aria-label="Pachinko routing simulation. Activate to drop a randomized request."
+        role="button"
+        tabIndex="0"
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            dropRef.current();
+          }
+        }}
+      />
+      <div className="light-capability-sim__result" aria-live="polite">
+        <span>{result}</span>
+        <button type="button" onClick={() => dropRef.current()}>Add ball</button>
+      </div>
+    </div>
   );
 };
 
-const BuilderCapability = () => {
-  const modules = ['Interface', 'API', 'Logic', 'Mobile'];
-  const [activeModules, setActiveModules] = useState([0, 2]);
-  const toggleModule = (index) => {
-    setActiveModules((current) =>
-      current.includes(index)
-        ? current.filter((item) => item !== index)
-        : [...current, index]
-    );
+const PinballCapability = () => {
+  const canvasRef = useRef(null);
+  const launchRef = useRef(() => {});
+  const flipRef = useRef(() => {});
+  const [score, setScore] = useState(0);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const board = prepareCanvas(canvas);
+    if (!board) return undefined;
+    const { context, width, height } = board;
+    const bumpers = [
+      { x: width * 0.3, y: height * 0.34, r: 25, lastHit: 0 },
+      { x: width * 0.68, y: height * 0.3, r: 27, lastHit: 0 },
+      { x: width * 0.51, y: height * 0.56, r: 30, lastHit: 0 }
+    ];
+    let frame = 0;
+    let active = true;
+    let kickUntil = 0;
+    let previousTime = window.performance.now();
+    let points = 0;
+    let ball;
+
+    const launch = (resetScore = true) => {
+      if (resetScore) {
+        points = 0;
+        setScore(0);
+      }
+      ball = {
+        x: width * (0.67 + Math.random() * 0.02),
+        y: height - 58,
+        vx: -20 + Math.random() * 40,
+        vy: -300 - Math.random() * 90,
+        r: 7,
+        lastFlipper: 0
+      };
+    };
+    const flip = () => {
+      kickUntil = window.performance.now() + 170;
+    };
+    launchRef.current = () => launch(true);
+    flipRef.current = flip;
+
+    const drawLine = (x1, y1, x2, y2, color, lineWidth = 5) => {
+      context.beginPath();
+      context.moveTo(x1, y1);
+      context.lineTo(x2, y2);
+      context.strokeStyle = color;
+      context.lineWidth = lineWidth;
+      context.lineCap = 'round';
+      context.stroke();
+    };
+    const collideWithFlipper = (flipper, time, kicked) => {
+      const segmentX = flipper.x2 - flipper.x1;
+      const segmentY = flipper.y2 - flipper.y1;
+      const segmentLengthSquared = segmentX * segmentX + segmentY * segmentY;
+      const position = clamp(
+        ((ball.x - flipper.x1) * segmentX + (ball.y - flipper.y1) * segmentY) /
+          segmentLengthSquared,
+        0,
+        1
+      );
+      const nearestX = flipper.x1 + segmentX * position;
+      const nearestY = flipper.y1 + segmentY * position;
+      const dx = ball.x - nearestX;
+      const dy = ball.y - nearestY;
+      const distance = Math.hypot(dx, dy) || 1;
+      const minimum = ball.r + 6;
+      if (distance >= minimum || time - ball.lastFlipper < 65) return;
+      const nx = dx / distance;
+      const ny = dy / distance;
+      ball.x += nx * (minimum - distance);
+      ball.y += ny * (minimum - distance);
+      const impact = ball.vx * nx + ball.vy * ny;
+      if (impact < 0) {
+        ball.vx -= 1.65 * impact * nx;
+        ball.vy -= 1.65 * impact * ny;
+      }
+      if (kicked) {
+        ball.vy -= 240 + Math.random() * 85;
+        ball.vx += flipper.direction * (55 + Math.random() * 70);
+        points += 25;
+        setScore(points);
+      }
+      ball.lastFlipper = time;
+    };
+    const tick = (time) => {
+      const delta = Math.min((time - previousTime) / 1000, 0.032);
+      previousTime = time;
+      const kicked = time < kickUntil;
+      const leftFlipper = {
+        x1: width * 0.18,
+        y1: height - 38,
+        x2: width * 0.43,
+        y2: height - (kicked ? 68 : 46),
+        direction: 1
+      };
+      const rightFlipper = {
+        x1: width * 0.82,
+        y1: height - 38,
+        x2: width * 0.57,
+        y2: height - (kicked ? 68 : 46),
+        direction: -1
+      };
+      ball.vy += 185 * delta;
+      ball.x += ball.vx * delta;
+      ball.y += ball.vy * delta;
+      if (ball.x < ball.r || ball.x > width - ball.r) {
+        ball.x = clamp(ball.x, ball.r, width - ball.r);
+        ball.vx *= -0.92;
+      }
+      if (ball.y < ball.r) {
+        ball.y = ball.r;
+        ball.vy *= -0.9;
+      }
+      collideWithFlipper(leftFlipper, time, kicked);
+      collideWithFlipper(rightFlipper, time, kicked);
+      bumpers.forEach((bumper) => {
+        const dx = ball.x - bumper.x;
+        const dy = ball.y - bumper.y;
+        const distance = Math.hypot(dx, dy) || 1;
+        if (distance >= ball.r + bumper.r) return;
+        const nx = dx / distance;
+        const ny = dy / distance;
+        ball.x = bumper.x + nx * (ball.r + bumper.r);
+        ball.y = bumper.y + ny * (ball.r + bumper.r);
+        const speed = 240 + Math.random() * 95;
+        ball.vx = nx * speed + (Math.random() - 0.5) * 45;
+        ball.vy = ny * speed;
+        if (time - bumper.lastHit > 180) {
+          bumper.lastHit = time;
+          points += 50 + Math.floor(Math.random() * 3) * 25;
+          setScore(points);
+        }
+      });
+      if (ball.y > height + 18) launch(false);
+
+      context.clearRect(0, 0, width, height);
+      context.fillStyle = '#edf1ff';
+      context.fillRect(0, 0, width, height);
+      drawLine(10, 12, 10, height - 30, '#101728', 3);
+      drawLine(width - 10, 12, width - 10, height - 30, '#101728', 3);
+      drawLine(width * 0.08, height * 0.63, width * 0.24, height * 0.75, '#ffc400', 6);
+      drawLine(width * 0.92, height * 0.63, width * 0.76, height * 0.75, '#ffc400', 6);
+      bumpers.forEach((bumper, index) => {
+        context.beginPath();
+        context.arc(bumper.x, bumper.y, bumper.r, 0, Math.PI * 2);
+        context.fillStyle = index === 2 ? '#ffc400' : '#1347e8';
+        context.fill();
+        context.strokeStyle = '#101728';
+        context.lineWidth = 3;
+        context.stroke();
+      });
+      drawLine(leftFlipper.x1, leftFlipper.y1, leftFlipper.x2, leftFlipper.y2, '#ff5b22', 10);
+      drawLine(rightFlipper.x1, rightFlipper.y1, rightFlipper.x2, rightFlipper.y2, '#ff5b22', 10);
+      context.beginPath();
+      context.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+      context.fillStyle = '#101728';
+      context.fill();
+      if (active) frame = window.requestAnimationFrame(tick);
+    };
+    launch();
+    frame = window.requestAnimationFrame(tick);
+    return () => {
+      active = false;
+      window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  return (
+    <div className="light-capability-sim light-capability-sim--pinball">
+      <div className="light-capability-sim__head"><b>Product pinball</b><span>{score} pts</span></div>
+      <canvas
+        ref={canvasRef}
+        onPointerDown={() => flipRef.current()}
+        aria-label="Playable product pinball. Activate to fire the flippers."
+        role="button"
+        tabIndex="0"
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            flipRef.current();
+          }
+        }}
+      />
+      <div className="light-capability-sim__result light-pinball-controls" aria-live="polite">
+        <span>Keep the ball above the drain</span>
+        <div>
+          <button type="button" onClick={() => flipRef.current()}>Fire flippers</button>
+          <button type="button" onClick={() => launchRef.current()}>New ball</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const KnobCapability = () => {
+  const [temperature, setTemperature] = useState(46);
+  const [result, setResult] = useState({ label: 'Balanced', confidence: 91, latency: 164 });
+  const runInference = () => {
+    const randomness = () => Math.random() - 0.5;
+    const confidence = clamp(Math.round(97 - Math.abs(temperature - 42) * 0.22 + randomness() * 8), 68, 99);
+    const latency = clamp(Math.round(224 - temperature * 0.86 + randomness() * 38), 92, 260);
+    const labels = temperature < 34 ? ['Precise', 'Grounded'] : temperature > 68 ? ['Exploratory', 'Creative'] : ['Balanced', 'Adaptive'];
+    setResult({
+      label: labels[Math.floor(Math.random() * labels.length)],
+      confidence,
+      latency
+    });
+  };
+  const angle = -135 + temperature * 2.7;
+
+  return (
+    <div className="light-capability-sim light-capability-sim--knob">
+      <div className="light-capability-sim__head"><b>Model tuner</b><span>Temperature {temperature}</span></div>
+      <div className="light-knob-control">
+        <label htmlFor="model-temperature">Turn to tune</label>
+        <div className="light-knob" style={{ '--knob-angle': `${angle}deg` }}>
+          <i aria-hidden="true" />
+          <input
+            id="model-temperature"
+            type="range"
+            min="0"
+            max="100"
+            value={temperature}
+            onChange={(event) => setTemperature(Number(event.target.value))}
+            aria-label="Model temperature"
+          />
+        </div>
+        <div className="light-knob-scale"><span>Precise</span><span>Creative</span></div>
+      </div>
+      <div className="light-knob-result" aria-live="polite">
+        <div><span>Profile</span><strong>{result.label}</strong></div>
+        <div><span>Confidence</span><strong>{result.confidence}%</strong></div>
+        <div><span>Latency</span><strong>{result.latency}ms</strong></div>
+      </div>
+      <button className="light-sim-action" type="button" onClick={runInference}>Run inference</button>
+    </div>
+  );
+};
+
+const TrafficCapability = () => {
+  const [packets, setPackets] = useState([]);
+  const [result, setResult] = useState({ passed: 0, total: 0, latency: 0 });
+  const runBurst = () => {
+    const burst = Array.from({ length: 12 }, (_, index) => ({
+      id: `${Date.now()}-${index}`,
+      node: Math.floor(Math.random() * 3),
+      delay: Math.random() * 0.55,
+      duration: 0.75 + Math.random() * 0.45,
+      ok: Math.random() > 0.08
+    }));
+    const latencies = burst.map(() => 76 + Math.round(Math.random() * 124)).sort((a, b) => a - b);
+    setPackets(burst);
+    setResult({
+      passed: burst.filter((packet) => packet.ok).length,
+      total: burst.length,
+      latency: latencies[Math.floor(latencies.length * 0.9)]
+    });
   };
 
   return (
-    <div className="light-capability-play light-capability-play--builder">
-      <span className="light-capability-play__head">
-        <b>Product composer</b>
-        <span>{activeModules.length} connected</span>
-      </span>
-      <div className="light-builder" role="group" aria-label="Choose product modules">
-        {modules.map((module, index) => (
-          <button
-            type="button"
-            className={activeModules.includes(index) ? 'is-active' : ''}
-            aria-pressed={activeModules.includes(index)}
-            onClick={() => toggleModule(index)}
-            key={module}
-          >
-            <i aria-hidden="true" />
-            <span>0{index + 1}</span>
-            <b>{module}</b>
-          </button>
+    <div className="light-capability-sim light-capability-sim--traffic">
+      <div className="light-capability-sim__head"><b>Live workload</b><span>Random routing</span></div>
+      <div className="light-traffic-map" aria-hidden="true">
+        <span className="light-traffic-map__source">IN</span>
+        <div className="light-traffic-map__nodes"><i /><i /><i /></div>
+        <span className="light-traffic-map__target">OUT</span>
+        {packets.map((packet) => (
+          <motion.i
+            className={packet.ok ? 'is-ok' : 'is-retry'}
+            key={packet.id}
+            initial={{ left: '8%', top: '50%', opacity: 0 }}
+            animate={{
+              left: ['8%', '50%', '92%'],
+              top: ['50%', `${24 + packet.node * 26}%`, '50%'],
+              opacity: [0, 1, 1, 0]
+            }}
+            transition={{ duration: packet.duration, delay: packet.delay, ease: 'easeInOut' }}
+          />
         ))}
       </div>
-      <div className="light-builder__status" aria-live="polite">
-        <span>{activeModules.length === 4 ? 'Ready to ship' : 'Select modules'}</span>
-        <i style={{ '--builder-progress': `${activeModules.length * 25}%` }} />
+      <div className="light-traffic-result" aria-live="polite">
+        <div><strong>{result.total ? `${result.passed}/${result.total}` : '—'}</strong><span>completed</span></div>
+        <div><strong>{result.latency || '—'}</strong><span>p90 ms</span></div>
       </div>
-    </div>
-  );
-};
-
-const PipelineCapability = () => {
-  const stages = ['Collect', 'Clean', 'Model', 'Observe'];
-  const [activeStage, setActiveStage] = useState(1);
-
-  return (
-    <div className="light-capability-play light-capability-play--pipeline">
-      <span className="light-capability-play__head">
-        <b>Signal pipeline</b>
-        <span>Stage 0{activeStage + 1}</span>
-      </span>
-      <div className="light-data-pipeline" role="group" aria-label="Inspect data pipeline stages">
-        {stages.map((stage, index) => (
-          <button
-            type="button"
-            className={index <= activeStage ? 'is-active' : ''}
-            aria-pressed={index === activeStage}
-            onClick={() => setActiveStage(index)}
-            key={stage}
-          >
-            <i aria-hidden="true" />
-            <span>0{index + 1}</span>
-            <b>{stage}</b>
-          </button>
-        ))}
-      </div>
-      <div className="light-data-pipeline__readout" aria-live="polite">
-        <span>Quality</span>
-        <strong>{[72, 88, 94, 99][activeStage]}%</strong>
-        <i style={{ '--pipeline-progress': `${(activeStage + 1) * 25}%` }} />
-      </div>
-    </div>
-  );
-};
-
-const DeployCapability = () => {
-  const [liveNodes, setLiveNodes] = useState(3);
-  const scaleDeployment = () =>
-    setLiveNodes((current) => (current === 9 ? 3 : current + 3));
-
-  return (
-    <div className="light-capability-play light-capability-play--deploy">
-      <span className="light-capability-play__head">
-        <b>Release control</b>
-        <span className="light-deploy__live"><i /> Live</span>
-      </span>
-      <div className="light-deploy__nodes" aria-hidden="true">
-        {Array.from({ length: 9 }, (_, index) => (
-          <i className={index < liveNodes ? 'is-active' : ''} key={index} />
-        ))}
-      </div>
-      <div className="light-deploy__footer" aria-live="polite">
-        <span><strong>{liveNodes}</strong> healthy nodes</span>
-        <button type="button" onClick={scaleDeployment}>
-          {liveNodes === 9 ? 'Reset' : 'Scale +3'}
-          <ArrowRightIcon aria-hidden="true" />
-        </button>
-      </div>
+      <button className="light-sim-action" type="button" onClick={runBurst}>Send random burst</button>
     </div>
   );
 };
 
 const CapabilityInteractive = ({ type }) => {
   if (type === 'pachinko') return <PachinkoCapability />;
-  if (type === 'builder') return <BuilderCapability />;
-  if (type === 'pipeline') return <PipelineCapability />;
-  return <DeployCapability />;
+  if (type === 'pinball') return <PinballCapability />;
+  if (type === 'knob') return <KnobCapability />;
+  return <TrafficCapability />;
 };
 
 const PartnerCarousel = () => {
