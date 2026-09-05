@@ -936,24 +936,30 @@ const ClawCapability = () => {
       if (caught) {
         setCaughtPrize(caught);
         setPrizes((current) => current.filter((prize) => prize.id !== caught.id));
-        setResult(`Caught ${caught.label}`);
+        setResult(`Closing on ${caught.label}…`);
       } else {
-        setResult('Missed—reposition and try again');
+        setResult('Claw closing…');
       }
-      setPhase('rising');
+      setPhase('grabbing');
 
       schedule(() => {
-        setPhase('idle');
-        if (caught) {
-          setWins((current) => current + 1);
-          setPrizes((current) => {
-            const typeIndex = Math.floor(Math.random() * CLAW_PRIZE_TYPES.length);
-            const replacement = createClawPrize(typeIndex, 14 + Math.random() * 72);
-            return [...current, replacement];
-          });
-        }
-        setCaughtPrize(null);
-      }, 680);
+        setPhase('rising');
+        setResult(caught ? `Lifting ${caught.label}…` : 'Missed—reposition and try again');
+
+        schedule(() => {
+          setPhase('idle');
+          if (caught) {
+            setWins((current) => current + 1);
+            setResult(`Caught ${caught.label}`);
+            setPrizes((current) => {
+              const typeIndex = Math.floor(Math.random() * CLAW_PRIZE_TYPES.length);
+              const replacement = createClawPrize(typeIndex, 14 + Math.random() * 72);
+              return [...current, replacement];
+            });
+          }
+          setCaughtPrize(null);
+        }, 680);
+      }, 190);
     }, 540);
   };
 
