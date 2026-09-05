@@ -286,21 +286,21 @@
   --speech-bg: rgba(235, 247, 255, 0.78);
   position: absolute;
   z-index: 6;
-  top: 5%;
-  right: 3%;
+  top: -1%;
+  right: 1%;
   display: flex;
-  width: min(52%, 290px);
-  min-height: 58px;
+  width: min(42%, 220px);
+  min-height: 46px;
   align-items: center;
   justify-content: center;
-  padding: 13px 18px;
+  padding: 9px 12px;
   border: 2px solid rgba(19, 71, 232, 0.8);
   background: var(--speech-bg);
-  box-shadow: 6px 6px 0 rgba(19, 71, 232, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  box-shadow: 4px 4px 0 rgba(19, 71, 232, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.82);
   color: var(--light-blue);
   font-family: 'DSEG14', 'Courier New', monospace;
-  font-size: clamp(0.76rem, 1.55vw, 1.08rem);
-  letter-spacing: 0.08em;
+  font-size: clamp(0.62rem, 1.2vw, 0.85rem);
+  letter-spacing: 0.06em;
   line-height: 1.15;
   text-align: center;
   text-transform: uppercase;
@@ -312,12 +312,24 @@
   transition: opacity 180ms ease, transform 220ms ease, color 180ms ease, box-shadow 180ms ease;
 }
 
+.light-mascot__speech > span {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: light-mascot-speech-in 520ms steps(14, end) both;
+}
+
+.light-mascot__speech--warning > span {
+  animation-delay: 650ms;
+}
+
 .light-mascot__speech::after {
   position: absolute;
   right: 22%;
-  bottom: -10px;
-  width: 17px;
-  height: 17px;
+  bottom: -8px;
+  width: 14px;
+  height: 14px;
   border-right: 2px solid rgba(19, 71, 232, 0.8);
   border-bottom: 2px solid rgba(19, 71, 232, 0.8);
   background: var(--speech-bg);
@@ -332,12 +344,33 @@
 
 .light-mascot__speech--dead {
   color: var(--light-blue);
-  box-shadow: 6px 6px 0 rgba(112, 230, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  box-shadow: 4px 4px 0 rgba(112, 230, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.82);
 }
 
 .light-mascot__speech--kidding {
   color: var(--light-blue);
-  box-shadow: 6px 6px 0 rgba(19, 71, 232, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  box-shadow: 4px 4px 0 rgba(19, 71, 232, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+@keyframes light-mascot-speech-in {
+  0% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0.15;
+    text-shadow: 0 0 12px rgba(19, 71, 232, 0.85);
+    transform: translateY(2px);
+  }
+
+  70% {
+    opacity: 1;
+    text-shadow: 0 0 7px rgba(19, 71, 232, 0.5);
+  }
+
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+    text-shadow: 0 0 0 transparent;
+    transform: translateY(0);
+  }
 }
 
 .light-mascot__art,
@@ -2732,13 +2765,13 @@ button.light-capability-play:focus-visible {
   }
 
   .light-mascot__speech {
-    top: 3%;
-    right: 1%;
-    width: min(62%, 250px);
-    min-height: 50px;
-    padding: 10px 12px;
+    top: -2%;
+    right: 0;
+    width: min(48%, 205px);
+    min-height: 42px;
+    padding: 8px 10px;
     box-shadow: 4px 4px 0 rgba(19, 71, 232, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.82);
-    font-size: clamp(0.68rem, 3.2vw, 0.88rem);
+    font-size: clamp(0.56rem, 2.3vw, 0.68rem);
   }
 
   .light-mascot__speech--dead {
@@ -2909,6 +2942,10 @@ button.light-capability-play:focus-visible {
 
   .light-mascot__loader-fill {
     width: 100%;
+    animation: none;
+  }
+
+  .light-mascot__speech > span {
     animation: none;
   }
 

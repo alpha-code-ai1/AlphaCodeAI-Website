@@ -405,7 +405,7 @@ const InteractiveRobot = () => {
       window.clearTimeout(motion.mouthTimer);
       motion.mouthTimer = window.setTimeout(() => {
         mascot.classList.remove('is-dead');
-        setSpeech('HEHE JUST KIDDING');
+        setSpeech('HEHE JUST KIDDING!');
         setMood('kidding');
       }, 3000);
     };
@@ -499,7 +499,7 @@ const InteractiveRobot = () => {
         role="status"
         aria-live="polite"
       >
-        {speech}
+        <span key={speech}>{speech}</span>
       </div>
       <div className="light-mascot__loader" aria-hidden="true">
         <span>Loading mascot</span>
