@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import App from './App';
 
 jest.mock('./components/ui/CosmicBackground', () => () => null);
@@ -72,6 +72,27 @@ test('moves the mascot gaze and keeps the last touch position', async () => {
     );
     expect(horizontalOffset).toBeGreaterThan(20);
   });
+});
+
+test('shows the mascot warning, dead face, and three-second recovery message', () => {
+  jest.useFakeTimers();
+  const { unmount } = render(<App />);
+  const mascot = screen.getByRole('img', {
+    name: /friendly alphacodeai robot/i
+  });
+
+  expect(screen.getByRole('status')).toHaveTextContent('DONT CLICK ME >.<');
+  fireEvent.click(mascot);
+
+  expect(mascot).toHaveClass('is-dead');
+  expect(screen.getByRole('status')).toHaveTextContent('I AM DEAD');
+
+  act(() => jest.advanceTimersByTime(3000));
+
+  expect(mascot).not.toHaveClass('is-dead');
+  expect(screen.getByRole('status')).toHaveTextContent('HEHE JUST KIDDING');
+  unmount();
+  jest.useRealTimers();
 });
 
 test('renders distinct capability simulations and produces a tuned model result', async () => {

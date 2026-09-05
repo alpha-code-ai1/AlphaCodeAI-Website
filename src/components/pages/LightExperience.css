@@ -282,6 +282,62 @@
   opacity: 0.92;
 }
 
+.light-mascot__speech {
+  --speech-bg: #101728;
+  position: absolute;
+  z-index: 6;
+  top: 5%;
+  right: 3%;
+  display: flex;
+  width: min(52%, 290px);
+  min-height: 58px;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 18px;
+  border: 2px solid var(--light-ink);
+  background: var(--speech-bg);
+  box-shadow: 6px 6px 0 var(--light-orange);
+  color: var(--light-yellow);
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+  font-size: clamp(0.76rem, 1.55vw, 1.08rem);
+  letter-spacing: 0.08em;
+  line-height: 1.15;
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(9px);
+  transition: opacity 180ms ease, transform 220ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+.light-mascot__speech::after {
+  position: absolute;
+  right: 22%;
+  bottom: -10px;
+  width: 17px;
+  height: 17px;
+  border-right: 2px solid var(--light-ink);
+  border-bottom: 2px solid var(--light-ink);
+  background: var(--speech-bg);
+  content: '';
+  transform: rotate(45deg);
+}
+
+.light-mascot.is-ready .light-mascot__speech {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.light-mascot__speech--dead {
+  color: var(--light-orange);
+  box-shadow: 6px 6px 0 var(--light-yellow);
+}
+
+.light-mascot__speech--kidding {
+  color: #70e6ff;
+  box-shadow: 6px 6px 0 var(--light-blue);
+}
+
 .light-mascot__art,
 .light-mascot__face {
   position: absolute;
@@ -373,18 +429,26 @@
 }
 
 .light-mascot__x-eyes,
-.light-mascot__ooh {
+.light-mascot__ooh,
+.light-mascot__dead-mouth {
   opacity: 0;
 }
 
-.light-mascot.is-clicked .light-mascot__round-eyes,
-.light-mascot.is-clicked .light-mascot__smile {
+.light-mascot.is-dead .light-mascot__round-eyes,
+.light-mascot.is-dead .light-mascot__smile,
+.light-mascot.is-dead .light-mascot__ooh {
   opacity: 0;
 }
 
-.light-mascot.is-clicked .light-mascot__x-eyes,
-.light-mascot.is-clicked .light-mascot__ooh {
+.light-mascot.is-dead .light-mascot__x-eyes,
+.light-mascot.is-dead .light-mascot__dead-mouth {
   opacity: 1;
+}
+
+.light-mascot__mouth .light-mascot__tongue {
+  fill: var(--light-orange);
+  stroke: #70e6ff;
+  stroke-linejoin: round;
 }
 
 @keyframes light-mascot-load {
@@ -2663,6 +2727,24 @@ button.light-capability-play:focus-visible {
   .light-text-link {
     width: 100%;
     justify-content: center;
+  }
+
+  .light-mascot__speech {
+    top: 3%;
+    right: 1%;
+    width: min(62%, 250px);
+    min-height: 50px;
+    padding: 10px 12px;
+    box-shadow: 4px 4px 0 var(--light-orange);
+    font-size: clamp(0.68rem, 3.2vw, 0.88rem);
+  }
+
+  .light-mascot__speech--dead {
+    box-shadow: 4px 4px 0 var(--light-yellow);
+  }
+
+  .light-mascot__speech--kidding {
+    box-shadow: 4px 4px 0 var(--light-blue);
   }
 
   .light-hero__proof div {

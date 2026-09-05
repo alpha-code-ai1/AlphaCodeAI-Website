@@ -307,6 +307,8 @@ const InteractiveRobot = () => {
   const canvasRef = useRef(null);
   const eyesRef = useRef(null);
   const mouthRef = useRef(null);
+  const [speech, setSpeech] = useState('DONT CLICK ME >.<');
+  const [mood, setMood] = useState('warning');
 
   useEffect(() => {
     const mascot = mascotRef.current;
@@ -397,12 +399,15 @@ const InteractiveRobot = () => {
     };
 
     const reactToClick = () => {
-      mascot.classList.add('is-clicked');
+      mascot.classList.add('is-dead');
+      setSpeech('I AM DEAD');
+      setMood('dead');
       window.clearTimeout(motion.mouthTimer);
-      motion.mouthTimer = window.setTimeout(
-        () => mascot.classList.remove('is-clicked'),
-        motion.reduceMotion ? 300 : 900
-      );
+      motion.mouthTimer = window.setTimeout(() => {
+        mascot.classList.remove('is-dead');
+        setSpeech('HEHE JUST KIDDING');
+        setMood('kidding');
+      }, 3000);
     };
 
     const handlePointerMove = (event) => {
@@ -487,8 +492,15 @@ const InteractiveRobot = () => {
       role="img"
       tabIndex="0"
       aria-busy="true"
-      aria-label="Friendly AlphaCodeAI robot whose eyes and smile follow your pointer or touch. Activate the robot to see its surprised expression."
+      aria-label="Friendly AlphaCodeAI robot whose eyes and smile follow your pointer or touch. Activate the robot to play dead."
     >
+      <div
+        className={`light-mascot__speech light-mascot__speech--${mood}`}
+        role="status"
+        aria-live="polite"
+      >
+        {speech}
+      </div>
       <div className="light-mascot__loader" aria-hidden="true">
         <span>Loading mascot</span>
         <div className="light-mascot__loader-track">
@@ -523,6 +535,10 @@ const InteractiveRobot = () => {
         <g ref={mouthRef} className="light-mascot__mouth" filter="url(#light-eye-glow)">
           <path className="light-mascot__smile" d="M 623 494 Q 673 535 723 494" />
           <circle className="light-mascot__ooh" cx="673" cy="507" r="23" />
+          <g className="light-mascot__dead-mouth">
+            <path d="M 621 503 Q 673 522 725 503" />
+            <path className="light-mascot__tongue" d="M 650 513 L 696 513 L 696 544 Q 673 565 650 544 Z" />
+          </g>
         </g>
       </svg>
     </div>
