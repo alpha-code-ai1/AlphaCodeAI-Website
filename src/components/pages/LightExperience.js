@@ -25,8 +25,7 @@ const capabilities = [
     description:
       'Private copilots, retrieval systems, autonomous workflows, and decision engines shaped around the way your team actually works.',
     tags: ['LLMs', 'RAG', 'Agents'],
-    image: '/visuals/capability-ai.jpg',
-    imageAlt: 'A glowing AI reasoning core connected to knowledge and agent nodes.'
+    visual: 'pachinko'
   },
   {
     number: '02',
@@ -35,8 +34,7 @@ const capabilities = [
     description:
       'From the first architecture decision to a polished interface, we build the dependable software around the intelligence.',
     tags: ['Web', 'Mobile', 'APIs'],
-    image: '/visuals/capability-product-engineering.jpg',
-    imageAlt: 'A software product assembled from precise modular interface components.'
+    visual: 'builder'
   },
   {
     number: '03',
@@ -45,8 +43,7 @@ const capabilities = [
     description:
       'Clean pipelines, purposeful models, and observability that make AI useful beyond the prototype and trustworthy in production.',
     tags: ['Pipelines', 'Models', 'Analytics'],
-    image: '/visuals/capability-data-foundations.jpg',
-    imageAlt: 'A structured data pipeline with storage, validation, and observability stages.'
+    visual: 'pipeline'
   },
   {
     number: '04',
@@ -55,8 +52,7 @@ const capabilities = [
     description:
       'Production deployment, security, monitoring, and iteration—all handled as one continuous product practice.',
     tags: ['Cloud', 'MLOps', 'Security'],
-    image: '/visuals/capability-launch-scale.jpg',
-    imageAlt: 'A production AI module launching across reliable cloud nodes.'
+    visual: 'deploy'
   }
 ];
 
@@ -327,7 +323,7 @@ const InteractiveRobot = () => {
       frame: 0,
       mouthTimer: 0,
       readyTimer: 0,
-      touchTimer: 0,
+      lastInput: 'pointer',
       reduceMotion: reduceMotionQuery.matches
     };
     const loadingStartedAt = window.performance.now();
@@ -373,7 +369,7 @@ const InteractiveRobot = () => {
       if (!motion.frame) motion.frame = window.requestAnimationFrame(renderGaze);
     };
 
-    const pointAt = (clientX, clientY) => {
+    const pointAt = (clientX, clientY, inputType = 'pointer') => {
       const bounds = mascot.getBoundingClientRect();
       const centerX = bounds.left + bounds.width * 0.5;
       const centerY = bounds.top + bounds.height * 0.35;
@@ -387,7 +383,8 @@ const InteractiveRobot = () => {
         -1,
         1
       );
-      const motionScale = motion.reduceMotion ? 0.45 : 1;
+      const inputScale = inputType === 'touch' ? 1.5 : 1;
+      const motionScale = (motion.reduceMotion ? 0.45 : 1) * inputScale;
       motion.targetX = normalizedX * MAX_EYE_X * motionScale;
       motion.targetY = normalizedY * MAX_EYE_Y * motionScale;
       queueGaze();
@@ -408,16 +405,20 @@ const InteractiveRobot = () => {
       );
     };
 
-    const handlePointerMove = (event) => pointAt(event.clientX, event.clientY);
+    const handlePointerMove = (event) => {
+      if (event.pointerType === 'touch') return;
+      motion.lastInput = 'pointer';
+      pointAt(event.clientX, event.clientY);
+    };
     const handleTouchPoint = (event) => {
       const touch = event.touches?.[0] || event.changedTouches?.[0];
       if (!touch) return;
-      window.clearTimeout(motion.touchTimer);
-      pointAt(touch.clientX, touch.clientY);
+      motion.lastInput = 'touch';
+      pointAt(touch.clientX, touch.clientY, 'touch');
     };
-    const handleTouchEnd = (event) => {
-      handleTouchPoint(event);
-      motion.touchTimer = window.setTimeout(centerGaze, 700);
+    const handleTouchEnd = (event) => handleTouchPoint(event);
+    const handlePointerLeave = () => {
+      if (motion.lastInput !== 'touch') centerGaze();
     };
     const handleKeyDown = (event) => {
       const keyMovement = {
@@ -441,6 +442,7 @@ const InteractiveRobot = () => {
 
       if (!(event.key in keyMovement)) return;
       event.preventDefault();
+      motion.lastInput = 'keyboard';
       const [deltaX, deltaY] = keyMovement[event.key];
       motion.targetX = clamp(motion.targetX + deltaX, -MAX_EYE_X, MAX_EYE_X);
       motion.targetY = clamp(motion.targetY + deltaY, -MAX_EYE_Y, MAX_EYE_Y);
@@ -456,9 +458,8 @@ const InteractiveRobot = () => {
     window.addEventListener('touchstart', handleTouchPoint, { passive: true });
     window.addEventListener('touchmove', handleTouchPoint, { passive: true });
     window.addEventListener('touchend', handleTouchEnd, { passive: true });
-    window.addEventListener('touchcancel', centerGaze, { passive: true });
     mascot.addEventListener('click', reactToClick);
-    document.documentElement.addEventListener('pointerleave', centerGaze);
+    document.documentElement.addEventListener('pointerleave', handlePointerLeave);
     mascot.addEventListener('keydown', handleKeyDown);
     reduceMotionQuery.addEventListener('change', handleMotionPreference);
     queueGaze();
@@ -468,15 +469,13 @@ const InteractiveRobot = () => {
       window.removeEventListener('touchstart', handleTouchPoint);
       window.removeEventListener('touchmove', handleTouchPoint);
       window.removeEventListener('touchend', handleTouchEnd);
-      window.removeEventListener('touchcancel', centerGaze);
       mascot.removeEventListener('click', reactToClick);
-      document.documentElement.removeEventListener('pointerleave', centerGaze);
+      document.documentElement.removeEventListener('pointerleave', handlePointerLeave);
       mascot.removeEventListener('keydown', handleKeyDown);
       reduceMotionQuery.removeEventListener('change', handleMotionPreference);
       window.cancelAnimationFrame(motion.frame);
       window.clearTimeout(motion.mouthTimer);
       window.clearTimeout(motion.readyTimer);
-      window.clearTimeout(motion.touchTimer);
     };
   }, []);
 
@@ -547,6 +546,157 @@ const Reveal = ({ children, className = '', delay = 0 }) => (
     {children}
   </motion.div>
 );
+
+const PachinkoCapability = () => {
+  const routes = [
+    { label: 'RAG', x: '-34%' },
+    { label: 'LLM', x: '0%' },
+    { label: 'Agent', x: '34%' }
+  ];
+  const [run, setRun] = useState(0);
+  const route = routes[run % routes.length];
+
+  return (
+    <button
+      type="button"
+      className="light-capability-play light-capability-play--pachinko"
+      onClick={() => setRun((current) => current + 1)}
+      aria-label={`Route another AI request. Current destination: ${route.label}.`}
+    >
+      <span className="light-capability-play__head">
+        <b>Live request</b>
+        <span>Tap to route</span>
+      </span>
+      <span className="light-pachinko" aria-hidden="true">
+        <i
+          key={run}
+          className="light-pachinko__ball"
+          style={{ '--pachinko-x': route.x }}
+        />
+        <span className="light-pachinko__pins">
+          {Array.from({ length: 18 }, (_, index) => (
+            <i key={index} />
+          ))}
+        </span>
+        <span className="light-pachinko__routes">
+          {routes.map((item) => (
+            <b className={item.label === route.label ? 'is-active' : ''} key={item.label}>
+              {item.label}
+            </b>
+          ))}
+        </span>
+      </span>
+    </button>
+  );
+};
+
+const BuilderCapability = () => {
+  const modules = ['Interface', 'API', 'Logic', 'Mobile'];
+  const [activeModules, setActiveModules] = useState([0, 2]);
+  const toggleModule = (index) => {
+    setActiveModules((current) =>
+      current.includes(index)
+        ? current.filter((item) => item !== index)
+        : [...current, index]
+    );
+  };
+
+  return (
+    <div className="light-capability-play light-capability-play--builder">
+      <span className="light-capability-play__head">
+        <b>Product composer</b>
+        <span>{activeModules.length} connected</span>
+      </span>
+      <div className="light-builder" role="group" aria-label="Choose product modules">
+        {modules.map((module, index) => (
+          <button
+            type="button"
+            className={activeModules.includes(index) ? 'is-active' : ''}
+            aria-pressed={activeModules.includes(index)}
+            onClick={() => toggleModule(index)}
+            key={module}
+          >
+            <i aria-hidden="true" />
+            <span>0{index + 1}</span>
+            <b>{module}</b>
+          </button>
+        ))}
+      </div>
+      <div className="light-builder__status" aria-live="polite">
+        <span>{activeModules.length === 4 ? 'Ready to ship' : 'Select modules'}</span>
+        <i style={{ '--builder-progress': `${activeModules.length * 25}%` }} />
+      </div>
+    </div>
+  );
+};
+
+const PipelineCapability = () => {
+  const stages = ['Collect', 'Clean', 'Model', 'Observe'];
+  const [activeStage, setActiveStage] = useState(1);
+
+  return (
+    <div className="light-capability-play light-capability-play--pipeline">
+      <span className="light-capability-play__head">
+        <b>Signal pipeline</b>
+        <span>Stage 0{activeStage + 1}</span>
+      </span>
+      <div className="light-data-pipeline" role="group" aria-label="Inspect data pipeline stages">
+        {stages.map((stage, index) => (
+          <button
+            type="button"
+            className={index <= activeStage ? 'is-active' : ''}
+            aria-pressed={index === activeStage}
+            onClick={() => setActiveStage(index)}
+            key={stage}
+          >
+            <i aria-hidden="true" />
+            <span>0{index + 1}</span>
+            <b>{stage}</b>
+          </button>
+        ))}
+      </div>
+      <div className="light-data-pipeline__readout" aria-live="polite">
+        <span>Quality</span>
+        <strong>{[72, 88, 94, 99][activeStage]}%</strong>
+        <i style={{ '--pipeline-progress': `${(activeStage + 1) * 25}%` }} />
+      </div>
+    </div>
+  );
+};
+
+const DeployCapability = () => {
+  const [liveNodes, setLiveNodes] = useState(3);
+  const scaleDeployment = () =>
+    setLiveNodes((current) => (current === 9 ? 3 : current + 3));
+
+  return (
+    <div className="light-capability-play light-capability-play--deploy">
+      <span className="light-capability-play__head">
+        <b>Release control</b>
+        <span className="light-deploy__live"><i /> Live</span>
+      </span>
+      <div className="light-deploy__nodes" aria-hidden="true">
+        {Array.from({ length: 9 }, (_, index) => (
+          <i className={index < liveNodes ? 'is-active' : ''} key={index} />
+        ))}
+      </div>
+      <div className="light-deploy__footer" aria-live="polite">
+        <span><strong>{liveNodes}</strong> healthy nodes</span>
+        <button type="button" onClick={scaleDeployment}>
+          {liveNodes === 9 ? 'Reset' : 'Scale +3'}
+          <ArrowRightIcon aria-hidden="true" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const CapabilityInteractive = ({ type }) => {
+  if (type === 'pachinko') return <PachinkoCapability />;
+  if (type === 'builder') return <BuilderCapability />;
+  if (type === 'pipeline') return <PipelineCapability />;
+  return <DeployCapability />;
+};
 
 const PartnerCarousel = () => {
   const trackRef = useRef(null);
@@ -775,14 +925,8 @@ const LightExperience = () => {
                       <span>{item.number}</span>
                       <Icon aria-hidden="true" />
                     </div>
-                    <div className="light-capability__image">
-                      <img
-                        src={`${process.env.PUBLIC_URL}${item.image}`}
-                        alt={item.imageAlt}
-                        loading="lazy"
-                        width="1536"
-                        height="1024"
-                      />
+                    <div className="light-capability__interactive">
+                      <CapabilityInteractive type={item.visual} />
                     </div>
                     <h3>{item.title}</h3>
                     <p>{item.description}</p>

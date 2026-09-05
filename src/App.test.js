@@ -33,7 +33,7 @@ test('defaults to the light experience and can switch themes', async () => {
   expect(window.localStorage.getItem('alphacodeai-theme')).toBe('dark');
 });
 
-test('moves the mascot gaze in response to touch movement', async () => {
+test('moves the mascot gaze and keeps the last touch position', async () => {
   render(<App />);
 
   const mascot = await screen.findByRole('img', {
@@ -60,4 +60,29 @@ test('moves the mascot gaze in response to touch movement', async () => {
   await waitFor(() => {
     expect(eyes.style.transform).not.toBe('translate(0px, 0px)');
   });
+
+  fireEvent.touchEnd(window, {
+    changedTouches: [{ clientX: 1000, clientY: 120 }]
+  });
+  fireEvent.pointerLeave(document.documentElement);
+
+  await waitFor(() => {
+    const horizontalOffset = Number(
+      eyes.style.transform.match(/translate\(([-\d.]+)px/)?.[1]
+    );
+    expect(horizontalOffset).toBeGreaterThan(20);
+  });
+});
+
+test('routes requests through the interactive AI pachinko', async () => {
+  render(<App />);
+
+  const pachinko = await screen.findByRole('button', {
+    name: /current destination: rag/i
+  });
+  fireEvent.click(pachinko);
+
+  expect(
+    screen.getByRole('button', { name: /current destination: llm/i })
+  ).toBeInTheDocument();
 });
