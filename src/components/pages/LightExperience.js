@@ -400,7 +400,7 @@ const InteractiveRobot = () => {
 
     const reactToClick = () => {
       mascot.classList.add('is-dead');
-      setSpeech('I AM DEAD');
+      setSpeech('OH NO');
       setMood('dead');
       window.clearTimeout(motion.mouthTimer);
       motion.mouthTimer = window.setTimeout(() => {

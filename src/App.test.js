@@ -85,7 +85,7 @@ test('shows the mascot warning, dead face, and three-second recovery message', (
   fireEvent.click(mascot);
 
   expect(mascot).toHaveClass('is-dead');
-  expect(screen.getByRole('status')).toHaveTextContent('I AM DEAD');
+  expect(screen.getByRole('status')).toHaveTextContent('OH NO');
 
   act(() => jest.advanceTimersByTime(3000));
 
