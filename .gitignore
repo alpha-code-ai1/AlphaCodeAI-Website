@@ -11,6 +11,7 @@
 # production
 /build
 /.worktrees
+/worktrees
 
 # misc
 .DS_Store
