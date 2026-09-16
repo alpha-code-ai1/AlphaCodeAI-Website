@@ -146,3 +146,32 @@ test('groups desktop capability and case-study chapters into pairs', async () =>
     expect(chapter.querySelectorAll('article')).toHaveLength(2);
   });
 });
+
+test('maps desktop page scroll to partner carousel progress', async () => {
+  render(<App />);
+
+  const track = await screen.findByRole('region', { name: /selected clients/i });
+  const section = track.closest('.light-partners');
+  const progress = screen.getByRole('progressbar', {
+    name: /partner carousel progress/i
+  });
+
+  Object.defineProperties(window, {
+    innerWidth: { configurable: true, value: 1280 },
+    innerHeight: { configurable: true, value: 720 },
+    scrollY: { configurable: true, value: 860 }
+  });
+  Object.defineProperties(section, {
+    offsetTop: { configurable: true, value: 500 },
+    offsetHeight: { configurable: true, value: 1440 }
+  });
+  Object.defineProperties(track, {
+    clientWidth: { configurable: true, value: 600 },
+    scrollWidth: { configurable: true, value: 1200 }
+  });
+
+  fireEvent.scroll(window);
+
+  expect(track.scrollLeft).toBeGreaterThan(300);
+  expect(progress).toHaveAttribute('aria-valuenow', '56');
+});

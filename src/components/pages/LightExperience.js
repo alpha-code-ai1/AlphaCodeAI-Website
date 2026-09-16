@@ -626,9 +626,9 @@ const PachinkoCapability = () => {
 
     const draw = () => {
       context.clearRect(0, 0, width, height);
-      context.fillStyle = '#101728';
+      context.fillStyle = '#e8efff';
       context.fillRect(0, 0, width, height);
-      context.strokeStyle = 'rgba(112, 230, 255, 0.18)';
+      context.strokeStyle = 'rgba(19, 71, 232, 0.12)';
       context.lineWidth = 1;
       for (let x = 0; x < width; x += 28) {
         context.beginPath();
@@ -639,18 +639,20 @@ const PachinkoCapability = () => {
       pins.forEach((pin) => {
         context.beginPath();
         context.arc(pin.x, pin.y, 4, 0, Math.PI * 2);
-        context.fillStyle = '#fffdf7';
-        context.shadowColor = '#70e6ff';
-        context.shadowBlur = 8;
+        context.fillStyle = '#1347e8';
+        context.shadowColor = 'rgba(19, 71, 232, 0.28)';
+        context.shadowBlur = 5;
         context.fill();
       });
       context.shadowBlur = 0;
       bins.forEach((bin, index) => {
         const binWidth = width / 3;
         const isLit = window.performance.now() < basketLights[index];
-        context.fillStyle = isLit ? basketColors[index] : 'rgba(255,255,255,0.08)';
+        context.fillStyle = isLit ? basketColors[index] : 'rgba(255,253,247,0.74)';
         context.fillRect(index * binWidth + 3, height - 38, binWidth - 6, 35);
-        context.fillStyle = isLit ? '#101728' : basketColors[index];
+        context.strokeStyle = 'rgba(16, 23, 40, 0.42)';
+        context.strokeRect(index * binWidth + 3, height - 38, binWidth - 6, 35);
+        context.fillStyle = '#101728';
         context.font = '700 10px Space Grotesk, sans-serif';
         context.textAlign = 'center';
         context.fillText(
@@ -1038,6 +1040,55 @@ const CapabilityInteractive = ({ type }) => {
 
 const PartnerCarousel = () => {
   const trackRef = useRef(null);
+  const progressRef = useRef(null);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    const progress = progressRef.current;
+    const section = track?.closest('.light-partners');
+    if (!track || !progress || !section) return undefined;
+
+    const setProgress = (ratio) => {
+      const bounded = Math.min(Math.max(ratio, 0), 1);
+      progress.style.setProperty('--partner-progress', bounded);
+      progress.setAttribute('aria-valuenow', String(Math.round(bounded * 100)));
+    };
+
+    const syncIndicatorFromTrack = () => {
+      const maximum = track.scrollWidth - track.clientWidth;
+      setProgress(maximum > 0 ? track.scrollLeft / maximum : 0);
+    };
+
+    const syncTrackFromPage = () => {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (window.innerWidth < 1024 || reduceMotion) {
+        syncIndicatorFromTrack();
+        return;
+      }
+
+      const navigationOffset = 92;
+      const visibleHeight = window.innerHeight - navigationOffset;
+      const start = section.offsetTop - navigationOffset;
+      const runway = Math.max(section.offsetHeight - visibleHeight, 1);
+      const ratio = (window.scrollY - start) / runway;
+      const bounded = Math.min(Math.max(ratio, 0), 1);
+      const maximum = track.scrollWidth - track.clientWidth;
+
+      track.scrollLeft = bounded * Math.max(maximum, 0);
+      setProgress(bounded);
+    };
+
+    syncTrackFromPage();
+    window.addEventListener('scroll', syncTrackFromPage, { passive: true });
+    window.addEventListener('resize', syncTrackFromPage);
+    track.addEventListener('scroll', syncIndicatorFromTrack, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', syncTrackFromPage);
+      window.removeEventListener('resize', syncTrackFromPage);
+      track.removeEventListener('scroll', syncIndicatorFromTrack);
+    };
+  }, []);
 
   const move = (direction) => {
     const track = trackRef.current;
@@ -1066,8 +1117,22 @@ const PartnerCarousel = () => {
   return (
     <div className="light-partners__carousel" aria-roledescription="carousel">
       <div className="light-partners__controls">
-        <span>Drag or swipe to explore</span>
-        <div>
+        <div className="light-partners__guide">
+          <span className="light-partners__guide-desktop">Scroll to explore</span>
+          <span className="light-partners__guide-mobile">Drag or swipe to explore</span>
+          <span
+            ref={progressRef}
+            className="light-partners__progress"
+            role="progressbar"
+            aria-label="Partner carousel progress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <i aria-hidden="true" />
+          </span>
+        </div>
+        <div className="light-partners__buttons">
           <button type="button" onClick={() => move(-1)} aria-label="Previous clients">
             <ChevronLeftIcon aria-hidden="true" />
           </button>
@@ -1431,13 +1496,19 @@ const LightExperience = () => {
                   <SectionIntro
                     index="03"
                     eyebrow="Selected case studies"
-                    title="Real work. Clear problems. Useful outcomes."
+                    title={(
+                      <>
+                        <span className="light-section-intro__title-line">Real work.</span>{' '}
+                        <span className="light-section-intro__title-line">Clear problems.</span>{' '}
+                        <span className="light-section-intro__title-line">Useful outcomes.</span>
+                      </>
+                    )}
                     copy="A closer look at how we turn complicated workflows and ambitious ideas into products people can understand and use. Sensitive implementation details stay private."
                   />
                 ) : (
                   <Reveal className="light-case-study-chapter__continuation">
                     <span>03 / Selected case studies</span>
-                    <p>More systems built for the field, not the slide deck.</p>
+                    <p>More systems built for the field.</p>
                   </Reveal>
                 )}
                 <div className="light-cases__grid">
