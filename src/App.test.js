@@ -122,3 +122,27 @@ test('renders distinct capability simulations and produces a tuned model result'
   expect(screen.getByText('Adaptive')).toBeInTheDocument();
   randomSpy.mockRestore();
 });
+
+test('groups desktop capability and case-study chapters into pairs', async () => {
+  render(<App />);
+
+  await screen.findByRole('heading', {
+    name: /one team from first question to final release/i
+  });
+
+  const capabilityChapters = screen.getAllByRole('group', {
+    name: /capability chapter \d of 2/i
+  });
+  expect(capabilityChapters).toHaveLength(2);
+  capabilityChapters.forEach((chapter) => {
+    expect(chapter.querySelectorAll('article')).toHaveLength(2);
+  });
+
+  const caseStudyChapters = screen.getAllByRole('group', {
+    name: /case study chapter \d of 2/i
+  });
+  expect(caseStudyChapters).toHaveLength(2);
+  caseStudyChapters.forEach((chapter) => {
+    expect(chapter.querySelectorAll('article')).toHaveLength(2);
+  });
+});

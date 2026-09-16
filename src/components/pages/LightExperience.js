@@ -239,6 +239,9 @@ const caseStudies = [
   }
 ];
 
+const capabilityChapters = [capabilities.slice(0, 2), capabilities.slice(2)];
+const caseStudyChapters = [caseStudies.slice(0, 2), caseStudies.slice(2)];
+
 const ROBOT_WIDTH = 1342;
 const ROBOT_HEIGHT = 1172;
 const MAX_EYE_X = 40;
@@ -1233,48 +1236,62 @@ const LightExperience = () => {
       </section>
 
       <section id="services" className="light-section light-services">
-        <div className="light-shell">
-          <SectionIntro
-            index="01"
-            eyebrow="Capabilities"
-            title="One team from first question to final release."
-            copy="Good AI is not a feature bolted onto a product. It is a clear system of data, experience, engineering, and operations."
-          />
-          <Reveal className="light-editorial-visual light-editorial-visual--services">
-            <img
-              src={`${process.env.PUBLIC_URL}/visuals/capabilities-workbench.jpg`}
-              alt="A modular cobalt and orange AI production system connected by amber data pathways."
-              loading="lazy"
-              width="1536"
-              height="1024"
+        <div className="light-services__overview">
+          <div className="light-shell light-services__overview-layout">
+            <SectionIntro
+              index="01"
+              eyebrow="Capabilities"
+              title="One team from first question to final release."
+              copy="Good AI is not a feature bolted onto a product. It is a clear system of data, experience, engineering, and operations."
             />
-            <span>From signal to shipped system</span>
-          </Reveal>
-          <div className="light-services__grid">
-            {capabilities.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <Reveal key={item.number} delay={index * 0.06}>
-                  <article className="light-capability">
-                    <div className="light-capability__top">
-                      <span>{item.number}</span>
-                      <Icon aria-hidden="true" />
-                    </div>
-                    <div className="light-capability__interactive">
-                      <CapabilityInteractive type={item.visual} />
-                    </div>
-                    <h3>{item.title}</h3>
-                    <p>{item.description}</p>
-                    <div className="light-capability__tags">
-                      {item.tags.map((tag) => (
-                        <span key={tag}>{tag}</span>
-                      ))}
-                    </div>
-                  </article>
-                </Reveal>
-              );
-            })}
+            <Reveal className="light-editorial-visual light-editorial-visual--services">
+              <img
+                src={`${process.env.PUBLIC_URL}/visuals/capabilities-workbench.jpg`}
+                alt="A modular cobalt and orange AI production system connected by amber data pathways."
+                loading="lazy"
+                width="1536"
+                height="1024"
+              />
+              <span>From signal to shipped system</span>
+            </Reveal>
           </div>
+        </div>
+
+        <div className="light-services__chapters">
+          {capabilityChapters.map((chapter, chapterIndex) => (
+            <div
+              key={`capability-chapter-${chapterIndex + 1}`}
+              role="group"
+              aria-label={`Capability chapter ${chapterIndex + 1} of ${capabilityChapters.length}`}
+              className="light-capability-chapter"
+            >
+              <div className="light-shell light-services__grid">
+                {chapter.map((item, itemIndex) => {
+                  const Icon = item.icon;
+                  return (
+                    <Reveal key={item.number} delay={itemIndex * 0.06}>
+                      <article className="light-capability">
+                        <div className="light-capability__top">
+                          <span>{item.number}</span>
+                          <Icon aria-hidden="true" />
+                        </div>
+                        <div className="light-capability__interactive">
+                          <CapabilityInteractive type={item.visual} />
+                        </div>
+                        <h3>{item.title}</h3>
+                        <p>{item.description}</p>
+                        <div className="light-capability__tags">
+                          {item.tags.map((tag) => (
+                            <span key={tag}>{tag}</span>
+                          ))}
+                        </div>
+                      </article>
+                    </Reveal>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -1401,70 +1418,88 @@ const LightExperience = () => {
       </section>
 
       <section id="case-studies" className="light-section light-cases">
-        <div className="light-shell">
-          <SectionIntro
-            index="03"
-            eyebrow="Selected case studies"
-            title="Real work. Clear problems. Useful outcomes."
-            copy="A closer look at how we turn complicated workflows and ambitious ideas into products people can understand and use. Sensitive implementation details stay private."
-          />
-          <div className="light-cases__grid">
-            {caseStudies.map((study, index) => (
-              <Reveal key={study.client} delay={index * 0.06}>
-                <article className="light-case-study">
-                  <div className="light-case-study__image">
-                    <img
-                      src={`${process.env.PUBLIC_URL}${study.image}`}
-                      alt={study.imageAlt}
-                      loading="lazy"
-                      width="1536"
-                      height="1024"
-                    />
-                    <div
-                      className="light-case-study__logo"
-                      style={{
-                        backgroundColor: study.logoBg,
-                        '--case-logo-aspect': study.logoAspect,
-                        '--case-logo-width': study.logoWidth
-                      }}
-                    >
-                      <img
-                        src={`${process.env.PUBLIC_URL}${study.logo}`}
-                        alt={`${study.client} logo`}
-                        loading="lazy"
-                      />
-                    </div>
-                  </div>
-                  <div className="light-case-study__body">
-                    <div className="light-case-study__meta">
-                      <span>{study.client}</span>
-                      <span>{study.discipline}</span>
-                    </div>
-                    <h3>{study.title}</h3>
-                    <dl>
-                      <div>
-                        <dt>The challenge</dt>
-                        <dd>{study.challenge}</dd>
-                      </div>
-                      <div>
-                        <dt>What we changed</dt>
-                        <dd>{study.result}</dd>
-                      </div>
-                    </dl>
-                    <a
-                      href={study.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="light-case-study__link"
-                    >
-                      Visit {study.client}
-                      <ArrowUpRightIcon aria-hidden="true" />
-                    </a>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
+        <div className="light-cases__chapters">
+          {caseStudyChapters.map((chapter, chapterIndex) => (
+            <div
+              key={`case-study-chapter-${chapterIndex + 1}`}
+              role="group"
+              aria-label={`Case study chapter ${chapterIndex + 1} of ${caseStudyChapters.length}`}
+              className="light-case-study-chapter"
+            >
+              <div className="light-shell light-case-study-chapter__layout">
+                {chapterIndex === 0 ? (
+                  <SectionIntro
+                    index="03"
+                    eyebrow="Selected case studies"
+                    title="Real work. Clear problems. Useful outcomes."
+                    copy="A closer look at how we turn complicated workflows and ambitious ideas into products people can understand and use. Sensitive implementation details stay private."
+                  />
+                ) : (
+                  <Reveal className="light-case-study-chapter__continuation">
+                    <span>03 / Selected case studies</span>
+                    <p>More systems built for the field, not the slide deck.</p>
+                  </Reveal>
+                )}
+                <div className="light-cases__grid">
+                  {chapter.map((study, studyIndex) => (
+                    <Reveal key={study.client} delay={studyIndex * 0.06}>
+                      <article className="light-case-study">
+                        <div className="light-case-study__image">
+                          <img
+                            src={`${process.env.PUBLIC_URL}${study.image}`}
+                            alt={study.imageAlt}
+                            loading="lazy"
+                            width="1536"
+                            height="1024"
+                          />
+                          <div
+                            className="light-case-study__logo"
+                            style={{
+                              backgroundColor: study.logoBg,
+                              '--case-logo-aspect': study.logoAspect,
+                              '--case-logo-width': study.logoWidth
+                            }}
+                          >
+                            <img
+                              src={`${process.env.PUBLIC_URL}${study.logo}`}
+                              alt={`${study.client} logo`}
+                              loading="lazy"
+                            />
+                          </div>
+                        </div>
+                        <div className="light-case-study__body">
+                          <div className="light-case-study__meta">
+                            <span>{study.client}</span>
+                            <span>{study.discipline}</span>
+                          </div>
+                          <h3>{study.title}</h3>
+                          <dl>
+                            <div>
+                              <dt>The challenge</dt>
+                              <dd>{study.challenge}</dd>
+                            </div>
+                            <div>
+                              <dt>What we changed</dt>
+                              <dd>{study.result}</dd>
+                            </div>
+                          </dl>
+                          <a
+                            href={study.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="light-case-study__link"
+                          >
+                            Visit {study.client}
+                            <ArrowUpRightIcon aria-hidden="true" />
+                          </a>
+                        </div>
+                      </article>
+                    </Reveal>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
