@@ -1,0 +1,383 @@
+[
+  {
+    "path": "/ai-development-company-mumbai/",
+    "kind": "location",
+    "eyebrow": "AI product engineering · Mumbai / Worldwide",
+    "title": "AI Development Company in Mumbai",
+    "description": "AlphaCodeAI designs and develops production-grade AI agents, chatbots, RAG systems and custom AI software for businesses in Mumbai and worldwide.",
+    "lede": "We take AI products from a useful first brief to a dependable production system—combining product strategy, experience design, software engineering, data foundations and deployment in one team.",
+    "promise": "Built in Mumbai. Designed for real operations.",
+    "services": [
+      { "label": "AI agent development", "href": "/ai-agent-development/" },
+      { "label": "AI chatbot development", "href": "/ai-chatbot-development/" },
+      { "label": "Generative AI development", "href": "/generative-ai-development/" },
+      { "label": "RAG knowledge systems", "href": "/rag-knowledge-systems/" },
+      { "label": "Custom AI software", "href": "/custom-ai-software-development/" }
+    ],
+    "sections": [
+      {
+        "kicker": "What we build",
+        "title": "AI systems tied to a business outcome",
+        "body": "A useful AI product is more than a model call. We design the workflow around it: permissions, data retrieval, human review, integrations, evaluation, observability and the interface people use every day.",
+        "items": [
+          "Private copilots and task-focused AI agents",
+          "Customer-support and internal knowledge assistants",
+          "Retrieval-augmented generation over business data",
+          "Workflow automation with explicit human control",
+          "AI-enabled web products and operational platforms",
+          "Production infrastructure, monitoring and iteration"
+        ]
+      },
+      {
+        "kicker": "How we work",
+        "title": "One accountable team from discovery to release",
+        "body": "We begin with the decisions and tasks the product must improve. A focused prototype validates the riskiest assumption; the production phase then adds the security, integrations, testing and operating controls needed to make the system dependable.",
+        "items": [
+          "Workflow and data discovery",
+          "Prototype with measurable acceptance criteria",
+          "Product design and full-stack engineering",
+          "Model and retrieval evaluation",
+          "Cloud deployment and operational handover",
+          "Post-launch measurement and improvement"
+        ]
+      },
+      {
+        "kicker": "Why AlphaCodeAI",
+        "title": "Technical depth without losing the product",
+        "body": "Our work spans product engineering, AI orchestration, data pipelines and digital experience. That breadth lets us solve the entire operating problem instead of delivering an isolated demonstration that another team must rebuild.",
+        "items": [
+          "Mumbai-based team working with clients globally",
+          "Experience across property, operations and industrial workflows",
+          "Clear ownership from interface to infrastructure",
+          "Sensitive implementation details kept private",
+          "Direct communication with the people building the product"
+        ]
+      }
+    ],
+    "proof": [
+      { "client": "Proofit", "title": "Guided property inspection experience", "href": "/case-studies/proofit-property-inspection/", "image": "/visuals/case-proofit.jpg" },
+      { "client": "Opro Maldives", "title": "Governed project-control product", "href": "/case-studies/opro-project-control/", "image": "/visuals/case-opro.jpg" },
+      { "client": "Shapotools", "title": "Guided industrial offer workflow", "href": "/case-studies/shapotools-offer-workflow/", "image": "/visuals/case-shapotools.jpg" }
+    ],
+    "faqs": [
+      { "question": "What kinds of AI projects does AlphaCodeAI take on?", "answer": "We focus on production software where AI improves a real workflow: agents, chatbots, knowledge systems, document-heavy operations, decision support and custom web products." },
+      { "question": "Can you work with a company outside Mumbai?", "answer": "Yes. AlphaCodeAI is based in Mumbai and works with teams in India and internationally through a remote-first delivery process." },
+      { "question": "Can you begin with a prototype?", "answer": "Yes. A focused prototype is often the best way to test data quality, model behaviour, user value and integration risk before committing to a complete build." }
+    ]
+  },
+  {
+    "path": "/ai-agent-development/",
+    "kind": "service",
+    "eyebrow": "Service · Applied AI",
+    "title": "AI Agent Development",
+    "description": "Design and development of reliable AI agents that use your tools, data and approval rules to complete real business workflows.",
+    "lede": "We build bounded agents that know what they may do, when they must ask for help, and how every important action can be reviewed.",
+    "promise": "Autonomy where it helps. Control where it matters.",
+    "services": [
+      { "label": "Mumbai AI development", "href": "/ai-development-company-mumbai/" },
+      { "label": "RAG knowledge systems", "href": "/rag-knowledge-systems/" },
+      { "label": "Custom AI software", "href": "/custom-ai-software-development/" }
+    ],
+    "sections": [
+      {
+        "kicker": "Agent design",
+        "title": "Start with the workflow, not the demo",
+        "body": "We map the goal, available context, tools, failure modes and approval boundaries before choosing an agent architecture. The result is a system designed for a specific operating responsibility rather than an open-ended bot.",
+        "items": ["Single and multi-step task agents", "Tool and API use", "Human approval checkpoints", "Role-aware access", "Memory and context design", "Audit trails"]
+      },
+      {
+        "kicker": "Reliability",
+        "title": "Evaluation is part of the product",
+        "body": "Agent quality cannot be judged from a few impressive conversations. We create representative task sets, measure completion and failure patterns, test tool calls and make uncertain outcomes visible to operators.",
+        "items": ["Task-level evaluation", "Structured outputs", "Fallback and escalation", "Cost and latency controls", "Prompt and model versioning", "Production monitoring"]
+      },
+      {
+        "kicker": "Delivery",
+        "title": "Integrated with the systems your team already uses",
+        "body": "Agents become valuable when they can safely read, decide and act across the right systems. We connect data stores, internal APIs, CRMs, support tools, documents and communication channels around a clear permission model.",
+        "items": ["Discovery and feasibility", "Working prototype", "Integration engineering", "Operator interface", "Security review", "Deployment and handover"]
+      }
+    ],
+    "proof": [
+      { "client": "Proofit", "title": "AI-guided service discovery", "href": "/case-studies/proofit-property-inspection/", "image": "/visuals/case-proofit.jpg" },
+      { "client": "Opro Maldives", "title": "Governed operational workflows", "href": "/case-studies/opro-project-control/", "image": "/visuals/case-opro.jpg" }
+    ],
+    "faqs": [
+      { "question": "What is an AI agent?", "answer": "An AI agent is software that uses a model, context and approved tools to work toward a defined goal. A production agent also needs permissions, evaluation, logging and escalation paths." },
+      { "question": "Will an agent act without human approval?", "answer": "Only where that is appropriate. We define explicit autonomy levels and place human approval before sensitive, expensive or irreversible actions." },
+      { "question": "Can an agent use our existing software?", "answer": "Usually, yes. We connect agents to existing systems through supported APIs, databases or controlled automation after reviewing access and reliability constraints." }
+    ]
+  },
+  {
+    "path": "/ai-chatbot-development/",
+    "kind": "service",
+    "eyebrow": "Service · Conversational software",
+    "title": "AI Chatbot Development",
+    "description": "Custom AI chatbots and copilots grounded in your business knowledge, integrated with your workflows and designed for safe escalation.",
+    "lede": "We build conversational products that answer from approved sources, collect the right context and move the user toward a useful next step.",
+    "promise": "Helpful answers, grounded in your business.",
+    "services": [
+      { "label": "RAG knowledge systems", "href": "/rag-knowledge-systems/" },
+      { "label": "AI agent development", "href": "/ai-agent-development/" },
+      { "label": "Generative AI development", "href": "/generative-ai-development/" }
+    ],
+    "sections": [
+      {
+        "kicker": "Use cases",
+        "title": "A chatbot should resolve a job, not prolong a chat",
+        "body": "The conversation is only the interface. We design the complete path around it—retrieving accurate information, collecting structured details, handing over to a person and recording what happened.",
+        "items": ["Customer-support assistants", "Internal knowledge copilots", "Lead qualification", "Service discovery", "Employee onboarding", "Document and policy Q&A"]
+      },
+      {
+        "kicker": "Grounding",
+        "title": "Answers traceable to approved information",
+        "body": "We prepare and index the right sources, retrieve context at question time and design responses that cite or link back to their evidence. When confidence is low, the assistant says so and follows the agreed escalation path.",
+        "items": ["Document ingestion", "Semantic and hybrid retrieval", "Source citations", "Permission-aware results", "Feedback capture", "Knowledge refresh workflows"]
+      },
+      {
+        "kicker": "Experience",
+        "title": "Designed for the moment around the question",
+        "body": "A useful assistant matches the brand, channel and stakes of the interaction. We design onboarding, suggested prompts, forms, rich responses, mobile behaviour and human handoff as one coherent product.",
+        "items": ["Web and product chat", "WhatsApp-compatible workflows", "Branded conversational UI", "Structured lead capture", "Analytics and transcript review", "Multilingual experiences"]
+      }
+    ],
+    "proof": [
+      { "client": "Proofit", "title": "Property concerns routed toward action", "href": "/case-studies/proofit-property-inspection/", "image": "/visuals/case-proofit.jpg" }
+    ],
+    "faqs": [
+      { "question": "Can the chatbot answer from our documents?", "answer": "Yes. We can build a retrieval layer over approved documents and systems so answers are grounded in your current business information." },
+      { "question": "What happens when the chatbot does not know?", "answer": "We design explicit low-confidence and no-answer behaviour, including source clarification, information collection and handoff to the appropriate person." },
+      { "question": "Can it collect leads or create support tickets?", "answer": "Yes. The assistant can collect structured information and call approved integrations to create records, tickets or follow-up tasks." }
+    ]
+  },
+  {
+    "path": "/generative-ai-development/",
+    "kind": "service",
+    "eyebrow": "Service · Generative AI",
+    "title": "Generative AI Development",
+    "description": "Production generative AI products for content, documents, operations and decision support—designed with evaluation and human control.",
+    "lede": "We turn model capability into a focused product: the right context, repeatable outputs, a usable interface and a clear quality bar.",
+    "promise": "From model capability to dependable product.",
+    "services": [
+      { "label": "AI agent development", "href": "/ai-agent-development/" },
+      { "label": "AI chatbot development", "href": "/ai-chatbot-development/" },
+      { "label": "Custom AI software", "href": "/custom-ai-software-development/" }
+    ],
+    "sections": [
+      {
+        "kicker": "Product strategy",
+        "title": "Choose a problem where generation creates leverage",
+        "body": "We identify where generated text, images, summaries or structured data can remove repetitive work or improve a decision without hiding the need for expert judgement.",
+        "items": ["Document generation", "Summarisation and extraction", "Content operations", "Research assistance", "Structured data generation", "Multimodal workflows"]
+      },
+      {
+        "kicker": "Engineering",
+        "title": "A model is one component of the system",
+        "body": "The production layer handles context, templates, validation, permissions, versioning, cost and observability. We select models around the job and keep the architecture adaptable as capabilities change.",
+        "items": ["Model selection and routing", "Prompt and context architecture", "Schema-constrained output", "Safety and policy checks", "Caching and cost control", "Provider abstraction"]
+      },
+      {
+        "kicker": "Quality",
+        "title": "Define what good looks like before launch",
+        "body": "We turn subjective expectations into review criteria and representative test cases. Automated checks and human review then reveal regressions before users do.",
+        "items": ["Evaluation datasets", "Rubric-based review", "Adversarial testing", "Human approval flows", "Production feedback loops", "Model-change regression tests"]
+      }
+    ],
+    "proof": [
+      { "client": "Shapotools", "title": "Complex inputs shaped into a guided output flow", "href": "/case-studies/shapotools-offer-workflow/", "image": "/visuals/case-shapotools.jpg" },
+      { "client": "Opro Maldives", "title": "Operational information made easier to understand", "href": "/case-studies/opro-project-control/", "image": "/visuals/case-opro.jpg" }
+    ],
+    "faqs": [
+      { "question": "Which AI model will you use?", "answer": "We choose models after defining the task, quality bar, latency, privacy and cost constraints. The product architecture can support more than one provider where resilience or routing is useful." },
+      { "question": "Can generative AI produce structured data?", "answer": "Yes. We use constrained schemas, validation and retries when the output must be consumed by software rather than only read by a person." },
+      { "question": "How do you reduce hallucinations?", "answer": "The approach depends on the task and can include retrieval from approved sources, constrained output, verification steps, clear uncertainty behaviour and human review." }
+    ]
+  },
+  {
+    "path": "/rag-knowledge-systems/",
+    "kind": "service",
+    "eyebrow": "Service · Enterprise knowledge",
+    "title": "RAG & Knowledge Systems",
+    "description": "Retrieval-augmented generation systems that make approved company knowledge searchable, traceable and useful inside real workflows.",
+    "lede": "We design knowledge systems around source quality, permissions, retrieval relevance and the decisions people need to make—not around a vector database alone.",
+    "promise": "The right context, from a source you can inspect.",
+    "services": [
+      { "label": "AI chatbot development", "href": "/ai-chatbot-development/" },
+      { "label": "AI agent development", "href": "/ai-agent-development/" },
+      { "label": "Custom AI software", "href": "/custom-ai-software-development/" }
+    ],
+    "sections": [
+      {
+        "kicker": "Knowledge preparation",
+        "title": "Retrieval quality begins before embedding",
+        "body": "We inventory sources, remove noise, preserve useful structure and attach the metadata needed for permissions, filtering and citations. Update workflows keep the index aligned with the source of truth.",
+        "items": ["Source inventory", "Parsing and chunking", "Metadata design", "Access-control mapping", "Version and freshness tracking", "Ingestion monitoring"]
+      },
+      {
+        "kicker": "Retrieval",
+        "title": "Find evidence, not merely similar text",
+        "body": "Queries are transformed, filtered and ranked around the domain. We test retrieval separately from generation so missing evidence is visible and correctable.",
+        "items": ["Semantic and keyword search", "Hybrid retrieval", "Re-ranking", "Query transformation", "Permission-aware filtering", "Retrieval evaluation"]
+      },
+      {
+        "kicker": "Answer experience",
+        "title": "Make trust part of the interface",
+        "body": "Answers can cite their sources, expose uncertainty and let users inspect the underlying material. Feedback and unresolved questions become signals for improving the knowledge base.",
+        "items": ["Inline source citations", "Evidence previews", "No-answer behaviour", "Expert escalation", "Feedback and analytics", "Knowledge-gap reporting"]
+      }
+    ],
+    "proof": [
+      { "client": "Proofit", "title": "Structured guidance for technical property concerns", "href": "/case-studies/proofit-property-inspection/", "image": "/visuals/case-proofit.jpg" },
+      { "client": "Shapotools", "title": "Rules surfaced inside a guided workflow", "href": "/case-studies/shapotools-offer-workflow/", "image": "/visuals/case-shapotools.jpg" }
+    ],
+    "faqs": [
+      { "question": "What data can a RAG system use?", "answer": "Depending on access and format, it can use policies, product documentation, support material, project files, databases and other approved business sources." },
+      { "question": "How are document permissions respected?", "answer": "We map source permissions into ingestion and retrieval so the application only returns information the current user is allowed to access." },
+      { "question": "How do you measure retrieval quality?", "answer": "We build representative questions with expected evidence, then measure whether the right material is retrieved before evaluating the generated answer." }
+    ]
+  },
+  {
+    "path": "/custom-ai-software-development/",
+    "kind": "service",
+    "eyebrow": "Service · Full-stack product engineering",
+    "title": "Custom AI Software Development",
+    "description": "End-to-end design and engineering of custom AI software, from product discovery and interface design to cloud deployment and iteration.",
+    "lede": "When the workflow does not fit an off-the-shelf product, we design and build the software around the way your organization needs to operate.",
+    "promise": "Custom software with intelligence built in.",
+    "services": [
+      { "label": "Mumbai AI development", "href": "/ai-development-company-mumbai/" },
+      { "label": "Generative AI development", "href": "/generative-ai-development/" },
+      { "label": "AI agent development", "href": "/ai-agent-development/" }
+    ],
+    "sections": [
+      {
+        "kicker": "Product discovery",
+        "title": "Turn an ambitious brief into a buildable system",
+        "body": "We define users, workflows, risks, data and success criteria before committing to an architecture. Early prototypes resolve uncertainty while changes are still inexpensive.",
+        "items": ["Stakeholder and workflow discovery", "Product scope", "Technical feasibility", "Prototype design", "Architecture and delivery plan", "Acceptance criteria"]
+      },
+      {
+        "kicker": "Product engineering",
+        "title": "The interface, intelligence and infrastructure together",
+        "body": "Our delivery spans responsive front ends, APIs, data stores, AI orchestration, integrations and cloud infrastructure. Decisions are made across the complete product rather than passed between disconnected vendors.",
+        "items": ["Web application engineering", "API and integration development", "AI and retrieval layers", "Databases and data pipelines", "Cloud deployment", "Testing and observability"]
+      },
+      {
+        "kicker": "Launch and iteration",
+        "title": "Production is the beginning of the evidence",
+        "body": "After release, real usage reveals where the system creates value and where it needs refinement. We instrument important actions, review failures and prioritize improvements against business outcomes.",
+        "items": ["Staged rollout", "Operational monitoring", "Usage analytics", "Reliability improvements", "Feature iteration", "Technical handover"]
+      }
+    ],
+    "proof": [
+      { "client": "Opro Maldives", "title": "Project-control software for complex property work", "href": "/case-studies/opro-project-control/", "image": "/visuals/case-opro.jpg" },
+      { "client": "OKNO Modhomes", "title": "Immersive digital product experience", "href": "/case-studies/okno-modhomes-experience/", "image": "/visuals/case-okno.jpg" },
+      { "client": "Shapotools", "title": "Industrial offer-production workflow", "href": "/case-studies/shapotools-offer-workflow/", "image": "/visuals/case-shapotools.jpg" }
+    ],
+    "faqs": [
+      { "question": "Can AlphaCodeAI take over an existing product?", "answer": "Yes. We begin with a technical and product assessment to understand the current architecture, risks, data and priorities before proposing a transition plan." },
+      { "question": "Do you build only the AI component?", "answer": "We can build an AI component, but our main strength is delivering the complete product around it: experience, application, data, integrations and deployment." },
+      { "question": "Who owns the finished software?", "answer": "Ownership and licensing are agreed clearly in the project contract. Custom project deliverables are structured so clients can operate and extend what is built for them." }
+    ]
+  },
+  {
+    "path": "/case-studies/proofit-property-inspection/",
+    "kind": "case-study",
+    "eyebrow": "Case study · Proofit",
+    "title": "A Clearer Path From Property Concern to Inspection",
+    "description": "How AlphaCodeAI shaped Proofit's responsive service experience and AI-guided enquiry path for property inspection customers.",
+    "lede": "Property concerns often begin with uncertainty. Proofit needed a digital experience that could explain technical services clearly and help homeowners take an appropriate next step.",
+    "promise": "Digital experience · AI guidance",
+    "heroImage": "/visuals/case-proofit.jpg",
+    "externalUrl": "https://proofitcompany.com",
+    "services": [
+      { "label": "AI chatbot development", "href": "/ai-chatbot-development/" },
+      { "label": "RAG knowledge systems", "href": "/rag-knowledge-systems/" }
+    ],
+    "sections": [
+      { "kicker": "Challenge", "title": "Make a technical service easier to navigate", "body": "Dense service categories and unfamiliar terminology made it difficult for homeowners to identify the right inspection path. The experience needed to educate without overwhelming and collect useful context before a conversation.", "items": ["Multiple property-concern categories", "Users with different levels of technical knowledge", "A need for concise guidance", "Clear transition from research to enquiry"] },
+      { "kicker": "Approach", "title": "Structure guidance around the customer's concern", "body": "We shaped a responsive service experience around recognisable problems and progressive detail. A concise assistant supports discovery and can route serious concerns toward an appointment rather than pretending to replace a qualified inspection.", "items": ["Service information architecture", "Responsive interface design", "Guided discovery", "Structured enquiry capture", "Human handoff", "Clear scope and limitations"] },
+      { "kicker": "Result", "title": "A calmer route to a qualified next step", "body": "The resulting experience brings services, supporting information and enquiry into one path. Visitors can understand the available help, share useful context and move toward an inspection with less ambiguity.", "items": ["Simpler service comparison", "More contextual enquiries", "AI guidance bounded by the service", "Mobile-friendly interaction"] }
+    ],
+    "proof": [],
+    "faqs": [
+      { "question": "Did the assistant replace a property inspector?", "answer": "No. Its role is to clarify service discovery and gather context. Serious property concerns are routed toward qualified human inspection." },
+      { "question": "What did AlphaCodeAI deliver?", "answer": "The work covered digital experience, structured service discovery, enquiry design and a concise AI-guidance layer." }
+    ]
+  },
+  {
+    "path": "/case-studies/opro-project-control/",
+    "kind": "case-study",
+    "eyebrow": "Case study · Opro Maldives",
+    "title": "One Operating View for Complex Property Projects",
+    "description": "How AlphaCodeAI designed a governed project-control product for Opro Maldives across budgets, milestones and stakeholder updates.",
+    "lede": "Complex property work creates a constant stream of cost, timing and approval information. Opro needed a clearer operating view without forcing every stakeholder into the same level of detail.",
+    "promise": "Product strategy · Project control",
+    "heroImage": "/visuals/case-opro.jpg",
+    "externalUrl": "https://opromaldives.com",
+    "services": [
+      { "label": "Custom AI software", "href": "/custom-ai-software-development/" },
+      { "label": "Generative AI development", "href": "/generative-ai-development/" }
+    ],
+    "sections": [
+      { "kicker": "Challenge", "title": "Information spread across files and working habits", "body": "Budgets, milestones, procurement dates and stakeholder updates were distributed across separate tools. That made it harder to see project health and identify the decisions that needed attention.", "items": ["Multiple information sources", "Different stakeholder needs", "Time-sensitive milestones", "Cost and decision visibility"] },
+      { "kicker": "Approach", "title": "Design around decisions, not dashboards", "body": "We organised the product around the questions each audience must answer. The system brings progress, cost variance, procurement and decision points into a governed view while keeping the underlying detail available.", "items": ["Role-focused views", "Milestone and cost structure", "Decision tracking", "Governed project data", "Clear status communication", "Product experience design"] },
+      { "kicker": "Result", "title": "A common operational picture", "body": "The product creates a clearer shared understanding of project state. Each audience can focus on relevant information while working from the same governed operating model.", "items": ["Central project view", "Clearer decision points", "Reduced reporting fragmentation", "Purposeful stakeholder communication"] }
+    ],
+    "proof": [],
+    "faqs": [
+      { "question": "What problem did the product solve?", "answer": "It brought fragmented project-control information into a clearer governed view for progress, cost and decisions." },
+      { "question": "Was the same dashboard shown to every user?", "answer": "No. The experience was designed around the different questions and levels of detail required by each audience." }
+    ]
+  },
+  {
+    "path": "/case-studies/shapotools-offer-workflow/",
+    "kind": "case-study",
+    "eyebrow": "Case study · Shapotools",
+    "title": "From Workbook Complexity to a Guided Offer Flow",
+    "description": "How AlphaCodeAI translated Shapotools' industrial configuration and pricing workflow into clearer offer-production software.",
+    "lede": "Specialist product configuration and pricing logic had accumulated inside a dense workbook. Shapotools needed a product that preserved the important rules while making the commercial journey easier to operate.",
+    "promise": "Workflow software · Offer operations",
+    "heroImage": "/visuals/case-shapotools.jpg",
+    "externalUrl": "https://shapotools.com",
+    "services": [
+      { "label": "Custom AI software", "href": "/custom-ai-software-development/" },
+      { "label": "RAG knowledge systems", "href": "/rag-knowledge-systems/" }
+    ],
+    "sections": [
+      { "kicker": "Challenge", "title": "Critical commercial logic hidden in a specialist workbook", "body": "Product configuration, pricing rules, revisions and offer documents depended on a tool that required deep specialist knowledge. The risk was not only usability—the logic also needed to remain visible and governable.", "items": ["Complex configuration options", "Pricing and rule dependencies", "Revision management", "Document production", "Specialist operating knowledge"] },
+      { "kicker": "Approach", "title": "Translate the rules into an explicit product journey", "body": "We mapped the commercial flow and turned important conditions into understandable interface states. Users can configure products, review notices, manage revisions and prepare an offer through a guided sequence.", "items": ["Workflow and rule mapping", "Guided product configuration", "Visible rule notices", "Revision controls", "Offer preparation", "Operational interface design"] },
+      { "kicker": "Result", "title": "A process people can follow and improve", "body": "The new experience makes the commercial workflow easier to understand without hiding its important constraints. Knowledge that lived in a workbook becomes part of an explicit, maintainable product flow.", "items": ["Clearer configuration journey", "Visible commercial rules", "Managed revisions", "Ready-to-share offer output"] }
+    ],
+    "proof": [],
+    "faqs": [
+      { "question": "Did the new product discard the workbook logic?", "answer": "No. The core commercial journey and its important rules were translated into explicit product behaviour and interface guidance." },
+      { "question": "What stages were included?", "answer": "The workflow covers product configuration, rule notices, revision management and preparation of a shareable offer." }
+    ]
+  },
+  {
+    "path": "/case-studies/okno-modhomes-experience/",
+    "kind": "case-study",
+    "eyebrow": "Case study · OKNO Modhomes",
+    "title": "An Immersive Introduction to Modular Living",
+    "description": "How AlphaCodeAI built a scroll-led 3D experience that helps OKNO Modhomes communicate architecture, landscape and brand philosophy.",
+    "lede": "A modular home is difficult to understand through plans alone. OKNO needed a digital experience capable of expressing not only the structure, but the relationship between home, landscape and pace of life.",
+    "promise": "Immersive web · 3D storytelling",
+    "heroImage": "/visuals/case-okno.jpg",
+    "externalUrl": "https://www.oknomodhomes.com/",
+    "services": [
+      { "label": "Custom AI software", "href": "/custom-ai-software-development/" },
+      { "label": "Mumbai AI development", "href": "/ai-development-company-mumbai/" }
+    ],
+    "sections": [
+      { "kicker": "Challenge", "title": "Communicate a spatial promise on a screen", "body": "The offer combines modular architecture with a strong relationship to place. Flat plans and conventional product pages could explain dimensions, but not the feeling that differentiates the brand.", "items": ["Spatial product story", "Architecture and landscape", "Premium visual standard", "A clear sales transition"] },
+      { "kicker": "Approach", "title": "Use scroll as a guided camera", "body": "We designed an immersive sequence that moves from city noise toward the home and its surroundings. Motion, framing and pacing reveal the proposition progressively instead of presenting a passive gallery.", "items": ["Scroll-led narrative", "3D environment", "Responsive interaction", "Performance-aware delivery", "Brand-led art direction"] },
+      { "kicker": "Result", "title": "Experience the philosophy before the conversation", "body": "The site gives prospective buyers a memorable first encounter with the product and its setting, providing emotional context before detailed specifications or a sales discussion.", "items": ["Distinctive product introduction", "Integrated architecture and landscape story", "Guided exploration", "Clear route to enquiry"] }
+    ],
+    "proof": [],
+    "faqs": [
+      { "question": "Why use a 3D web experience?", "answer": "The product promise is spatial and environmental. A guided 3D sequence can communicate that relationship more directly than isolated plans and still images." },
+      { "question": "What did AlphaCodeAI focus on?", "answer": "The work focused on immersive storytelling, scroll-led interaction, responsive behaviour and a clear transition toward the sales conversation." }
+    ]
+  }
+]

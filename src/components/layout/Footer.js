@@ -1,5 +1,4 @@
 import { EnvelopeIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline';
-import { scrollToSection } from '../../utils/scrollUtils';
 
 const LinkedInIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -13,7 +12,13 @@ const socials = [
   { icon: ChatBubbleLeftRightIcon, href: 'https://wa.me/918850313109', label: 'WhatsApp' }
 ];
 
-const quickLinks = ['Services', 'Solutions', 'Articles', 'Contact'];
+const quickLinks = [
+  { label: 'AI Development Mumbai', href: '/ai-development-company-mumbai/' },
+  { label: 'AI Agents', href: '/ai-agent-development/' },
+  { label: 'AI Chatbots', href: '/ai-chatbot-development/' },
+  { label: 'RAG Systems', href: '/rag-knowledge-systems/' },
+  { label: 'Contact', href: '/#contact' }
+];
 
 const partners = [
   { name: 'Terracon India', href: 'https://www.terraconindia.com/' },
@@ -74,13 +79,13 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2.5">
               {quickLinks.map((link) => (
-                <li key={link}>
-                  <button
-                    onClick={() => scrollToSection(link.toLowerCase())}
+                <li key={link.href}>
+                  <a
+                    href={link.href}
                     className="text-sm text-slate-400 transition-all hover:translate-x-1 hover:text-brand-cyan"
                   >
-                    {link}
-                  </button>
+                    {link.label}
+                  </a>
                 </li>
               ))}
             </ul>

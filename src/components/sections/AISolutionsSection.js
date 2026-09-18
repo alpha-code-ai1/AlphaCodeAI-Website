@@ -1,11 +1,8 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
 import { scrollToSection } from '../../utils/scrollUtils';
-import contentIcon from '../../assets/icons/content-generation.png';
-import videoIcon from '../../assets/icons/video-editing.png';
-import learningIcon from '../../assets/icons/personalized-learning.png';
-import medicalIcon from '../../assets/icons/medical-ai.png';
 import SectionHeading from '../ui/SectionHeading';
+import SignalIcon from '../ui/SignalIcon';
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -13,30 +10,26 @@ const aiSolutions = [
   {
     title: 'AI Content Generation',
     description: 'Generate high-quality content across formats and languages, on brand.',
-    image: contentIcon,
-    gradient: 'linear-gradient(135deg,#22D3EE,#3B82F6)',
-    glow: 'rgba(34,211,238,0.45)'
+    icon: 'content',
+    glow: 'rgba(67, 240, 218, 0.45)'
   },
   {
     title: 'AI-Driven Video Editing',
     description: 'Automated editing with intelligent scene and content analysis.',
-    image: videoIcon,
-    gradient: 'linear-gradient(135deg,#6366F1,#22D3EE)',
-    glow: 'rgba(99,102,241,0.45)'
+    icon: 'video',
+    glow: 'rgba(83, 216, 255, 0.45)'
   },
   {
     title: 'Personalized Learning',
     description: 'Adaptive learning platforms that tailor pace and path to each learner.',
-    image: learningIcon,
-    gradient: 'linear-gradient(135deg,#E879F9,#8B5CF6)',
-    glow: 'rgba(232,121,249,0.45)'
+    icon: 'learning',
+    glow: 'rgba(255, 184, 77, 0.4)'
   },
   {
     title: 'Medical AI Assistance',
     description: 'Supporting clinicians with AI-powered triage and diagnostic insights.',
-    image: medicalIcon,
-    gradient: 'linear-gradient(135deg,#8B5CF6,#6366F1)',
-    glow: 'rgba(139,92,246,0.45)'
+    icon: 'medical',
+    glow: 'rgba(67, 240, 218, 0.45)'
   }
 ];
 
@@ -73,15 +66,10 @@ const SolutionRow = ({ solution, index }) => {
             0{index + 1}
           </span>
 
-          {/* Icon tile */}
-          <img
-            src={solution.image}
-            alt=""
-            aria-hidden
-            draggable={false}
-            className="h-11 w-11 shrink-0 select-none transition-all duration-500 group-hover:-rotate-12 group-hover:scale-110 sm:h-14 sm:w-14"
-            style={{ filter: `drop-shadow(0 0 12px ${solution.glow})` }}
-          />
+          {/* Precision line icon */}
+          <span className="h-11 w-11 shrink-0 sm:h-14 sm:w-14">
+            <SignalIcon type={solution.icon} />
+          </span>
 
           {/* Title + description */}
           <span className="min-w-0 flex-1">

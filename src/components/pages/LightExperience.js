@@ -14,6 +14,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { scrollToSection } from '../../utils/scrollUtils';
 import './LightExperience.css';
+import { paintPachinkoSurface } from './pachinkoDrawing';
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -625,17 +626,7 @@ const PachinkoCapability = () => {
     dropRef.current = drop;
 
     const draw = () => {
-      context.clearRect(0, 0, width, height);
-      context.fillStyle = '#e8efff';
-      context.fillRect(0, 0, width, height);
-      context.strokeStyle = 'rgba(19, 71, 232, 0.12)';
-      context.lineWidth = 1;
-      for (let x = 0; x < width; x += 28) {
-        context.beginPath();
-        context.moveTo(x, 0);
-        context.lineTo(x, height);
-        context.stroke();
-      }
+      paintPachinkoSurface(context, width, height);
       pins.forEach((pin) => {
         context.beginPath();
         context.arc(pin.x, pin.y, 4, 0, Math.PI * 2);
@@ -1621,6 +1612,9 @@ const LightExperience = () => {
           </div>
           <p>Production-grade AI software for ambitious teams.</p>
           <div className="light-footer__links">
+            <a href="/ai-development-company-mumbai/">AI development Mumbai</a>
+            <a href="/ai-agent-development/">AI agents</a>
+            <a href="/rag-knowledge-systems/">RAG systems</a>
             <a href="https://www.linkedin.com/in/aryanchandwani/" target="_blank" rel="noreferrer">
               LinkedIn
             </a>

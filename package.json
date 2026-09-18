@@ -23,8 +23,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "generate:seo": "node scripts/generate-seo-pages.js public",
+    "prestart": "npm run generate:seo",
     "start": "react-scripts start",
+    "prebuild": "npm run generate:seo",
     "build": "react-scripts build",
+    "postbuild": "node scripts/generate-seo-pages.js build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

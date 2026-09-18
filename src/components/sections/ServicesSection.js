@@ -1,12 +1,7 @@
 import { motion } from 'framer-motion';
 import { scrollToSection } from '../../utils/scrollUtils';
-import chatbotsIcon from '../../assets/icons/chatbots-web-apps.png';
-import tradingIcon from '../../assets/icons/trading-platforms.png';
-import datastoresIcon from '../../assets/icons/ai-datastores.png';
-import cloudIcon from '../../assets/icons/cloud-solutions.png';
-import paymentsIcon from '../../assets/icons/payments-ecommerce.png';
-import enterpriseIcon from '../../assets/icons/enterprise-digitization.png';
 import SectionHeading from '../ui/SectionHeading';
+import SignalIcon from '../ui/SignalIcon';
 import TiltCard from '../ui/TiltCard';
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -16,49 +11,43 @@ const services = [
     title: 'AI Chatbots & Web Apps',
     description:
       'Custom AI-powered chatbots and web applications, built end-to-end and tailored to how your business actually works.',
-    image: chatbotsIcon,
-    gradient: 'linear-gradient(135deg,#8B5CF6,#6366F1)',
-    glow: 'rgba(139,92,246,0.5)'
+    icon: 'chat',
+    glow: 'rgba(67, 240, 218, 0.34)'
   },
   {
     title: 'Trading Platforms',
     description:
       'Advanced trading platforms with AI-driven insights, real-time data, and automated execution strategies.',
-    image: tradingIcon,
-    gradient: 'linear-gradient(135deg,#22D3EE,#3B82F6)',
-    glow: 'rgba(34,211,238,0.5)'
+    icon: 'trading',
+    glow: 'rgba(83, 216, 255, 0.34)'
   },
   {
     title: 'AI Custom Datastores',
     description:
       'Scalable, secure data storage optimized for AI workloads — embeddings, retrieval, and everything in between.',
-    image: datastoresIcon,
-    gradient: 'linear-gradient(135deg,#6366F1,#22D3EE)',
-    glow: 'rgba(99,102,241,0.5)'
+    icon: 'database',
+    glow: 'rgba(67, 240, 218, 0.34)'
   },
   {
     title: 'Cloud Solutions',
     description:
       'Enterprise-grade cloud infrastructure with AI-powered optimization, monitoring, and cost control.',
-    image: cloudIcon,
-    gradient: 'linear-gradient(135deg,#3B82F6,#8B5CF6)',
-    glow: 'rgba(59,130,246,0.5)'
+    icon: 'cloud',
+    glow: 'rgba(83, 216, 255, 0.34)'
   },
   {
     title: 'Payments & eCommerce',
     description:
       'Secure payment flows and AI-enhanced eCommerce experiences that convert and scale.',
-    image: paymentsIcon,
-    gradient: 'linear-gradient(135deg,#E879F9,#8B5CF6)',
-    glow: 'rgba(232,121,249,0.5)'
+    icon: 'commerce',
+    glow: 'rgba(255, 184, 77, 0.3)'
   },
   {
     title: 'Enterprise Digitization',
     description:
       'Complete digital transformation — turning manual, legacy workflows into modern, intelligent systems.',
-    image: enterpriseIcon,
-    gradient: 'linear-gradient(135deg,#22D3EE,#6366F1)',
-    glow: 'rgba(34,211,238,0.5)'
+    icon: 'enterprise',
+    glow: 'rgba(67, 240, 218, 0.34)'
   }
 ];
 
@@ -91,16 +80,9 @@ const ServiceCard = ({ service, index }) => {
             style={{ background: service.glow }}
           />
 
-          {/* Icon tile with orbiting spark */}
+          {/* Precision line icon with orbiting signal */}
           <div className="relative mb-12 h-14 w-14 sm:mb-14">
-            <img
-              src={service.image}
-              alt=""
-              aria-hidden
-              draggable={false}
-              className="h-full w-full select-none transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110"
-              style={{ filter: `drop-shadow(0 0 14px ${service.glow})` }}
-            />
+            <SignalIcon type={service.icon} />
             <div className="pointer-events-none absolute -inset-2 animate-orbit opacity-0 transition-opacity duration-500 group-hover:opacity-100 [animation-duration:4s]">
               <span className="absolute -top-0.5 left-1/2 h-1.5 w-1.5 rounded-full bg-brand-cyan shadow-[0_0_8px_#22d3ee]" />
             </div>

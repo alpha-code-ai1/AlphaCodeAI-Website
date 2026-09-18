@@ -33,6 +33,63 @@ test('defaults to the light experience and can switch themes', async () => {
   expect(window.localStorage.getItem('alphacodeai-theme')).toBe('dark');
 });
 
+test('shows the cybernetic guide only in the dark experience', async () => {
+  render(<App />);
+
+  expect(
+    screen.queryByRole('img', { name: /alphacodeai cybernetic guide/i })
+  ).not.toBeInTheDocument();
+
+  fireEvent.click(
+    screen.getByRole('switch', { name: /switch to dark experience/i })
+  );
+
+  expect(
+    await screen.findByRole('img', { name: /alphacodeai cybernetic guide/i })
+  ).toBeInTheDocument();
+  expect(screen.queryByText(/cursor \/ scan/i)).not.toBeInTheDocument();
+});
+
+test('scrubs the cybernetic guide frames using horizontal pointer position', async () => {
+  render(<App />);
+  fireEvent.click(
+    screen.getByRole('switch', { name: /switch to dark experience/i })
+  );
+
+  const guide = await screen.findByRole('img', {
+    name: /alphacodeai cybernetic guide/i
+  });
+  const cursorMedia = guide.querySelector('[data-cursor-media]');
+
+  fireEvent(
+    window,
+    new MouseEvent('mousemove', { clientX: window.innerWidth, clientY: 130 })
+  );
+
+  await waitFor(() => {
+    expect(Number(cursorMedia.dataset.frame)).toBe(96);
+  });
+});
+
+test('uses crisp vector symbols for dark capability cards', async () => {
+  render(<App />);
+  fireEvent.click(
+    screen.getByRole('switch', { name: /switch to dark experience/i })
+  );
+
+  const chatbotCard = await screen.findByRole('button', {
+    name: /ai chatbots & web apps/i
+  });
+  const medicalCard = screen.getByRole('button', {
+    name: /medical ai assistance/i
+  });
+
+  expect(chatbotCard.querySelector('[data-signal-icon="chat"]')).toBeInTheDocument();
+  expect(medicalCard.querySelector('[data-signal-icon="medical"]')).toBeInTheDocument();
+  expect(chatbotCard.querySelector('img')).not.toBeInTheDocument();
+  expect(medicalCard.querySelector('img')).not.toBeInTheDocument();
+});
+
 test('moves the mascot gaze and keeps the last touch position', async () => {
   render(<App />);
 

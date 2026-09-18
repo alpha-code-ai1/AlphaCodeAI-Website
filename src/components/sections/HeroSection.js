@@ -4,6 +4,7 @@ import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
 import { scrollToSection } from '../../utils/scrollUtils';
 import CountUp from '../ui/CountUp';
 import MagneticButton from '../ui/MagneticButton';
+import DarkCyberneticGuide from '../ui/DarkCyberneticGuide';
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -75,6 +76,8 @@ const HeroSection = () => {
           <span className="absolute -bottom-1 left-1/3 h-2 w-2 rounded-full bg-brand-fuchsia shadow-[0_0_12px_#e879f9]" />
         </div>
       </div>
+
+      <DarkCyberneticGuide />
 
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
