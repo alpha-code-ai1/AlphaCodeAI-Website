@@ -1219,9 +1219,35 @@ const SectionIntro = ({ index, eyebrow, title, copy }) => (
 const LightExperience = () => {
   const [activeSolution, setActiveSolution] = useState(solutions[0]);
   const { isLight } = useTheme();
+  const experienceRef = useRef(null);
+
+  useEffect(() => {
+    const root = experienceRef.current;
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let frame;
+    const followPointer = (event) => {
+      if (event.pointerType !== 'mouse' || motionPreference.matches) return;
+      const surface = event.target.closest(
+        '.light-capability, .light-case-study, .light-contact__visual'
+      );
+      if (!surface) return;
+      const { clientX, clientY } = event;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const rect = surface.getBoundingClientRect();
+        surface.style.setProperty('--surface-x', `${clientX - rect.left}px`);
+        surface.style.setProperty('--surface-y', `${clientY - rect.top}px`);
+      });
+    };
+    root.addEventListener('pointermove', followPointer, { passive: true });
+    return () => {
+      root.removeEventListener('pointermove', followPointer);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
 
   return (
-    <main className="light-experience">
+    <main ref={experienceRef} className="light-experience">
       <section id="home" className="light-hero">
         <div className="light-hero__grid" aria-hidden="true" />
         <div className="light-shell light-hero__layout">

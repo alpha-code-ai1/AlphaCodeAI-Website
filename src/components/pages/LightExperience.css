@@ -3725,7 +3725,41 @@ button.light-capability-play:focus-visible {
 }
 
 .app-dark .light-contact__side p {
-  color: #fff4ed;
+  color: var(--light-muted);
+}
+
+.app-dark .light-contact {
+  border-color: #303b50;
+  background: #0b101a;
+}
+
+.app-dark .light-contact__eyebrow {
+  color: #ff865f;
+}
+
+.app-dark .light-contact__visual {
+  border-color: #394354;
+  box-shadow: 7px 7px 0 #963d25;
+}
+
+.app-dark .light-contact__email {
+  border-bottom-color: #963d25;
+}
+
+.app-dark .light-contact__email svg {
+  color: #ff865f;
+}
+
+.app-dark .light-contact .light-button--whatsapp {
+  border-color: #36bb91;
+  background: #133a30;
+  box-shadow: 5px 5px 0 #247957;
+  color: #c8f9e5;
+}
+
+.app-dark .light-contact .light-button--whatsapp:hover {
+  background: #194b3d;
+  box-shadow: 1px 1px 0 #247957;
 }
 
 .app-dark .light-button--ink {
@@ -3752,6 +3786,87 @@ button.light-capability-play:focus-visible {
 
 .app-dark .light-claw-controls button:nth-child(2) {
   color: #fff;
+}
+
+/* Interaction details inspired by 21st.dev's Interactive Hover Button.
+   These treatments reuse the editorial shapes and the current theme palette. */
+.light-button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.light-button::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.14);
+  clip-path: circle(0% at 100% 100%);
+  transition: clip-path 440ms cubic-bezier(0.22, 1, 0.36, 1);
+  content: '';
+  pointer-events: none;
+}
+
+.light-button:is(:hover, :focus-visible)::before {
+  clip-path: circle(150% at 100% 100%);
+}
+
+.light-case-study,
+.light-contact__visual {
+  position: relative;
+}
+
+.light-capability::after,
+.light-case-study::after,
+.light-contact__visual::after {
+  position: absolute;
+  z-index: 6;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    250px circle at var(--surface-x, 50%) var(--surface-y, 50%),
+    color-mix(in srgb, var(--dark-card-accent, var(--light-blue)) 9%, transparent),
+    transparent 100%
+  );
+  transition: opacity 260ms ease;
+  content: '';
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .light-capability:hover::after,
+  .light-case-study:hover::after,
+  .light-contact__visual:hover::after {
+    opacity: 1;
+  }
+}
+
+.light-case-study__link svg,
+.light-contact__email svg {
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.light-case-study__link:is(:hover, :focus-visible) svg {
+  transform: translate(3px, -3px);
+}
+
+.light-contact__email:is(:hover, :focus-visible) svg {
+  transform: translateY(-3px) rotate(-8deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .light-button::before,
+  .light-capability::after,
+  .light-case-study::after,
+  .light-contact__visual::after {
+    display: none;
+  }
+
+  .light-case-study__link svg,
+  .light-contact__email svg {
+    transition: none;
+    transform: none !important;
+  }
 }
 
 @media (max-width: 820px) {
