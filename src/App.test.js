@@ -71,23 +71,27 @@ test('scrubs the cybernetic guide frames using horizontal pointer position', asy
   });
 });
 
-test('uses crisp vector symbols for dark capability cards', async () => {
+test('keeps the light experience sections and copy in the dark theme', async () => {
   render(<App />);
   fireEvent.click(
     screen.getByRole('switch', { name: /switch to dark experience/i })
   );
 
-  const chatbotCard = await screen.findByRole('button', {
-    name: /ai chatbots & web apps/i
-  });
-  const medicalCard = screen.getByRole('button', {
-    name: /medical ai assistance/i
-  });
-
-  expect(chatbotCard.querySelector('[data-signal-icon="chat"]')).toBeInTheDocument();
-  expect(medicalCard.querySelector('[data-signal-icon="medical"]')).toBeInTheDocument();
-  expect(chatbotCard.querySelector('img')).not.toBeInTheDocument();
-  expect(medicalCard.querySelector('img')).not.toBeInTheDocument();
+  expect(
+    await screen.findByRole('heading', {
+      name: /software with intelligence built in/i
+    })
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole('heading', {
+      name: /one team from first question to final release/i
+    })
+  ).toBeInTheDocument();
+  expect(screen.getByRole('region', { name: /selected clients/i })).toBeInTheDocument();
+  expect(screen.getAllByRole('group', { name: /case study chapter/i })).toHaveLength(2);
+  expect(
+    screen.queryByRole('img', { name: /friendly alphacodeai robot/i })
+  ).not.toBeInTheDocument();
 });
 
 test('moves the mascot gaze and keeps the last touch position', async () => {

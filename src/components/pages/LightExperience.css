@@ -3457,6 +3457,241 @@ button.light-capability-play:focus-visible {
   }
 }
 
+/* The homepage is one editorial system in both themes. Dark mode keeps the
+   light experience's composition and interactions, then remaps only its
+   material palette and hero character. */
+.app-dark .light-experience {
+  --light-ink: #f4f6ff;
+  --light-paper: #070811;
+  --light-paper-deep: #121426;
+  --light-white: #0c0e1a;
+  --light-blue: #7184ff;
+  --light-orange: #ff6338;
+  --light-yellow: #ffd34e;
+  --light-green: #35d6a7;
+  --light-muted: #a7aec3;
+  background: var(--light-paper);
+  color: var(--light-ink);
+  color-scheme: dark;
+}
+
+.app-dark .light-hero {
+  background:
+    radial-gradient(circle at 84% 16%, rgba(113, 132, 255, 0.2), transparent 28%),
+    radial-gradient(circle at 68% 48%, rgba(53, 214, 167, 0.06), transparent 34%),
+    var(--light-paper);
+}
+
+.app-dark .light-hero__grid,
+.app-dark .light-sorter-map,
+.app-dark .light-solution__diagram {
+  background-image:
+    linear-gradient(rgba(244, 246, 255, 0.075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 246, 255, 0.075) 1px, transparent 1px);
+}
+
+.app-dark .light-hero__lede,
+.app-dark .light-partners__heading p,
+.app-dark .light-partners__guide > span:not(.light-partners__progress),
+.app-dark .light-partner-card__body p,
+.app-dark .light-section-intro > p,
+.app-dark .light-capability-play__head > span,
+.app-dark .light-builder button,
+.app-dark .light-builder__status span,
+.app-dark .light-data-pipeline button,
+.app-dark .light-capability-sim__head span,
+.app-dark .light-knob-scale,
+.app-dark .light-knob-result span,
+.app-dark .light-sorter-result span,
+.app-dark .light-capability p,
+.app-dark .light-workbench__tabs button,
+.app-dark .light-solution__copy > p,
+.app-dark .light-solution__outcome span,
+.app-dark .light-pipeline__stage span,
+.app-dark .light-case-study__meta span:last-child,
+.app-dark .light-case-study dd,
+.app-dark .light-footer p,
+.app-dark .light-footer > .light-shell > span {
+  color: var(--light-muted);
+}
+
+.app-dark .light-hero__proof div + div {
+  border-left-color: rgba(244, 246, 255, 0.32);
+}
+
+.app-dark .light-hero__visual .cyber-guide {
+  position: relative;
+  inset: auto;
+  width: min(100%, calc((100svh - 168px) * 0.86));
+  margin: 0 auto -34px;
+  aspect-ratio: 0.86;
+  opacity: 1;
+}
+
+.app-dark .light-hero__visual .cyber-guide__halo {
+  background:
+    radial-gradient(circle at 54% 32%, rgba(53, 214, 167, 0.24), transparent 25%),
+    radial-gradient(circle at 58% 54%, rgba(113, 132, 255, 0.19), transparent 56%);
+}
+
+.app-dark .light-hero__visual .cyber-guide__sprite {
+  filter: contrast(1.08) saturate(1.08) drop-shadow(0 28px 34px rgba(0, 0, 0, 0.72));
+}
+
+.app-dark .light-capability-chapter:nth-child(1) .light-services__grid > div:nth-child(2) .light-capability,
+.app-dark .light-case-study-chapter:nth-child(1) .light-cases__grid > div:nth-child(2) .light-case-study {
+  background: #11172c;
+}
+
+.app-dark .light-capability-chapter:nth-child(2) .light-services__grid > div:nth-child(1) .light-capability,
+.app-dark .light-case-study-chapter:nth-child(2) .light-cases__grid > div:nth-child(2) .light-case-study {
+  background: #241510;
+}
+
+.app-dark .light-capability-chapter:nth-child(2) .light-services__grid > div:nth-child(2) .light-capability,
+.app-dark .light-case-study-chapter:nth-child(2) .light-cases__grid > div:nth-child(1) .light-case-study {
+  background: #211d0e;
+}
+
+.app-dark .light-capability-play,
+.app-dark .light-capability-sim,
+.app-dark .light-capability-sim__head,
+.app-dark .light-capability-sim__result,
+.app-dark .light-builder button,
+.app-dark .light-builder__status,
+.app-dark .light-data-pipeline button,
+.app-dark .light-data-pipeline button i,
+.app-dark .light-deploy__nodes i,
+.app-dark .light-sorter-scanner,
+.app-dark .light-sorter-gate::before,
+.app-dark .light-claw-result,
+.app-dark .light-workbench__frame,
+.app-dark .light-solution__diagram-head,
+.app-dark .light-pipeline__stage,
+.app-dark .light-solution__meter div {
+  background: var(--light-white);
+  color: var(--light-ink);
+}
+
+.app-dark .light-capability-play--builder,
+.app-dark .light-capability-sim--sorter,
+.app-dark .light-capability-sim--pachinko,
+.app-dark .light-workbench {
+  background: #11172c;
+}
+
+.app-dark .light-capability-play--pipeline,
+.app-dark .light-capability-sim--knob {
+  background:
+    radial-gradient(circle at 50% 48%, rgba(255, 99, 56, 0.16), transparent 38%),
+    #1c1111;
+}
+
+.app-dark .light-capability-play--deploy,
+.app-dark .light-capability-sim--claw {
+  background: #201d0d;
+}
+
+.app-dark .light-data-pipeline button.is-active {
+  background: #4a211a;
+}
+
+.app-dark .light-data-pipeline__readout i {
+  background: linear-gradient(
+    90deg,
+    var(--light-orange) var(--pipeline-progress),
+    var(--light-white) var(--pipeline-progress)
+  );
+}
+
+.app-dark .light-deploy__nodes i {
+  box-shadow: inset 0 0 0 5px var(--light-white);
+}
+
+.app-dark .light-claw-machine {
+  background-image:
+    linear-gradient(rgba(244, 246, 255, 0.075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 246, 255, 0.075) 1px, transparent 1px),
+    linear-gradient(180deg, #11172c, #201d0d);
+}
+
+.app-dark .light-claw-machine__rail {
+  background: repeating-linear-gradient(90deg, #0c0e1a 0 12px, #263052 12px 24px);
+}
+
+.app-dark .light-workbench__tabs {
+  background: var(--light-paper-deep);
+}
+
+.app-dark .light-workbench__tabs button {
+  border-bottom-color: rgba(244, 246, 255, 0.22);
+}
+
+.app-dark .light-solution__diagram {
+  background-color: var(--light-paper);
+}
+
+.app-dark .light-case-study dl {
+  border-top-color: rgba(244, 246, 255, 0.38);
+}
+
+.app-dark .light-case-study dl > div {
+  border-bottom-color: rgba(244, 246, 255, 0.24);
+}
+
+.app-dark .light-manifesto {
+  background: #03040a;
+  color: #fff;
+}
+
+.app-dark .light-contact__side p {
+  color: #fff4ed;
+}
+
+.app-dark .light-button--ink {
+  border-color: #070811;
+  background: #070811;
+  color: #fff;
+}
+
+.app-dark .light-section-intro__marker span:first-child,
+.app-dark .light-editorial-visual > span,
+.app-dark .light-partners__controls button,
+.app-dark .light-pachinko__routes b.is-active,
+.app-dark .light-builder button.is-active,
+.app-dark .light-deploy__footer button,
+.app-dark .light-sorter-bin,
+.app-dark .light-claw-prizes span,
+.app-dark .light-capability-sim__result button,
+.app-dark .light-sim-action,
+.app-dark .light-claw-controls button,
+.app-dark .light-workbench__tabs button:hover,
+.app-dark .light-workbench__tabs button.is-active {
+  color: #101728;
+}
+
+.app-dark .light-claw-controls button:nth-child(2) {
+  color: #fff;
+}
+
+@media (max-width: 820px) {
+  .app-dark .light-hero__visual .cyber-guide {
+    inset: auto;
+    width: min(78vw, 430px);
+    margin: 0 auto -26px;
+    opacity: 1 !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .app-dark .light-hero__visual .cyber-guide {
+    inset: auto;
+    width: min(88vw, 390px);
+    margin: 0 auto -22px;
+    opacity: 1 !important;
+  }
+}
+
 @media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
   .light-partners {
     min-height: var(--light-chapter-height);

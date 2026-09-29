@@ -24,7 +24,8 @@ const Navbar = () => {
   const { isLight } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
-  const navItems = isLight ? lightNavItems : darkNavItems;
+  const usesEditorialNavigation = location.pathname === '/' || isLight;
+  const navItems = usesEditorialNavigation ? lightNavItems : darkNavItems;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,7 +65,7 @@ const Navbar = () => {
     const scrollToTarget = () => {
       const element = document.getElementById(itemId);
       if (!element) return;
-      const headerOffset = isLight ? 104 : 90;
+      const headerOffset = usesEditorialNavigation ? 104 : 90;
       const offsetPosition =
         element.getBoundingClientRect().top + window.pageYOffset - headerOffset;
       window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
@@ -113,9 +114,9 @@ const Navbar = () => {
                 onClick={() => handleNavClick(item.id)}
                 className={isActive ? 'is-active' : ''}
               >
-                {isLight && <span>0{index + 1}</span>}
+                {usesEditorialNavigation && <span>0{index + 1}</span>}
                 {item.label}
-                {isActive && !isLight && (
+                {isActive && !usesEditorialNavigation && (
                   <motion.i
                     layoutId="navActive"
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}

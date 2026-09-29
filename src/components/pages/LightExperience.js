@@ -13,6 +13,8 @@ import {
   EnvelopeIcon
 } from '@heroicons/react/24/outline';
 import { scrollToSection } from '../../utils/scrollUtils';
+import { useTheme } from '../../context/ThemeContext';
+import DarkCyberneticGuide from '../ui/DarkCyberneticGuide';
 import './LightExperience.css';
 import { paintPachinkoSurface } from './pachinkoDrawing';
 
@@ -584,6 +586,7 @@ const PachinkoCapability = () => {
   const canvasRef = useRef(null);
   const dropRef = useRef(() => {});
   const [result, setResult] = useState('Ready for a live request');
+  const { isLight } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -604,7 +607,26 @@ const PachinkoCapability = () => {
     }
 
     let balls = [];
-    const basketColors = ['#70e6ff', '#ffc400', '#ff5b22'];
+    const palette = isLight
+      ? {
+          background: '#e8efff',
+          grid: 'rgba(19, 71, 232, 0.12)',
+          pin: '#1347e8',
+          pinGlow: 'rgba(19, 71, 232, 0.28)',
+          bin: 'rgba(255,253,247,0.74)',
+          line: 'rgba(16, 23, 40, 0.42)',
+          ink: '#101728'
+        }
+      : {
+          background: '#0b1020',
+          grid: 'rgba(113, 132, 255, 0.16)',
+          pin: '#7184ff',
+          pinGlow: 'rgba(113, 132, 255, 0.46)',
+          bin: 'rgba(12, 14, 26, 0.92)',
+          line: 'rgba(244, 246, 255, 0.46)',
+          ink: '#f4f6ff'
+        };
+    const basketColors = ['#70e6ff', '#ffd34e', '#ff6338'];
     const basketHits = [0, 0, 0];
     const basketLights = [0, 0, 0];
     let frame = 0;
@@ -626,12 +648,12 @@ const PachinkoCapability = () => {
     dropRef.current = drop;
 
     const draw = () => {
-      paintPachinkoSurface(context, width, height);
+      paintPachinkoSurface(context, width, height, palette);
       pins.forEach((pin) => {
         context.beginPath();
         context.arc(pin.x, pin.y, 4, 0, Math.PI * 2);
-        context.fillStyle = '#1347e8';
-        context.shadowColor = 'rgba(19, 71, 232, 0.28)';
+        context.fillStyle = palette.pin;
+        context.shadowColor = palette.pinGlow;
         context.shadowBlur = 5;
         context.fill();
       });
@@ -639,11 +661,11 @@ const PachinkoCapability = () => {
       bins.forEach((bin, index) => {
         const binWidth = width / 3;
         const isLit = window.performance.now() < basketLights[index];
-        context.fillStyle = isLit ? basketColors[index] : 'rgba(255,253,247,0.74)';
+        context.fillStyle = isLit ? basketColors[index] : palette.bin;
         context.fillRect(index * binWidth + 3, height - 38, binWidth - 6, 35);
-        context.strokeStyle = 'rgba(16, 23, 40, 0.42)';
+        context.strokeStyle = palette.line;
         context.strokeRect(index * binWidth + 3, height - 38, binWidth - 6, 35);
-        context.fillStyle = '#101728';
+        context.fillStyle = isLit ? '#101728' : palette.ink;
         context.font = '700 10px Space Grotesk, sans-serif';
         context.textAlign = 'center';
         context.fillText(
@@ -713,7 +735,7 @@ const PachinkoCapability = () => {
       active = false;
       window.cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [isLight]);
 
   return (
     <div className="light-capability-sim light-capability-sim--pachinko">
@@ -1192,6 +1214,7 @@ const SectionIntro = ({ index, eyebrow, title, copy }) => (
 
 const LightExperience = () => {
   const [activeSolution, setActiveSolution] = useState(solutions[0]);
+  const { isLight } = useTheme();
 
   return (
     <main className="light-experience">
@@ -1257,7 +1280,7 @@ const LightExperience = () => {
             transition={{ duration: 0.9, delay: 0.12, ease: EASE }}
             className="light-hero__visual"
           >
-            <InteractiveRobot />
+            {isLight ? <InteractiveRobot /> : <DarkCyberneticGuide />}
           </motion.div>
         </div>
         <div className="light-hero__rail" aria-label="Our process">

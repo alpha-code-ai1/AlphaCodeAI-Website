@@ -591,6 +591,150 @@
   color: #94a3b8;
 }
 
+/* The homepage navigation keeps the light site's editorial construction in
+   both palettes, just like the homepage sections beneath it. */
+.app-home.app-dark .site-nav--dark .site-nav__inner,
+.app-home.app-dark .site-nav--dark.site-nav--scrolled .site-nav__inner {
+  border: 2px solid #f4f6ff;
+  border-radius: 3px;
+  background: rgba(7, 8, 17, 0.92);
+  box-shadow: 5px 5px 0 #f4f6ff;
+  backdrop-filter: blur(14px);
+}
+
+.app-home.app-dark .site-nav--dark.site-nav--scrolled .site-nav__inner {
+  box-shadow: 3px 3px 0 #f4f6ff, 0 16px 45px rgba(0, 0, 0, 0.4);
+}
+
+.app-home.app-dark .site-nav--dark .site-nav__mark::after {
+  display: none;
+}
+
+.app-home.app-dark .site-nav--dark .site-nav__wordmark {
+  color: #f4f6ff;
+  letter-spacing: -0.055em;
+}
+
+.app-home.app-dark .site-nav--dark .site-nav__wordmark span {
+  background: none;
+  color: #7184ff;
+  -webkit-text-fill-color: currentColor;
+}
+
+.app-home.app-dark .site-nav--dark .site-nav__links {
+  gap: 12px;
+}
+
+.app-home.app-dark .site-nav--dark .site-nav__links button {
+  min-height: 46px;
+  padding: 0 4px;
+  border-radius: 0;
+  color: #a7aec3;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.app-home.app-dark .site-nav--dark .site-nav__links button span {
+  margin-right: 5px;
+  color: #757d91;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.app-home.app-dark .site-nav--dark .site-nav__links button::after {
+  position: absolute;
+  right: 4px;
+  bottom: 6px;
+  left: 4px;
+  height: 2px;
+  background: #ff6338;
+  content: '';
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 220ms ease;
+}
+
+.app-home.app-dark .site-nav--dark .site-nav__links button:hover,
+.app-home.app-dark .site-nav--dark .site-nav__links button.is-active {
+  color: #f4f6ff;
+}
+
+.app-home.app-dark .site-nav--dark .site-nav__links button:hover::after,
+.app-home.app-dark .site-nav--dark .site-nav__links button.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.app-home.app-dark .site-nav--dark .site-nav__cta {
+  border: 2px solid #f4f6ff;
+  border-radius: 2px;
+  background: #ff6338;
+  box-shadow: 3px 3px 0 #f4f6ff;
+  color: #070811;
+  font-family: 'Space Grotesk', sans-serif;
+  text-transform: uppercase;
+}
+
+.app-home.app-dark .site-nav--dark .site-nav__cta:hover {
+  box-shadow: 1px 1px 0 #f4f6ff;
+  transform: translate(2px, 2px);
+}
+
+.app-home.app-dark .site-nav--dark .theme-switch {
+  border: 2px solid #f4f6ff;
+  border-radius: 2px;
+  background: #070811;
+}
+
+.app-home.app-dark .site-nav--dark .theme-switch__label {
+  color: #848ba0;
+}
+
+.app-home.app-dark .site-nav--dark .theme-switch:not(.theme-switch--light) .theme-switch__label--dark,
+.app-home.app-dark .site-nav--dark .theme-switch--light .theme-switch__label--light {
+  color: #101728;
+}
+
+.app-home.app-dark .site-nav--dark .theme-switch__thumb {
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  border: 1px solid #f4f6ff;
+  border-radius: 0;
+  background: #ffd34e;
+  box-shadow: none;
+}
+
+.app-home.app-dark .site-nav--dark .site-nav__menu-button {
+  border-left: 2px solid #f4f6ff;
+  color: #f4f6ff;
+}
+
+.app-home.app-dark .site-nav--dark .site-nav__mobile {
+  background:
+    linear-gradient(rgba(244, 246, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 246, 255, 0.07) 1px, transparent 1px),
+    #070811;
+  background-size: 32px 32px;
+}
+
+.app-home.app-dark .site-nav--dark .site-nav__mobile-list > button {
+  border-bottom: 2px solid #f4f6ff;
+  color: #f4f6ff;
+}
+
+.app-home.app-dark .site-nav--dark .site-nav__mobile-list > button span {
+  color: #ff6338;
+}
+
+.app-home.app-dark .site-nav--dark .site-nav__mobile-theme {
+  color: #a7aec3;
+}
+
 /* Make existing article pages belong to the light experience too. */
 .app-light > .fixed.inset-x-0.top-0 {
   filter: none;
