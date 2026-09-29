@@ -185,6 +185,7 @@ const caseStudies = [
     result:
       'We shaped a responsive experience with guided service discovery, structured enquiry capture, and a concise AI assistant that can route serious property concerns toward an appointment.',
     image: '/visuals/case-proofit.jpg',
+    darkImage: '/visuals/case-proofit-dark.webp',
     imageAlt: 'A property inspector using a thermal camera inside a modern apartment.',
     logo: '/partners/proofit.jpg',
     logoBg: '#ffffff',
@@ -201,6 +202,7 @@ const caseStudies = [
     result:
       'We designed a governed project-control product that makes progress, cost variance, and decision points easier to understand while keeping each audience focused on the information it needs.',
     image: '/visuals/case-opro.jpg',
+    darkImage: '/visuals/case-opro-dark.webp',
     imageAlt: 'An island property project model arranged with schedule and cost-control tools.',
     logo: '/partners/opro.jpg',
     logoBg: '#ffffff',
@@ -217,6 +219,7 @@ const caseStudies = [
     result:
       'We built an immersive, scroll-led 3D experience that moves visitors from city noise toward the home, helping the brand express its design philosophy before the first sales conversation.',
     image: '/visuals/case-okno.jpg',
+    darkImage: '/visuals/case-okno-dark.webp',
     imageAlt: 'A modern modular home resting beside a river in a mountain valley.',
     logo: '/partners/okno.webp',
     logoBg: '#111111',
@@ -233,6 +236,7 @@ const caseStudies = [
     result:
       'We translated the core commercial journey into a clearer interface for configuring products, reviewing rule notices, managing revisions, and producing ready-to-share offers.',
     image: '/visuals/case-shapotools.jpg',
+    darkImage: '/visuals/case-shapotools-dark.webp',
     imageAlt: 'Industrial pump components arranged in a precise offer-production workflow.',
     logo: '/partners/shapotools.jpg',
     logoBg: '#333333',
@@ -1325,7 +1329,9 @@ const LightExperience = () => {
             />
             <Reveal className="light-editorial-visual light-editorial-visual--services">
               <img
-                src={`${process.env.PUBLIC_URL}/visuals/capabilities-workbench.jpg`}
+                src={`${process.env.PUBLIC_URL}/visuals/${
+                  isLight ? 'capabilities-workbench.jpg' : 'capabilities-workbench-dark.webp'
+                }`}
                 alt="A modular cobalt and orange AI production system connected by amber data pathways."
                 loading="lazy"
                 width="1536"
@@ -1471,7 +1477,9 @@ const LightExperience = () => {
           </Reveal>
           <Reveal delay={0.08} className="light-manifesto__visual">
             <img
-              src={`${process.env.PUBLIC_URL}/visuals/trust-core.jpg`}
+              src={`${process.env.PUBLIC_URL}/visuals/${
+                isLight ? 'trust-core.jpg' : 'trust-core-dark.webp'
+              }`}
               alt="A glowing intelligence core protected by glass, with three visible human-control levers."
               loading="lazy"
               width="1536"
@@ -1531,7 +1539,9 @@ const LightExperience = () => {
                       <article className="light-case-study">
                         <div className="light-case-study__image">
                           <img
-                            src={`${process.env.PUBLIC_URL}${study.image}`}
+                            src={`${process.env.PUBLIC_URL}${
+                              isLight ? study.image : study.darkImage
+                            }`}
                             alt={study.imageAlt}
                             loading="lazy"
                             width="1536"
@@ -1597,7 +1607,9 @@ const LightExperience = () => {
           <Reveal delay={0.1} className="light-contact__side">
             <div className="light-contact__visual">
               <img
-                src={`${process.env.PUBLIC_URL}/visuals/project-launch.jpg`}
+                src={`${process.env.PUBLIC_URL}/visuals/${
+                  isLight ? 'project-launch.jpg' : 'project-launch-dark.webp'
+                }`}
                 alt="A finished cobalt and orange AI product module ready to launch on a blueprint table."
                 loading="lazy"
                 width="1536"

@@ -92,6 +92,16 @@ test('keeps the light experience sections and copy in the dark theme', async () 
   expect(
     screen.queryByRole('img', { name: /friendly alphacodeai robot/i })
   ).not.toBeInTheDocument();
+  expect(
+    screen.getByRole('img', {
+      name: /modular cobalt and orange ai production system/i
+    })
+  ).toHaveAttribute('src', expect.stringContaining('capabilities-workbench-dark.webp'));
+  expect(
+    screen.getByRole('img', {
+      name: /property inspector using a thermal camera/i
+    })
+  ).toHaveAttribute('src', expect.stringContaining('case-proofit-dark.webp'));
 });
 
 test('moves the mascot gaze and keeps the last touch position', async () => {
