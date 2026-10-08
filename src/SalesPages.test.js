@@ -1,5 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import SalesPageContent from "./components/pages/SalesPageContent";
+import SalesPageContent, {
+  ProductPreview,
+} from "./components/pages/SalesPageContent";
+import offers from "./data/funnelOffers.json";
 import {
   ProjectBrief,
   buildBrief,
@@ -35,7 +38,7 @@ test.each(salesPages)("$title has one h1, contact and proof routes", (page) => {
     page.title,
   );
   expect(
-    screen.getByRole("link", { name: page.cta, exact: true }),
+    screen.getAllByRole("link", { name: page.cta, exact: true })[0],
   ).toHaveAttribute("href", "#project-brief");
   expect(
     screen.getByRole("link", { name: "Start on WhatsApp ↗" }).href,
@@ -49,23 +52,67 @@ test("optional brief creates correctly encoded drafts without claiming submissio
   const page = salesPages[0];
   render(<ProjectBrief page={page} />);
   fireEvent.click(screen.getByLabelText("Lead routing"));
+  fireEvent.click(
+    screen.getByRole("button", { name: "Continue", exact: true }),
+  );
   fireEvent.change(screen.getByLabelText(page.briefLabel), {
     target: { value: "CRM & forms + approvals?" },
   });
   fireEvent.change(screen.getByLabelText("When are you looking to start?"), {
     target: { value: "In the next 1–3 months" },
   });
-  const whatsapp = screen.getByRole("link", { name: "Open WhatsApp draft ↗" });
+  const whatsapp = screen.getByRole("link", {
+    name: "Continue on WhatsApp ↗",
+  });
   const draft = new URL(whatsapp.href).searchParams.get("text");
   expect(draft).toContain("CRM & forms + approvals?");
   expect(draft).toContain("Focus: Lead routing");
   expect(draft).toContain(page.path);
   expect(
-    screen.getByRole("link", { name: "Open email draft ↗" }).href,
+    screen.getByRole("link", { name: "Prefer email? Open a draft ↗" }).href,
   ).toContain(encodeURIComponent(draft));
   expect(screen.getByRole("status")).toHaveTextContent(
     "No automatic submission",
   );
+});
+
+test.each(salesPages)(
+  "$title has an interactive, clearly labelled example",
+  (page) => {
+    render(<ProductPreview page={page} />);
+    const scene = offers[page.theme].scenarios[1];
+    fireEvent.click(
+      screen.getByRole("button", { name: scene.name, exact: true }),
+    );
+    expect(
+      screen.getByRole("button", { name: scene.name, exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByText(scene.result)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Illustrative experience, not a live product/),
+    ).toBeInTheDocument();
+  },
+);
+
+test("brief can go back without losing details and does not require a category", () => {
+  render(<ProjectBrief page={salesPages[0]} />);
+  fireEvent.click(
+    screen.getByRole("button", { name: "Continue", exact: true }),
+  );
+  const field = screen.getByLabelText(salesPages[0].briefLabel);
+  fireEvent.change(field, { target: { value: "Keep this brief" } });
+  fireEvent.click(
+    screen.getByRole("button", { name: "← Change my selection" }),
+  );
+  fireEvent.click(
+    screen.getByRole("button", { name: "Continue", exact: true }),
+  );
+  expect(screen.getByLabelText(salesPages[0].briefLabel)).toHaveValue(
+    "Keep this brief",
+  );
+  expect(
+    screen.getByRole("heading", { name: "Let’s start the conversation." }),
+  ).toHaveFocus();
 });
 
 test("empty brief is useful and analytics never include entered content", () => {

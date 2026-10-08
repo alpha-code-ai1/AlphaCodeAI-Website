@@ -1,0 +1,76 @@
+{
+  "whatsapp": {
+    "headline": "More useful conversations.",
+    "highlight": "Less inbox chaos.",
+    "intro": "Give every enquiry a clear next step. A WhatsApp chatbot that answers common questions, qualifies interest and brings your team into the conversation at the right moment.",
+    "benefits": ["Answers from your approved information", "Enquiries with useful context", "A clear route to a real person"],
+    "offerName": "Your WhatsApp build plan",
+    "offerIntro": "Let’s figure out what your chatbot should actually do.",
+    "offerDetails": ["The conversations worth automating", "The handoff your team needs", "A focused first-build scope"],
+    "before": ["The same questions, answered manually", "Leads buried in an unstructured chat history", "Customers repeating themselves at handoff"],
+    "after": ["Useful answers from approved business content", "The right details collected in the conversation", "Your team picks up with the context intact"],
+    "transition": "Make the first conversation count.",
+    "visualLabel": "Your business, one conversation closer.",
+    "scenarios": [
+      {"name":"Sales enquiries","question":"Hi! Can you help us automate our enquiries?","reply":"Absolutely. What takes up the most time for your team?","choice":"Answering the same questions","result":"Enquiry summary ready for your team"},
+      {"name":"Customer support","question":"Where can I find help with my order?","reply":"I can help you find the right support. Would you like me to connect you with the team?","choice":"Yes, speak to a person","result":"Human handoff with conversation context"},
+      {"name":"Booking requests","question":"Can I arrange a consultation?","reply":"Let’s get your preferred day and what you’d like to discuss. The team will confirm availability.","choice":"Next week works for me","result":"Booking request ready for confirmation"}
+    ]
+  },
+  "workflow": {
+    "headline": "Give your team",
+    "highlight": "their time back.",
+    "intro": "Connect the tools. Cut the copy-paste. Build an AI workflow that handles the repetitive steps while your people stay in control of the decisions.",
+    "benefits": ["Work with the tools you already use", "Keep approvals where they matter", "Start with one measurable workflow"],
+    "offerName": "Your automation starting point",
+    "offerIntro": "Find the first workflow worth taking off your team’s plate.",
+    "offerDetails": ["A clear view of the bottleneck", "What to automate—and what to keep human", "The integrations and first-build scope"],
+    "before": ["Moving the same information between tools", "Chasing people for the next step", "Exceptions disappearing into inboxes"],
+    "after": ["Connected handoffs with validation", "Clear ownership and review points", "An exception queue the team can act on"],
+    "transition": "Your team is not an integration layer.",
+    "visualLabel": "One workflow. Fewer loose ends.",
+    "scenarios": [{"name":"Lead intake","input":"New website enquiry","action":"Extract & qualify","result":"CRM record ready for review"},{"name":"Operations","input":"Customer request received","action":"Classify & route","result":"Assigned to the right owner"},{"name":"Reporting","input":"Project updates collected","action":"Summarise & check","result":"Weekly brief ready to approve"}]
+  },
+  "mvp": {
+    "headline": "An AI idea is a start.",
+    "highlight": "Build what’s next.",
+    "intro": "Go from a promising concept to a product real users can try. We help you cut the scope, build the core experience and learn what deserves the next release.",
+    "benefits": ["One clear first-release scope", "A working end-to-end experience", "AI quality tested before you expand"],
+    "offerName": "Your first-release plan",
+    "offerIntro": "Find the smallest version that can answer your biggest question.",
+    "offerDetails": ["Your core user journey", "The riskiest assumptions to test", "A build scope with clear non-goals"],
+    "before": ["A pitch deck full of features", "A demo that only works on perfect inputs", "A roadmap without real user feedback"],
+    "after": ["One useful journey for a defined audience", "A pilot tested against realistic examples", "A next-build decision informed by users"],
+    "transition": "Less roadmap. More real-world learning.",
+    "visualLabel": "From the big idea to the first useful release.",
+    "scenarios": [{"name":"Define","input":"The core user problem","action":"One useful outcome","result":"First-release scope"},{"name":"Build","input":"A focused product journey","action":"Design + AI + engineering","result":"Working pilot experience"},{"name":"Learn","input":"Real user feedback","action":"Evaluate & prioritise","result":"A clearer next release"}]
+  },
+  "documents": {
+    "headline": "Stop retyping PDFs.",
+    "highlight": "Put your data to work.",
+    "intro": "Turn repeat documents into structured, reviewable data. Extract the fields you need, check them against your rules and move approved results into your systems.",
+    "benefits": ["Fields traced back to their source", "Validation before downstream use", "Human review for uncertain results"],
+    "offerName": "Your document-processing plan",
+    "offerIntro": "One document type. The right fields. A useful first pilot.",
+    "offerDetails": ["The fields and formats that matter", "Validation and review requirements", "A pilot scope and evaluation approach"],
+    "before": ["Rekeying information from PDFs", "Finding mistakes after data has moved on", "Different document layouts breaking the process"],
+    "after": ["Structured fields with source references", "Checks and a review queue before export", "A workflow evaluated on your actual formats"],
+    "transition": "Data entry should not be your bottleneck.",
+    "visualLabel": "The document goes in. Useful data comes out.",
+    "scenarios": [{"name":"Invoices","input":"Invoice_042.pdf","action":"Invoice number · Date · Total","result":"Validated fields ready for review"},{"name":"Forms","input":"Application_form.pdf","action":"Required fields · Missing information","result":"Incomplete records flagged"},{"name":"Reports","input":"Monthly_report.pdf","action":"Key fields · Source references","result":"Structured records ready to export"}]
+  },
+  "property": {
+    "headline": "A property enquiry.",
+    "highlight": "A real next step.",
+    "intro": "Help buyers find answers, share their requirements and request a site visit. Give your sales team a useful lead summary—not just another phone number.",
+    "benefits": ["Answers from approved project details", "Budget, location and timing in context", "Site-visit requests routed to your team"],
+    "offerName": "Your property lead-flow plan",
+    "offerIntro": "Build a better path from first interest to your sales team.",
+    "offerDetails": ["The buyer questions to answer", "The details your team needs to qualify", "A clear CRM and site-visit handoff"],
+    "before": ["A phone number without buyer requirements", "The same project questions taking up sales time", "Visit requests waiting for an owner"],
+    "after": ["A structured summary of what the buyer needs", "Answers grounded in maintained project content", "A request routed to the person who confirms it"],
+    "transition": "Start the sales conversation with context.",
+    "visualLabel": "Interest becomes a useful sales handoff.",
+    "scenarios": [{"name":"Understand","input":"Looking for a 2 BHK","action":"Location · Budget · Timeline","result":"Buyer requirements captured"},{"name":"Guide","input":"Tell me about this project","action":"Approved project information","result":"Questions answered or escalated"},{"name":"Connect","input":"I’d like to visit","action":"Preferred day & time","result":"Site-visit request sent to the team"}]
+  }
+}

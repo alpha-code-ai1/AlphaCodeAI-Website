@@ -1,236 +1,412 @@
-import React from "react";
+import React, { useState } from "react";
+import offers from "../../data/funnelOffers.json";
 
-// Kept free of browser dependencies: this exact content is also rendered at build time.
+const Arrow = () => <span aria-hidden="true">↗</span>;
+const Check = () => (
+  <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+    <path
+      d="m4 10 4 4 8-8"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export function ProductPreview({ page }) {
+  const offer = offers[page.theme];
+  const [selected, setSelected] = useState(0);
+  const scene = offer.scenarios[selected];
+  return (
+    <div className={`funnel-preview funnel-preview--${page.theme}`}>
+      <div className="funnel-preview-glow" aria-hidden="true" />
+      <div className="funnel-product">
+        <div className="funnel-product-chrome">
+          <span className="funnel-product-mark">a</span>
+          <span>
+            {page.theme === "whatsapp"
+              ? "Your business on WhatsApp"
+              : "Your next business workflow"}
+          </span>
+          <span className="funnel-example-badge">EXAMPLE</span>
+        </div>
+        <div
+          className="funnel-demo-tabs"
+          role="group"
+          aria-label="Explore example scenarios"
+        >
+          {offer.scenarios.map((scenario, index) => (
+            <button
+              key={scenario.name}
+              type="button"
+              aria-pressed={index === selected}
+              onClick={() => setSelected(index)}
+            >
+              {scenario.name}
+            </button>
+          ))}
+        </div>
+        <div className="funnel-demo-body" aria-live="polite">
+          {page.theme === "whatsapp" ? (
+            <>
+              <div className="funnel-chat-heading">
+                <span className="funnel-avatar">YB</span>
+                <div>
+                  <strong>Your business</strong>
+                  <small>
+                    <i />
+                    Business assistant
+                  </small>
+                </div>
+                <span aria-hidden="true">···</span>
+              </div>
+              <div className="funnel-chat-bubble funnel-chat-bubble--customer">
+                {scene.question}
+                <small>Customer</small>
+              </div>
+              <div className="funnel-chat-bubble">
+                {scene.reply}
+                <small>Your assistant</small>
+              </div>
+              <div className="funnel-chat-bubble funnel-chat-bubble--customer">
+                {scene.choice}
+                <span className="funnel-read" aria-hidden="true">
+                  ✓✓
+                </span>
+              </div>
+              <div className="funnel-chat-input">
+                A more helpful first conversation
+                <span aria-hidden="true">➤</span>
+              </div>
+            </>
+          ) : page.theme === "documents" ? (
+            <div className="funnel-document-demo">
+              <div className="funnel-document-sheet">
+                <span className="funnel-file-icon">PDF</span>
+                <strong>{scene.input}</strong>
+                <div className="funnel-document-lines" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                </div>
+                <span className="funnel-highlight-field">
+                  Source fields identified
+                </span>
+              </div>
+              <div className="funnel-extract-arrow" aria-hidden="true">
+                ↓
+              </div>
+              <div className="funnel-data-card">
+                <small>EXTRACTION + VALIDATION</small>
+                <strong>{scene.action}</strong>
+                <p>
+                  Source reference attached <Check />
+                </p>
+                <p>
+                  Review required before export <Check />
+                </p>
+              </div>
+            </div>
+          ) : page.theme === "mvp" ? (
+            <div className="funnel-mvp-demo">
+              <div className="funnel-mini-sidebar" aria-hidden="true">
+                <b>a</b>
+                <i />
+                <i />
+                <i />
+              </div>
+              <div className="funnel-mini-workspace">
+                <span className="funnel-small-label">YOUR FIRST RELEASE</span>
+                <h3>{scene.input}</h3>
+                <div className="funnel-app-panel">
+                  <span className="funnel-app-orb" aria-hidden="true">
+                    ✳
+                  </span>
+                  <strong>{scene.action}</strong>
+                  <p>One clear journey, designed around the user.</p>
+                </div>
+                <div className="funnel-mini-task">
+                  <Check />
+                  Scope the core experience
+                </div>
+                <div className="funnel-mini-task">
+                  <Check />
+                  Test the important edge cases
+                </div>
+                <div className="funnel-mini-progress">
+                  <i />
+                </div>
+                <small>Illustrative product workspace</small>
+              </div>
+            </div>
+          ) : page.theme === "property" ? (
+            <div className="funnel-property-demo">
+              <div className="funnel-property-scene" aria-hidden="true">
+                <svg viewBox="0 0 400 180">
+                  <path
+                    d="M0 180V155H400V180"
+                    fill="currentColor"
+                    opacity=".08"
+                  />
+                  <path
+                    d="M70 155V67L145 25L218 67V155M218 155V83L292 43L349 77V155"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
+                  <path
+                    d="M101 155V110H137V155M166 83H192V109H166ZM245 97H271V121H245ZM296 88H322V113H296Z"
+                    fill="currentColor"
+                    opacity=".2"
+                  />
+                  <path d="M43 156H366" stroke="currentColor" strokeWidth="2" />
+                </svg>
+                <span>YOUR PROJECT / YOUR INFORMATION</span>
+              </div>
+              <div className="funnel-property-question">“{scene.input}”</div>
+              <div className="funnel-lead-fields">
+                <span>ASSISTANT’S NEXT STEP</span>
+                <strong>{scene.action}</strong>
+                <p>Approved information. Relevant questions. Clear handoff.</p>
+              </div>
+            </div>
+          ) : (
+            <div className="funnel-automation-demo">
+              <div className="funnel-node">
+                <span className="funnel-node-icon">↙</span>
+                <div>
+                  <small>TRIGGER</small>
+                  <strong>{scene.input}</strong>
+                </div>
+                <span className="funnel-node-status">01</span>
+              </div>
+              <div className="funnel-connector" aria-hidden="true">
+                <i />↓
+              </div>
+              <div className="funnel-node funnel-node--ai">
+                <span className="funnel-node-icon">✳</span>
+                <div>
+                  <small>AI + YOUR BUSINESS RULES</small>
+                  <strong>{scene.action}</strong>
+                </div>
+                <span className="funnel-node-status">02</span>
+              </div>
+              <div className="funnel-connector" aria-hidden="true">
+                <i />↓
+              </div>
+              <div className="funnel-node">
+                <span className="funnel-node-icon">✓</span>
+                <div>
+                  <small>HUMAN CHECKPOINT</small>
+                  <strong>Review. Approve. Move forward.</strong>
+                </div>
+                <span className="funnel-node-status">03</span>
+              </div>
+              <div className="funnel-tool-row">
+                <span>Email</span>
+                <span>CRM</span>
+                <span>Tasks</span>
+                <span>Your team</span>
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="funnel-result">
+          <span className="funnel-result-icon">
+            <Check />
+          </span>
+          <div>
+            <small>THE NEXT STEP</small>
+            <strong>{scene.result}</strong>
+          </div>
+        </div>
+      </div>
+      <p className="funnel-demo-caption">
+        Illustrative experience, not a live product. Explore the examples above.
+      </p>
+    </div>
+  );
+}
+
+// Shared by client and static rendering, including all public offer and FAQ content.
 export default function SalesPageContent({ page, contact, themeControl }) {
+  const offer = offers[page.theme];
   const whatsapp = `https://wa.me/918850313109?text=${encodeURIComponent(`Hi AlphaCodeAI, I'd like to discuss ${page.title}.\nPage: https://www.alphacodeai.com${page.path}`)}`;
+  const cta = (
+    <>
+      {page.cta}
+      <Arrow />
+    </>
+  );
   return (
     <div className={`sales-page sales-page--${page.theme}`}>
       <a className="sales-skip" href="#sales-main">
         Skip to content
       </a>
-      <header className="sales-header">
+      <header className="sales-header sales-shell">
         <a href="/" className="sales-brand" aria-label="AlphaCodeAI home">
-          <span aria-hidden="true">a.</span>AlphaCodeAI
+          <span className="funnel-logo" aria-hidden="true">
+            a
+          </span>
+          AlphaCodeAI<span className="funnel-brand-label">FOR BUSINESS</span>
         </a>
         <div className="sales-header-actions">
           {themeControl}
           <a className="sales-button sales-button--small" href="#project-brief">
-            Let’s talk <span aria-hidden="true">↗</span>
+            {cta}
           </a>
         </div>
       </header>
       <main id="sales-main">
-        <section className="sales-hero sales-shell">
-          <div className="sales-hero-copy">
-            <p className="sales-eyebrow">
-              <span className="sales-dot" />
-              {page.eyebrow}
-            </p>
-            <h1>
-              <span className="sales-service-name">{page.title}</span>
-              {page.headline}
-            </h1>
-            <p className="sales-lede">{page.lede}</p>
-            <div className="sales-actions">
-              <a className="sales-button" href="#project-brief">
-                {page.cta}
-                <span aria-hidden="true">↗</span>
-              </a>
+        <div className="funnel-hero-band">
+          <section className="sales-hero sales-shell">
+            <div className="sales-hero-copy">
+              <p className="sales-eyebrow">
+                <span className="sales-dot" />
+                {page.eyebrow}
+              </p>
+              <h1>
+                <span className="sales-service-name">{page.title}. </span>
+                {offer.headline}
+                <em>{offer.highlight}</em>
+              </h1>
+              <p className="sales-lede">{offer.intro}</p>
               <a
-                className="sales-text-link"
-                href={whatsapp}
-                target="_blank"
-                rel="noreferrer"
-                data-contact-channel="whatsapp"
-                data-contact-placement="hero"
+                className="sales-button sales-button--hero"
+                href="#project-brief"
               >
-                Or chat on WhatsApp ↗
+                {cta}
               </a>
+              <p className="sales-quiet">
+                Talk directly to the builders. No obligation to start a project.
+              </p>
+              <ul className="funnel-hero-benefits">
+                {offer.benefits.map((benefit) => (
+                  <li key={benefit}>
+                    <Check />
+                    {benefit}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <p className="sales-quiet">
-              A direct conversation. No long form. No obligation to build.
-            </p>
-          </div>
-          <div
-            className="sales-blueprint"
-            aria-label={`Illustrative workflow: ${page.flowTitle}`}
-          >
-            <div className="sales-blueprint-top">
-              <span>ALPHA / FIELD NOTES</span>
-              <span>↗</span>
-            </div>
-            <div className="sales-blueprint-heading">
-              <span className="sales-spark" aria-hidden="true">
-                ✳
-              </span>
-              <h2>{page.flowTitle}</h2>
-            </div>
-            <ol className="sales-flow">
-              {page.flow.map((step, index) => (
-                <li key={step.label}>
-                  <span className="sales-flow-number" aria-hidden="true">
-                    {index + 1}
-                  </span>
-                  <div>
-                    <small>{step.label}</small>
-                    <strong>{step.title}</strong>
-                    <p>{step.detail}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <p className="sales-blueprint-note">
-              Illustrative flow · tailored to your systems
-            </p>
-          </div>
-        </section>
-        <div className="sales-strip">
-          <div className="sales-shell">
-            <span>{page.audience}</span>
-            <span>Mumbai-based. Built for teams everywhere. ↗</span>
-          </div>
+            <ProductPreview page={page} />
+          </section>
         </div>
         <section
-          className="sales-section sales-shell"
+          className="funnel-credibility sales-shell"
+          aria-label="Selected product work"
+        >
+          <div>
+            <span>BUILT BY ALPHACODEAI</span>
+            <p>
+              Product thinking.
+              <br />
+              <strong>Real engineering.</strong>
+            </p>
+          </div>
+          <div className="funnel-work-names">
+            <span>
+              Proofit<small>Property services</small>
+            </span>
+            <span>
+              Shapotools<small>Business workflows</small>
+            </span>
+            <span>
+              Opro<small>Project operations</small>
+            </span>
+          </div>
+          <p>
+            Mumbai-based.
+            <br />
+            Working with teams worldwide.
+          </p>
+        </section>
+        <section
+          className="sales-section sales-shell funnel-change"
           aria-labelledby="sales-problem"
         >
           <div className="sales-section-heading">
-            <p className="sales-eyebrow">01 / The opportunity</p>
-            <h2 id="sales-problem">{page.problemTitle}</h2>
+            <p className="sales-eyebrow">A better way to work</p>
+            <h2 id="sales-problem">{offer.transition}</h2>
             <p>{page.problemBody}</p>
           </div>
-          <div className="sales-use-grid">
-            {page.uses.map((use, index) => (
-              <article className="sales-use-card" key={use.title}>
-                <span className="sales-card-index">
-                  0{index + 1}
-                  <span aria-hidden="true">↗</span>
-                </span>
-                <h3>{use.title}</h3>
-                <p>{use.body}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-        <section className="sales-scope-band">
-          <div className="sales-shell sales-scope-grid">
-            <div>
-              <p className="sales-eyebrow">02 / A useful first build</p>
-              <h2>{page.scopeTitle}</h2>
-              <p className="sales-scope-intro">
-                Clear deliverables. Clear boundaries. Something your team can
-                actually use.
-              </p>
-              <a className="sales-text-link" href="#project-brief">
-                Talk through your scope <span aria-hidden="true">↗</span>
-              </a>
-            </div>
-            <div>
-              <ul className="sales-checklist">
-                {page.scope.map((item) => (
+          <div className="funnel-comparison">
+            <div className="funnel-before">
+              <span className="funnel-small-label">THE FRICTION TODAY</span>
+              <h3>More effort than it should take.</h3>
+              <ul>
+                {offer.before.map((item) => (
                   <li key={item}>
-                    <span aria-hidden="true">↗</span>
+                    <span aria-hidden="true">−</span>
                     {item}
                   </li>
                 ))}
               </ul>
-              <div className="sales-cost">
-                <strong>What affects cost & timing?</strong>
-                <p>{page.cost}</p>
-              </div>
+            </div>
+            <div className="funnel-after">
+              <span className="funnel-small-label">WHAT WE BUILD TOWARDS</span>
+              <h3>A clear path to the next step.</h3>
+              <ul>
+                {offer.after.map((item) => (
+                  <li key={item}>
+                    <Check />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
-        <section
-          className="sales-section sales-shell sales-proof"
-          aria-labelledby="sales-proof-heading"
-        >
-          <a
-            className="sales-proof-art"
-            href={page.proof.href}
-            aria-label={`Read the ${page.proof.client} case study`}
-          >
-            <img
-              className="sales-image-light"
-              src={page.proof.image}
-              alt=""
-              width="1536"
-              height="1024"
-              loading="lazy"
-            />
-            <img
-              className="sales-image-dark"
-              src={page.proof.darkImage}
-              alt=""
-              width="1536"
-              height="1024"
-              loading="lazy"
-            />
-            <span>{page.proof.client} / Selected work ↗</span>
-          </a>
-          <div>
-            <p className="sales-eyebrow">03 / The thinking behind the work</p>
-            <h2 id="sales-proof-heading">{page.proof.title}</h2>
-            <p>{page.proof.body}</p>
-            <a href={page.proof.href} className="sales-text-link">
-              Read the {page.proof.client} case study{" "}
-              <span aria-hidden="true">↗</span>
-            </a>
+        <section className="funnel-proof-band">
+          <div className="sales-shell sales-proof">
+            <div className="sales-proof-art">
+              <img
+                className="sales-image-light"
+                src={page.proof.image}
+                alt=""
+                width="1536"
+                height="1024"
+                loading="lazy"
+              />
+              <img
+                className="sales-image-dark"
+                src={page.proof.darkImage}
+                alt=""
+                width="1536"
+                height="1024"
+                loading="lazy"
+              />
+              <span>SELECTED WORK / {page.proof.client}</span>
+            </div>
+            <div>
+              <p className="sales-eyebrow">
+                See how we think. Not just what we promise.
+              </p>
+              <h2>{page.proof.title}</h2>
+              <p>{page.proof.body}</p>
+              <a href={page.proof.href} className="sales-text-link">
+                Read the {page.proof.client} case study <Arrow />
+              </a>
+            </div>
           </div>
         </section>
-        <section
-          className="sales-section sales-shell sales-process"
-          aria-labelledby="sales-process-heading"
-        >
+        <section className="sales-section sales-shell funnel-value">
           <div className="sales-section-heading">
-            <p className="sales-eyebrow">04 / From question to first release</p>
-            <h2 id="sales-process-heading">
-              Small enough to start.
-              <br />
-              Clear enough to move.
-            </h2>
+            <p className="sales-eyebrow">Built around the job you need done</p>
+            <h2>{page.scopeTitle}</h2>
           </div>
-          <ol className="sales-process-grid">
-            {page.steps.map((step, index) => (
-              <li key={step.title}>
-                <span>0{index + 1}</span>
-                <h3>{step.title}</h3>
-                <p>{step.body}</p>
-              </li>
-            ))}
-          </ol>
-          <div className="sales-fit">
-            <div>
-              <strong>A good fit</strong>
-              <p>{page.fit}</p>
-            </div>
-            <div>
-              <strong>Worth knowing first</strong>
-              <p>{page.notFit}</p>
-            </div>
-          </div>
-        </section>
-        <section
-          className="sales-section sales-shell sales-faq"
-          aria-labelledby="sales-faq-heading"
-        >
-          <div>
-            <p className="sales-eyebrow">05 / Before you decide</p>
-            <h2 id="sales-faq-heading">
-              Good questions.
-              <br />
-              Straight answers.
-            </h2>
-          </div>
-          <div>
-            {page.faqs.map((faq) => (
-              <details key={faq.question}>
-                <summary>
-                  {faq.question}
-                  <span aria-hidden="true">+</span>
-                </summary>
-                <p>{faq.answer}</p>
-              </details>
+          <div className="sales-use-grid">
+            {page.uses.map((use, index) => (
+              <article className="sales-use-card" key={use.title}>
+                <span className="funnel-value-icon" aria-hidden="true">
+                  {["↗", "◎", "⇄"][index]}
+                </span>
+                <h3>{use.title}</h3>
+                <p>{use.body}</p>
+              </article>
             ))}
           </div>
         </section>
@@ -240,16 +416,26 @@ export default function SalesPageContent({ page, contact, themeControl }) {
           aria-labelledby="sales-contact-heading"
         >
           <div className="sales-shell sales-contact-grid">
-            <div>
-              <p className="sales-eyebrow">Your next move</p>
-              <h2 id="sales-contact-heading">{page.offer}</h2>
-              <p>{page.offerBody}</p>
-              <div className="sales-contact-person">
-                <span aria-hidden="true">AC↗</span>
-                <div>
-                  <strong>Talk to AlphaCodeAI</strong>
-                  <small>Mumbai, India · Working with teams worldwide</small>
-                </div>
+            <div className="funnel-offer-copy">
+              <p className="sales-eyebrow">Let’s find your starting point</p>
+              <h2 id="sales-contact-heading">{offer.offerIntro}</h2>
+              <p className="funnel-offer-lede">
+                You bring the business problem. We’ll talk through:
+              </p>
+              <ul className="funnel-offer-list">
+                {offer.offerDetails.map((item) => (
+                  <li key={item}>
+                    <Check />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div className="funnel-no-pressure">
+                <strong>A conversation, not a commitment.</strong>
+                <p>
+                  We’ll discuss fit and scope before quoting a build. No
+                  detailed specification needed.
+                </p>
               </div>
               <a
                 className="sales-text-link"
@@ -257,17 +443,15 @@ export default function SalesPageContent({ page, contact, themeControl }) {
                 data-contact-channel="phone"
                 data-contact-placement="brief"
               >
-                Prefer a call? +91 88503 13109 ↗
+                Prefer to call? +91 88503 13109 <Arrow />
               </a>
             </div>
             <div className="sales-brief-card">
               {contact || (
                 <>
-                  <h3>Let’s talk about your project.</h3>
-                  <p>
-                    No detailed specification needed. A short description is
-                    enough to start.
-                  </p>
+                  <span className="funnel-small-label">{offer.offerName}</span>
+                  <h3>Tell us what you’re working on.</h3>
+                  <p>A short description is enough to start.</p>
                   <a
                     className="sales-button"
                     href={whatsapp}
@@ -287,18 +471,104 @@ export default function SalesPageContent({ page, contact, themeControl }) {
             </div>
           </div>
         </section>
+        <section className="sales-section sales-shell funnel-expectations">
+          <div className="sales-section-heading">
+            <p className="sales-eyebrow">What happens after you reach out?</p>
+            <h2>
+              No mystery process.
+              <br />
+              Just a clear next step.
+            </h2>
+          </div>
+          <ol className="sales-process-grid">
+            {page.steps.map((step, index) => (
+              <li key={step.title}>
+                <span>0{index + 1}</span>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </li>
+            ))}
+          </ol>
+          <details className="funnel-build-details">
+            <summary>
+              What’s included, what affects cost, and when we’re a good fit{" "}
+              <span aria-hidden="true">+</span>
+            </summary>
+            <div className="funnel-detail-grid">
+              <div>
+                <h3>Proposed build scope</h3>
+                <ul>
+                  {page.scope.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3>Cost & timing</h3>
+                <p>{page.cost}</p>
+                <h3>Is it a fit?</h3>
+                <p>{page.fit}</p>
+                <p>{page.notFit}</p>
+              </div>
+            </div>
+          </details>
+        </section>
+        <section className="sales-section sales-shell sales-faq">
+          <div>
+            <p className="sales-eyebrow">Before we talk</p>
+            <h2>
+              A few things
+              <br />
+              you might be wondering.
+            </h2>
+            <a className="sales-text-link" href="#project-brief">
+              Ask us something else <Arrow />
+            </a>
+          </div>
+          <div>
+            {page.faqs.map((faq) => (
+              <details key={faq.question}>
+                <summary>
+                  {faq.question}
+                  <span aria-hidden="true">+</span>
+                </summary>
+                <p>{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+        <section className="funnel-final sales-shell">
+          <span className="funnel-small-label">YOUR NEXT MOVE</span>
+          <h2>
+            {offer.headline}
+            <em>{offer.highlight}</em>
+          </h2>
+          <a href="#project-brief" className="sales-button">
+            {cta}
+          </a>
+          <p>No sign-up. No long brief. Just a useful first conversation.</p>
+        </section>
       </main>
       <footer className="sales-footer sales-shell">
-        <a className="sales-brand" href="/">
-          AlphaCodeAI<span aria-hidden="true">↗</span>
+        <a href="/" className="sales-brand">
+          AlphaCodeAI
         </a>
         <div>
           <a href={page.parent}>{page.parentLabel}</a>
           <a href="/">Back to the main site</a>
           <a href="mailto:aryanchandwani@gmail.com">Email us</a>
         </div>
-        <p>Thoughtful engineering. Useful outcomes.</p>
+        <p>AI product engineering · Mumbai, India</p>
       </footer>
+      <div className="funnel-sticky">
+        <div>
+          <strong>{offer.offerName}</strong>
+          <span>Start with a conversation.</span>
+        </div>
+        <a href="#project-brief" className="sales-button">
+          Let’s talk <Arrow />
+        </a>
+      </div>
     </div>
   );
 }

@@ -3,6 +3,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const authority = require("../src/data/authorityPages.json");
 const sales = require("../src/data/salesPages.json");
+const offers = require('../src/data/funnelOffers.json');
 const root = path.resolve(__dirname, "../build");
 const sitemap = fs.readFileSync(path.join(root, "sitemap.xml"), "utf8");
 const allPages = [...authority, ...sales];
@@ -44,7 +45,8 @@ for (const page of allPages) {
     page.faqs.length,
   );
   if (page.theme) {
-    assert.ok(html.includes(page.headline));
+    assert.ok(html.includes(offers[page.theme].headline.replaceAll("'", '&#x27;')));
+    assert.ok(html.includes(offers[page.theme].highlight.replaceAll("'", '&#x27;')));
     assert.ok(html.includes("https://wa.me/918850313109?text="));
     assert.ok(html.includes("mailto:aryanchandwani@gmail.com"));
     assert.ok(html.includes('id="project-brief"'));
