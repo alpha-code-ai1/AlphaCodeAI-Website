@@ -243,67 +243,7 @@ export default function SalesPageContent({ page, contact, themeControl }) {
       <Arrow />
     </>
   );
-  return (
-    <div className={`sales-page sales-page--${page.theme}`}>
-      <a className="sales-skip" href="#sales-main">
-        Skip to content
-      </a>
-      <header className="sales-header sales-shell">
-        <a href="/" className="sales-brand" aria-label="AlphaCodeAI home">
-          <span className="funnel-logo" aria-hidden="true">
-            <img className="campaign-brand-icon" src="/alpha.png" alt="" width="40" height="40" />
-          </span>
-          AlphaCodeAI
-          <span className="funnel-brand-label">BUILD BETTER BUSINESS</span>
-        </a>
-        <div className="sales-header-actions">
-          {themeControl}
-          <a className="sales-button sales-button--small" href="#project-brief">
-            {cta}
-          </a>
-        </div>
-      </header>
-      <main id="sales-main">
-        <div className="funnel-hero-band">
-          <section className="sales-hero sales-shell">
-            <div className="sales-hero-copy">
-              <p className="sales-eyebrow">
-                <span className="sales-dot" />
-                {page.eyebrow}
-              </p>
-              <h1>
-                <span className="sales-service-name">{page.title}. </span>
-                {offer.headline}
-                <em>{offer.highlight}</em>
-              </h1>
-              <p className="sales-lede">{offer.intro}</p>
-              <a
-                className="sales-button sales-button--hero"
-                href="#project-brief"
-              >
-                {cta}
-              </a>
-              <p className="sales-quiet">
-                Free instant checklist. No email gate. No obligation.
-              </p>
-              <ul className="funnel-hero-benefits">
-                {offer.benefits.map((benefit) => (
-                  <li key={benefit}>
-                    <Check />
-                    {benefit}
-                  </li>
-                ))}
-              </ul>
-              <a className="campaign-proof-link" href={page.proof.href}>
-                <span className="campaign-proof-monogram" aria-hidden="true">
-                  {page.proof.client.slice(0, 1)}
-                </span>
-                <span>
-                  <small>{plan.proofLabel}</small>
-                  <strong>Explore our {page.proof.client} work ↗</strong>
-                </span>
-              </a>
-            </div>
+  const planner = (
             <div className="campaign-planner" id="project-brief">
               <div className="campaign-planner-label">
                 <span>YOUR NEXT MOVE, MADE CLEAR</span>
@@ -315,9 +255,7 @@ export default function SalesPageContent({ page, contact, themeControl }) {
                     <span className="funnel-small-label">{plan.label}</span>
                     <h3>A useful starting point. No guesswork.</h3>
                     <p>
-                      {plan.deliverable} With JavaScript enabled, choose your
-                      focus to build it instantly. Or speak directly to the
-                      builders:
+                      {plan.deliverable} Choose your focus for a useful starting checklist, or speak directly to the builders:
                     </p>
                     <ol className="campaign-plan-list">
                       <li>{plan.focusActions[3]}</li>
@@ -346,6 +284,73 @@ export default function SalesPageContent({ page, contact, themeControl }) {
                 plan
               </p>
             </div>
+  );
+  return (
+    <div className={`sales-page sales-page--${page.theme}`}>
+      <a className="sales-skip" href="#sales-main">
+        Skip to content
+      </a>
+      <header className="sales-header sales-shell">
+        <a href="/" className="sales-brand" aria-label="AlphaCodeAI home">
+          <span className="funnel-logo" aria-hidden="true">
+            <img className="campaign-brand-icon" src="/alpha.png" alt="" width="40" height="40" />
+          </span>
+          AlphaCodeAI
+          <span className="funnel-brand-label">BUILD BETTER BUSINESS</span>
+        </a>
+        <div className="sales-header-actions">
+          {themeControl}
+          <a className="sales-button sales-button--small" href={whatsapp} target="_blank" rel="noreferrer" data-contact-channel="whatsapp" data-contact-placement="header">
+            Let’s talk <Arrow />
+          </a>
+        </div>
+      </header>
+      <main id="sales-main">
+        <div className="funnel-hero-band">
+          <section className="sales-hero sales-shell">
+            <div className="sales-hero-copy">
+              <p className="sales-eyebrow">
+                <span className="sales-dot" />
+                {page.eyebrow}
+              </p>
+              <h1>
+                <span className="sales-service-name">{page.title}. </span>
+                {offer.headline}
+                <em>{offer.highlight}</em>
+              </h1>
+              <p className="sales-lede">{offer.intro}</p>
+              <div className="campaign-hero-actions">
+                <a className="sales-button sales-button--hero" href={whatsapp} target="_blank" rel="noreferrer" data-contact-channel="whatsapp" data-contact-placement="hero">
+                  {offer.contactCta} <Arrow />
+                </a>
+                <a className="campaign-plan-link" href="#project-brief">{cta} <span aria-hidden="true">↓</span></a>
+              </div>
+              <p className="sales-quiet">Talk directly to the builders. No long form.</p>
+              <ul className="funnel-hero-benefits">
+                {offer.benefits.map((benefit) => (
+                  <li key={benefit}>
+                    <Check />
+                    {benefit}
+                  </li>
+                ))}
+              </ul>
+              <a className="campaign-proof-link" href={page.proof.href}>
+                <span className="campaign-proof-monogram" aria-hidden="true">
+                  {page.proof.client.slice(0, 1)}
+                </span>
+                <span>
+                  <small>{plan.proofLabel}</small>
+                  <strong>Explore our {page.proof.client} work ↗</strong>
+                </span>
+              </a>
+            </div>
+            <figure className="campaign-hero-art">
+              <picture>
+                <source media="(max-width: 760px)" srcSet={page.heroImage.replace(".webp", "-640.webp")} />
+                <img src={page.heroImage} alt={offer.heroAlt} width="1200" height="800" fetchpriority="high" />
+              </picture>
+              <figcaption><span className="campaign-art-dot" />{offer.visualLabel}</figcaption>
+            </figure>
           </section>
         </div>
         <section
@@ -478,6 +483,16 @@ export default function SalesPageContent({ page, contact, themeControl }) {
               </article>
             ))}
           </div>
+        </section>
+        <section className="campaign-planning sales-shell" aria-labelledby="campaign-planning-heading">
+          <div className="campaign-planning-copy">
+            <p className="sales-eyebrow">YOUR FIRST STEP, NOT A BIG COMMITMENT</p>
+            <h2 id="campaign-planning-heading">Start with one<br />useful change.</h2>
+            <p>Not sure where to begin? Choose your focus and get a short starting checklist. No email required.</p>
+            <p>Already have a task in mind? Tell us what happens today and what you want to improve.</p>
+            <a className="sales-text-link" href={whatsapp} target="_blank" rel="noreferrer" data-contact-channel="whatsapp" data-contact-placement="planner">Talk it through with us <Arrow /></a>
+          </div>
+          {planner}
         </section>
         <section
           className="sales-contact-band"
@@ -622,13 +637,10 @@ export default function SalesPageContent({ page, contact, themeControl }) {
             {offer.headline}
             <em>{offer.highlight}</em>
           </h2>
-          <a href="#project-brief" className="sales-button">
-            {cta}
+          <a href={whatsapp} className="sales-button" target="_blank" rel="noreferrer" data-contact-channel="whatsapp" data-contact-placement="final">
+            {offer.contactCta} <Arrow />
           </a>
-          <p>
-            Get your starting checklist now. Talk to the builders when you’re
-            ready.
-          </p>
+          <p>One conversation. A clearer next step.</p>
         </section>
       </main>
       <footer className="sales-footer sales-shell">
@@ -645,11 +657,11 @@ export default function SalesPageContent({ page, contact, themeControl }) {
       </footer>
       <div className="funnel-sticky">
         <div>
-          <strong>{plan.label}</strong>
-          <span>Free. Instant. No email gate.</span>
+          <strong>Let’s build something useful.</strong>
+          <span>Speak directly to our team.</span>
         </div>
-        <a href="#project-brief" className="sales-button">
-          Get my plan <Arrow />
+        <a href={whatsapp} className="sales-button" target="_blank" rel="noreferrer" data-contact-channel="whatsapp" data-contact-placement="sticky">
+          Let’s talk <Arrow />
         </a>
       </div>
     </div>

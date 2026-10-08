@@ -12,7 +12,7 @@ export const ThemeProvider = ({ children, initialTheme = 'light', campaign = fal
     document
       .querySelector('meta[name="theme-color"]')
       ?.setAttribute('content', campaign
-        ? (theme === 'light' ? '#f7f7f0' : '#111b17')
+        ? (theme === 'light' ? '#faf8f1' : '#000000')
         : (theme === 'light' ? '#f4f0e6' : '#050014'));
     window.localStorage.setItem(STORAGE_KEY, theme);
   }, [theme, campaign]);

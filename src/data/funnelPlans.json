@@ -153,5 +153,36 @@
     "proofLabel": "Related property-sector experience",
     "fitTitle": "Incoming interest. Maintained project information.",
     "metric": "Lead completeness, routing reliability and follow-up quality"
+  },
+  "automation": {
+    "label": "AI automation starter plan",
+    "question": "Where are you with automation?",
+    "stages": [
+      "Exploring what AI can help with",
+      "A repeated task we want to improve",
+      "Existing systems ready to connect"
+    ],
+    "directions": [
+      "Find a useful business problem first.",
+      "Build a bounded first pilot.",
+      "Validate the connected workflow."
+    ],
+    "actions": [
+      "Document the trigger, owner and exception path using one real example.",
+      "Measure current handling time and choose one success measure for a pilot.",
+      "Confirm API access, permissions and a manual fallback for each connected tool."
+    ],
+    "focusActions": [
+      "Trace one lead from arrival to a useful next step for sales.",
+      "Choose one document or request and define its correct output.",
+      "List approved answers and the questions that need a person.",
+      "Choose a repeated task with a clear input, owner and outcome."
+    ],
+    "checkpoint": "Decide which actions always require a person’s approval.",
+    "bring": "A process example, the tools involved and an approximate weekly volume.",
+    "deliverable": "A first-pilot checklist with the business outcome, boundaries and next decision.",
+    "proofLabel": "Real business workflow engineering",
+    "fitTitle": "AI that fits the way your business works.",
+    "metric": "Time spent, output quality and successful handoffs"
   }
 }

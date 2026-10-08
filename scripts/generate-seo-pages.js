@@ -140,8 +140,8 @@ const updateHead = (html, page) => {
   if (page.theme) {
     html = html
       .replace('data-theme="light"', 'data-theme="dark"')
-      .replace(/<meta\s+name="theme-color"[^>]*>/i, '<meta name="theme-color" content="#111b17" />')
-      .replace('</head>', '<style>html[data-theme="dark"]:has(.sales-page),html[data-theme="dark"]:has(.sales-page) body{background:#111b17;color-scheme:dark}</style></head>');
+      .replace(/<meta\s+name="theme-color"[^>]*>/i, '<meta name="theme-color" content="#000000" />')
+      .replace('</head>', '<style>html[data-theme="dark"]:has(.sales-page),html[data-theme="dark"]:has(.sales-page) body{background:#000000;color-scheme:dark}</style></head>');
   }
 
   return html

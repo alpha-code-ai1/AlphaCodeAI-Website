@@ -1,8 +1,8 @@
 {
   "whatsapp": {
-    "headline": "Your next customer is on WhatsApp.",
-    "highlight": "Make the conversation count.",
-    "intro": "Give every enquiry a clear next step. A WhatsApp chatbot that answers common questions, qualifies interest and brings your team into the conversation at the right moment.",
+    "headline": "Better conversations.",
+    "highlight": "On WhatsApp.",
+    "intro": "Turn common questions into useful answers and enquiries into clear next steps. A custom WhatsApp AI assistant, with your team ready to take over.",
     "benefits": [
       "Answers from your approved information",
       "Enquiries with useful context",
@@ -49,12 +49,14 @@
         "choice": "Next week works for me",
         "result": "Booking request ready for confirmation"
       }
-    ]
+    ],
+    "contactCta": "Discuss my chatbot",
+    "heroAlt": "Graphite smartphone connected to conversation panels and a human handoff"
   },
   "workflow": {
-    "headline": "Stop paying your team to copy and paste.",
-    "highlight": "Automate the busywork.",
-    "intro": "Connect the tools. Cut the copy-paste. Build an AI workflow that handles the repetitive steps while your people stay in control of the decisions.",
+    "headline": "Connected workflows.",
+    "highlight": "Less manual work.",
+    "intro": "Connect your CRM, inbox and everyday tools with AI workflows built around your team. Start with one bottleneck. Keep control of every important decision.",
     "benefits": [
       "Work with the tools you already use",
       "Keep approvals where they matter",
@@ -77,7 +79,7 @@
       "Clear ownership and review points",
       "An exception queue the team can act on"
     ],
-    "transition": "Your team is not an integration layer.",
+    "transition": "Less friction between your tools and your team.",
     "visualLabel": "One workflow. Fewer loose ends.",
     "scenarios": [
       {
@@ -98,12 +100,14 @@
         "action": "Summarise & check",
         "result": "Weekly brief ready to approve"
       }
-    ]
+    ],
+    "contactCta": "Discuss my workflow",
+    "heroAlt": "AI processor connecting incoming messages to organised data and completed tasks"
   },
   "mvp": {
-    "headline": "Your AI idea needs users.",
-    "highlight": "Not another pitch deck.",
-    "intro": "Go from a promising concept to a product real users can try. We help you cut the scope, build the core experience and learn what deserves the next release.",
+    "headline": "Your AI product.",
+    "highlight": "Built for real users.",
+    "intro": "Turn a promising idea into a focused product people can use. Design, AI and engineering from one team, with a clear first-release scope.",
     "benefits": [
       "One clear first-release scope",
       "A working end-to-end experience",
@@ -147,12 +151,14 @@
         "action": "Evaluate & prioritise",
         "result": "A clearer next release"
       }
-    ]
+    ],
+    "contactCta": "Discuss my AI product",
+    "heroAlt": "Layered product interface assembled around a golden core"
   },
   "documents": {
-    "headline": "Your team reads the same PDFs all day.",
-    "highlight": "Give them better work.",
-    "intro": "Turn repeat documents into structured, reviewable data. Extract the fields you need, check them against your rules and move approved results into your systems.",
+    "headline": "From documents",
+    "highlight": "to useful data.",
+    "intro": "Turn PDFs, invoices and forms into structured information. Extract the right fields, validate the results and send uncertain cases to your team.",
     "benefits": [
       "Fields traced back to their source",
       "Validation before downstream use",
@@ -196,12 +202,14 @@
         "action": "Key fields · Source references",
         "result": "Structured records ready to export"
       }
-    ]
+    ],
+    "contactCta": "Discuss document AI",
+    "heroAlt": "Document fields flowing into a structured data table"
   },
   "property": {
-    "headline": "Another property lead. Just a phone number?",
-    "highlight": "Get the full picture.",
-    "intro": "Help buyers find answers, share their requirements and request a site visit. Give your sales team a useful lead summary—not just another phone number.",
+    "headline": "Better property leads.",
+    "highlight": "From the first chat.",
+    "intro": "Help buyers get answers and share what they need. Give your sales team structured enquiries and a clear path to the next conversation.",
     "benefits": [
       "Answers from approved project details",
       "Budget, location and timing in context",
@@ -245,6 +253,59 @@
         "action": "Preferred day & time",
         "result": "Site-visit request sent to the team"
       }
-    ]
+    ],
+    "contactCta": "Discuss my lead flow",
+    "heroAlt": "Residential architectural model connected to enquiry and qualification panels"
+  },
+  "automation": {
+    "headline": "AI automation.",
+    "highlight": "Built for your business.",
+    "intro": "Custom AI agents and connected workflows for sales, support and operations. Built around your tools, your team and the way your business works.",
+    "benefits": [
+      "Connect the tools you already use",
+      "Keep your team in control",
+      "Start with one useful pilot"
+    ],
+    "offerName": "Your AI automation starting point",
+    "offerIntro": "Let’s find your most useful first automation.",
+    "offerDetails": [
+      "A business task worth improving",
+      "The AI, rules and integrations it needs",
+      "A focused pilot with clear success measures"
+    ],
+    "before": [
+      "Moving the same information between tools",
+      "Chasing people for the next step",
+      "Exceptions disappearing into inboxes"
+    ],
+    "after": [
+      "Connected handoffs with validation",
+      "Clear ownership and review points",
+      "An exception queue the team can act on"
+    ],
+    "transition": "Your tools should work together. So should your AI.",
+    "visualLabel": "From incoming work to the next useful action.",
+    "scenarios": [
+      {
+        "name": "Sales",
+        "input": "Enquiry from your website",
+        "action": "Understand & prepare CRM details",
+        "result": "A lead with context and an owner"
+      },
+      {
+        "name": "Operations",
+        "input": "Document or service request",
+        "action": "Extract, check & route",
+        "result": "Structured work ready for approval"
+      },
+      {
+        "name": "Support",
+        "input": "Customer question received",
+        "action": "Find approved answers & escalate",
+        "result": "A useful response or a human handoff"
+      }
+    ],
+    "contactCta": "Discuss AI automation",
+    "heroAlt": "AI processor connecting incoming messages to organised data and completed tasks"
   }
 }

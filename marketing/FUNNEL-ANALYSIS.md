@@ -1,14 +1,14 @@
 # AlphaCodeAI sales funnel analysis
 
-Date: 8 October 2026. Business: custom AI development services. Funnel: lead generation into a scoped sales conversation. Scope: the five service campaigns, not the main website or existing authority pages. Method: the installed `market-funnel` skill, live workflow-page inspection, shared component and route inspection, and the existing keyword research.
+Date: 8 October 2026. Business: custom AI development services. Funnel: lead generation into a scoped sales conversation. Scope: six service campaigns, including the new `/ai-automation/` flagship, not the main website or existing authority pages. Method: the installed `market-funnel` skill, live workflow-page inspection, shared component and route inspection, and the existing keyword research.
 
 ## Executive summary
 
 The original five campaigns explained services, but offered little immediate value before asking visitors to start a conversation. The main CTA led past several sections to an optional two-step brief. Relevant work appeared farther down the page, and cost context was collapsed. These are plausible friction points, not measured drop-off findings.
 
-The remake puts a free, service-specific starter planner in the hero. Visitors choose a focus and their current readiness, see a rules-based checklist immediately, and can download it without supplying an email address. A direct WhatsApp shortcut remains for high-intent buyers. The result leads into a contextual WhatsApp or email draft; neither is misrepresented as a submitted enquiry.
+The mobile-focused revision puts direct WhatsApp contact in the hero and persistent mobile action bar. The optional service-specific starter planner sits below the solution, evidence and use cases rather than occupying the first screen. Visitors can choose a focus and readiness, see a rules-based checklist immediately, and download it without an email address. The result leads into a contextual WhatsApp or email draft; neither is misrepresented as a submitted enquiry.
 
-The visual system is independent of the main site: ink, warm neutral surfaces and a high-contrast lime action colour. The persuasion sequence is outcome and offer → business case → illustrative solution and fit → relevant work → implementation scope → commercial expectations → process and objections. Proof links now appear beside the first offer, while the detailed case-study block preserves limitations on adjacent evidence.
+The visual system is independent of the main site: black default surfaces, charcoal cards, the original yellow alpha logo and yellow contact actions. An optional warm-neutral light mode remains. Five custom black-and-gold images have 640px mobile WebP variants (12–35KB), with automation and workflow sharing one image. The sequence is clear service headline and direct contact → client-work strip → business case → illustrative solution and fit → relevant work → use cases → optional planner → commercial expectations → process and objections. The detailed case-study block preserves limitations on adjacent evidence. Generated artwork is not presented as client evidence.
 
 The largest unresolved operational risk is the transition from an external draft to a sent message, qualified conversation and won project. No CRM, analytics destination or email delivery service is configured in this implementation. A visually complete campaign is not an automated sales pipeline, and there is no basis to promise more revenue or search rankings.
 
@@ -48,11 +48,11 @@ Scores describe the pre-remake design on a 0–10 heuristic scale. Friction is s
 
 ### Step 1 — Campaign landing
 
-URLs: the five paths above on `https://www.alphacodeai.com`. Type: service landing page. Primary action: get the matching starter plan; next step: planner in the same hero. Secondary exit points: relevant case study, home logo, service footer and direct chat. These are lower emphasis than the primary action.
+URLs: the five paths above and `/ai-automation/` on `https://www.alphacodeai.com`. Type: service landing page. Primary action: discuss the service on WhatsApp. Secondary action: find a starting checklist farther down the page. Other exits are relevant case studies, home logo and service footer. The new flagship addresses broad business AI automation across sales, operations and support; the Mumbai page stays focused on connected workflow implementation.
 
 Trust: real named case studies, explicit related-work labels, Mumbai identity, visible cost factors and limitations. No invented testimonials, performance percentages, scarcity, delivery dates, free consultation promises or exact build prices. Illustrations remain labelled examples, not live products. The main navigation remains absent from these campaigns, and these campaigns remain absent from the main menu.
 
-Load complexity: static HTML plus the existing React bundle, CSS-built demo and lazy-loaded case-study imagery. No new external scripts or fonts were added. Field load time is unknown; visual browser testing is not a Core Web Vitals measurement.
+Load complexity: static HTML plus the existing React bundle, a responsive eager hero image, CSS-built demo and lazy-loaded case-study imagery. No new external scripts or fonts were added. Field load time is unknown; visual browser testing is not a Core Web Vitals measurement.
 
 ### Step 2 — Starter planner and result
 
@@ -97,7 +97,7 @@ Illustration only, not a forecast: 1,000 visitors × 2% received leads × 40% qu
 
 | Priority | Action | Expected impact | Effort | Status |
 | --- | --- | --- | --- | --- |
-| P1 | Specific headline, immediate offer, proof near CTA | Clearer relevance and reason to act; lift unmeasured | Low | Implemented on all five |
+| P1 | Specific headline, immediate contact, early client-work context | Clearer relevance and reason to act; lift unmeasured | Low | Implemented on all six |
 | P1 | Ungated relevant checklist plus direct-chat shortcut | Value for researching buyers without blocking ready buyers; lift unmeasured | Medium | Implemented |
 | P1 | Disclose cost drivers, scope and handoff | Fewer avoidable uncertainties; lift unmeasured | Low | Implemented |
 | P1 | Track actual receipt and ownership | Essential for avoiding lost enquiries | Low operational effort | Business follow-through required |
@@ -133,7 +133,7 @@ After a signed project, agree kickoff inputs, owners, checkpoints and success me
 
 The existing `keyword-research.json` remains the qualitative keyword map; no volume or CPC claim is added. Send workflow-intent searches to workflow, WhatsApp implementation searches to WhatsApp, AI product build searches to MVP, document extraction searches to documents, and property qualification searches to property. Keep ad/email promises consistent with the actual starter offer. No paid campaign was launched.
 
-Researching visitors can use the checklist. Ready buyers can chat immediately. Branded visitors can return to the main site. Existing service-page links and the sitemap preserve discoverability without adding these pages to the main menu. Avoid near-duplicate city variants; these five represent different buying problems.
+Researching visitors can use the checklist. Ready buyers can chat immediately. Branded visitors can return to the main site. Existing service-page links and the sitemap preserve discoverability without adding these pages to the main menu. The flagship uses broader AI automation service intent; no new search-volume or ranking claim is made.
 
 ## Next steps
 

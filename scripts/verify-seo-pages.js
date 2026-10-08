@@ -61,7 +61,9 @@ for (const page of allPages) {
       parent.includes(`href="${page.path}"`),
       `Missing incoming link: ${page.path}`,
     );
-    for (const image of [page.proof.image, page.proof.darkImage])
+    assert.ok(html.includes('content="#000000"'), `${page.path}: black browser theme`);
+    assert.ok(html.includes(`src="${page.heroImage}"`), `${page.path}: hero image`);
+    for (const image of [page.proof.image, page.proof.darkImage, page.heroImage, page.heroImage.replace('.webp', '-640.webp')])
       assert.ok(fs.existsSync(path.join(root, image)), image);
     for (const section of page.uses)
       assert.ok(html.includes(section.title.replaceAll("&", "&amp;")));

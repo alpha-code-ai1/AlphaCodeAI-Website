@@ -15,11 +15,11 @@ import {
 import salesPages from "./data/salesPages.json";
 import authorityPages from "./data/authorityPages.json";
 
-test("five distinct, reachable buying journeys with useful content", () => {
-  expect(salesPages).toHaveLength(5);
+test("six distinct, reachable buying journeys with useful content", () => {
+  expect(salesPages).toHaveLength(6);
   expect(
     new Set([...salesPages, ...authorityPages].map((page) => page.path)).size,
-  ).toBe(15);
+  ).toBe(16);
   salesPages.forEach((page) => {
     expect(authorityPages.some((parent) => parent.path === page.parent)).toBe(
       true,

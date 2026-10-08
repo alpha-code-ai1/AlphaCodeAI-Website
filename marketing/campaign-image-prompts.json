@@ -1,0 +1,40 @@
+{
+  "mode": "Built-in image_gen; resized and encoded as responsive WebP with Pillow. No generated client results.",
+  "assets": [
+    {
+      "name": "automation",
+      "source": "exec-ff2163ef-74cd-4e35-b007-f167f2b12726.png",
+      "output": "public/visuals/campaign-automation-v2.webp",
+      "mobile": "public/visuals/campaign-automation-v2-640.webp",
+      "prompt": "Use case: stylized-concept. Asset: premium AI automation services landing page hero, landscape 1536x1024. Create a sophisticated editorial 3D product visualization on a pure black #000000 studio background. A central machined graphite AI processing module with a luminous restrained warm yellow core, connected by graceful thin golden conduits to three distinct floating physical glass cards: an incoming envelope/message symbol, an organized table/grid symbol, and a completed task/check symbol. Clearly communicate messy incoming work becoming organized action. All objects tangible, detailed industrial materials, sharp realistic edges, brushed dark metal and smoked glass. Wide balanced composition, main subject centered, readable when cropped to a landscape mobile card. Tasteful cinematic lighting, realistic reflections, subtle gold rim light, ample black negative space near edges. Sophisticated technology art direction, not a toy and not science fiction. No words, no letters, no numbers, no logos, no robots, no hands, no purple or blue neon, no rainbow gradients, no huge glowing haze, no invented metrics. Final image should feel crafted for a premium AI engineering company, crisp and photographic."
+    },
+    {
+      "name": "whatsapp",
+      "source": "exec-038d92b7-a3e2-4d97-a97d-4fc2a9c8e7b7.png",
+      "output": "public/visuals/campaign-whatsapp-v2.webp",
+      "mobile": "public/visuals/campaign-whatsapp-v2-640.webp",
+      "prompt": "Use case: stylized-concept. Asset: landscape 1536x1024 premium business AI landing page artwork. Pure black #000000 studio background. Sophisticated photographic 3D render, graphite metal, smoked glass, restrained warm yellow/gold highlights matching a yellow alpha brand logo. Main objects centered and readable at mobile landscape card size, black negative space near edges. Precise physically plausible materials, soft cinematic light, beautiful editorial composition. No text, letters, numbers, logos, people, robots, purple, blue neon, rainbow gradients, exaggerated glow, fake metrics or floating random ornament. A beautifully crafted dark smartphone standing in a slight three-quarter view, with three tangible translucent message panels flowing outward in a clear sequence. Panels contain simple white rounded message-line shapes and one warm yellow reply shape, no actual words. A small elegant gold connector leads to a person/handoff geometric symbol. Calm refined customer-conversation visualization."
+    },
+    {
+      "name": "mvp",
+      "source": "exec-5061eb18-92cb-43ae-8d80-5e8647f2bd5c.png",
+      "output": "public/visuals/campaign-mvp-v2.webp",
+      "mobile": "public/visuals/campaign-mvp-v2-640.webp",
+      "prompt": "Use case: stylized-concept. Asset: landscape 1536x1024 premium business AI landing page artwork. Pure black #000000 studio background. Sophisticated photographic 3D render, graphite metal, smoked glass, restrained warm yellow/gold highlights matching a yellow alpha brand logo. Main objects centered and readable at mobile landscape card size, black negative space near edges. Precise physically plausible materials, soft cinematic light, beautiful editorial composition. No text, letters, numbers, logos, people, robots, purple, blue neon, rainbow gradients, exaggerated glow, fake metrics or floating random ornament. An elegant partially assembled graphite product interface made of three layered physical glass panels with refined rounded blocks and miniature controls, one warm yellow modular core sliding precisely into place. A crisp architectural exploded view that expresses an idea becoming a usable product. No text on panels. Sophisticated premium industrial product photography."
+    },
+    {
+      "name": "documents",
+      "source": "exec-abfcda73-651a-4bc8-9d76-13c55f29ce1e.png",
+      "output": "public/visuals/campaign-documents-v2.webp",
+      "mobile": "public/visuals/campaign-documents-v2-640.webp",
+      "prompt": "Use case: stylized-concept. Asset: landscape 1536x1024 premium business AI landing page artwork. Pure black #000000 studio background. Sophisticated photographic 3D render, graphite metal, smoked glass, restrained warm yellow/gold highlights matching a yellow alpha brand logo. Main objects centered and readable at mobile landscape card size, black negative space near edges. Precise physically plausible materials, soft cinematic light, beautiful editorial composition. No text, letters, numbers, logos, people, robots, purple, blue neon, rainbow gradients, exaggerated glow, fake metrics or floating random ornament. Two floating realistically textured dark document sheets with white horizontal lines and thin warm gold highlighted field rectangles, passing into a machined graphite slit and emerging as a beautifully organized glass data table with small aligned rows. The image clearly communicates documents becoming structured information. No actual words or numbers. Simple compelling composition."
+    },
+    {
+      "name": "property",
+      "source": "exec-2e875ab1-b3db-40ec-a824-7a45226aeadd.png",
+      "output": "public/visuals/campaign-property-v2.webp",
+      "mobile": "public/visuals/campaign-property-v2-640.webp",
+      "prompt": "Use case: stylized-concept. Asset: landscape 1536x1024 premium business AI landing page artwork. Pure black #000000 studio background. Sophisticated photographic 3D render, graphite metal, smoked glass, restrained warm yellow/gold highlights matching a yellow alpha brand logo. Main objects centered and readable at mobile landscape card size, black negative space near edges. Precise physically plausible materials, soft cinematic light, beautiful editorial composition. No text, letters, numbers, logos, people, robots, purple, blue neon, rainbow gradients, exaggerated glow, fake metrics or floating random ornament. A premium miniature architectural model of contemporary Indian residential apartment towers on a dark graphite platform, smoked-glass enquiry panels hovering beside it connected by a delicate golden path. Warm yellow window highlights, refined building materials, clear recognizable architecture and a small checklist panel. Calm luxurious property technology editorial illustration. No actual text."
+    }
+  ]
+}
