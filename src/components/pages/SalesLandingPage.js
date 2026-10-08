@@ -4,6 +4,7 @@ import SeoHead from "../ui/SeoHead";
 import ThemeSwitch from "../ui/ThemeSwitch";
 import WhatsAppIcon from "../ui/WhatsAppIcon";
 import SalesPageContent from "./SalesPageContent";
+import { trackAnalyticsEvent } from "../../utils/analytics";
 import "./SalesLandingPage.css";
 import "./SalesCampaign.css";
 
@@ -32,6 +33,11 @@ export function buildBrief(
 
 // Contact intent only, never a claim that a message was sent. No brief text or PII.
 export function trackContact(page, channel, placement) {
+  trackAnalyticsEvent("contact_intent", {
+    landing_page: page.path,
+    contact_channel: channel,
+    contact_placement: placement,
+  });
   if (Array.isArray(window.dataLayer)) {
     window.dataLayer.push({
       event: "contact_intent",
@@ -82,6 +88,10 @@ export function starterPlanText(page, category, readiness) {
 }
 
 export function trackFunnel(page, stage) {
+  trackAnalyticsEvent("funnel_progress", {
+    landing_page: page.path,
+    funnel_stage: stage,
+  });
   if (Array.isArray(window.dataLayer)) {
     window.dataLayer.push({
       event: "funnel_progress",

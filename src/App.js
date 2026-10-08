@@ -14,6 +14,7 @@ import { ThemeProvider, useTheme } from './context/ThemeContext';
 import authorityPages from './data/authorityPages.json';
 import salesPages from './data/salesPages.json';
 import SalesLandingPage from './components/pages/SalesLandingPage';
+import { trackSiteContact } from './utils/analytics';
 import './App.css';
 
 const isSalesRoute = (pathname) => pathname.toLowerCase().replace(/\/$/, '') === '/ai-automation' || salesPages.some(page =>
@@ -25,6 +26,13 @@ const AppContent = () => {
   const location = useLocation();
   const isHomepage = location.pathname === '/';
   const isSalesPage = isSalesRoute(location.pathname);
+
+  useEffect(() => {
+    // Campaigns already track their own CTA placements; avoid double counting.
+    if (isSalesPage) return undefined;
+    document.addEventListener('click', trackSiteContact);
+    return () => document.removeEventListener('click', trackSiteContact);
+  }, [isSalesPage]);
 
   useEffect(() => {
     document.documentElement.scrollTop = 0;
