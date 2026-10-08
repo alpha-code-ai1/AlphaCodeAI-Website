@@ -2,7 +2,12 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
-      "source": "/ai-automation/:path*",
+      "source": "/ai-automation/",
+      "destination": "/landing/",
+      "permanent": true
+    },
+    {
+      "source": "/ai-automation",
       "destination": "/landing/",
       "permanent": true
     }
