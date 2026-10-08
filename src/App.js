@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from './components/layout/Navbar';
 import ArticlePage from './components/pages/ArticlePage';
@@ -16,7 +16,7 @@ import salesPages from './data/salesPages.json';
 import SalesLandingPage from './components/pages/SalesLandingPage';
 import './App.css';
 
-const isSalesRoute = (pathname) => salesPages.some(page =>
+const isSalesRoute = (pathname) => pathname.toLowerCase().replace(/\/$/, '') === '/ai-automation' || salesPages.some(page =>
   page.path === `${pathname.toLowerCase().replace(/\/$/, '')}/`
 );
 
@@ -51,6 +51,7 @@ const AppContent = () => {
           <Routes location={location}>
             <Route path="/" element={<LightExperience />} />
             <Route path="/article/:id" element={<ArticlePage />} />
+            <Route path="/ai-automation/" element={<Navigate to={`/landing/${location.search}${location.hash}`} replace />} />
             {salesPages.map(page => <Route key={page.path} path={page.path} element={<SalesLandingPage page={page} />} />)}
             {authorityPages.map((page) => (
               <Route key={page.path} path={page.path} element={<AuthorityPage />} />

@@ -1,6 +1,6 @@
 # AlphaCodeAI sales funnel analysis
 
-Date: 8 October 2026. Business: custom AI development services. Funnel: lead generation into a scoped sales conversation. Scope: six service campaigns, including the new `/ai-automation/` flagship, not the main website or existing authority pages. Method: the installed `market-funnel` skill, live workflow-page inspection, shared component and route inspection, and the existing keyword research.
+Date: 8 October 2026. Business: custom AI development services. Funnel: lead generation into a scoped sales conversation. Scope: six service campaigns, including the new `/landing/` AI automation flagship, not the main website or existing authority pages. Method: the installed `market-funnel` skill, live workflow-page inspection, shared component and route inspection, and the existing keyword research.
 
 ## Executive summary
 
@@ -48,7 +48,7 @@ Scores describe the pre-remake design on a 0–10 heuristic scale. Friction is s
 
 ### Step 1 — Campaign landing
 
-URLs: the five paths above and `/ai-automation/` on `https://www.alphacodeai.com`. Type: service landing page. Primary action: discuss the service on WhatsApp. Secondary action: find a starting checklist farther down the page. Other exits are relevant case studies, home logo and service footer. The new flagship addresses broad business AI automation across sales, operations and support; the Mumbai page stays focused on connected workflow implementation.
+URLs: the five paths above and `/landing/` on `https://www.alphacodeai.com`. The former `/ai-automation/` address permanently redirects to `/landing/`. Type: service landing page. Primary action: discuss the service on WhatsApp. Secondary action: find a starting checklist farther down the page. Other exits are relevant case studies, home logo and service footer. The new flagship addresses broad business AI automation across sales, operations and support; the Mumbai page stays focused on connected workflow implementation.
 
 Trust: real named case studies, explicit related-work labels, Mumbai identity, visible cost factors and limitations. No invented testimonials, performance percentages, scarcity, delivery dates, free consultation promises or exact build prices. Illustrations remain labelled examples, not live products. The main navigation remains absent from these campaigns, and these campaigns remain absent from the main menu.
 

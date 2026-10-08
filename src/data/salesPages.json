@@ -616,7 +616,7 @@
     "heroImage": "/visuals/campaign-property-v2.webp"
   },
   {
-    "path": "/ai-automation/",
+    "path": "/landing/",
     "kind": "service",
     "theme": "automation",
     "title": "AI Automation Services",
