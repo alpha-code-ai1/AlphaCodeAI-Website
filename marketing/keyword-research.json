@@ -1,0 +1,17 @@
+{
+  "researchedOn": "2026-10-08",
+  "method": "Qualitative commercial-intent research using current search results and first-party service pages. No access to Keyword Planner or Search Console query data; no numerical volume, CPC, difficulty or ranking claims.",
+  "strategy": "Five distinct buying problems extend the existing general AI service pages. They are omitted from main navigation, linked from relevant service pages, rendered into crawlable HTML and included in the sitemap. Each offers a direct contact path, not a redirect to another generic sales page.",
+  "keywordMapping": [
+    {"path":"/ai-workflow-automation-mumbai/","primary":"AI workflow automation Mumbai","supporting":["business process automation company Mumbai","AI automation agency Mumbai"],"buyer":"Operations owner seeking implementation","source":"https://www.aiclex.in/services/ai-workflow-automation-in-mumbai"},
+    {"path":"/whatsapp-chatbot-development-india/","primary":"WhatsApp chatbot development India","supporting":["WhatsApp Business API chatbot development","WhatsApp lead generation chatbot"],"buyer":"Business owner seeking a customer-enquiry channel integration","source":"https://www.lacewingtech.in/ai/ai-chatbots/whatsapp-business-chatbot"},
+    {"path":"/ai-mvp-development/","primary":"AI MVP development company","supporting":["AI MVP development for startups","hire AI MVP developers"],"buyer":"Founder seeking a scoped product build","source":"https://mvpdevelopment.company/services/ai-mvp-development"},
+    {"path":"/ai-document-processing/","primary":"AI document processing services","supporting":["intelligent document processing company India","invoice data extraction automation"],"buyer":"Operations team seeking document-to-system implementation","source":"https://webbox.co.in/services/ai-agents-automation/ai-document-processing"},
+    {"path":"/real-estate-ai-chatbot/","primary":"AI chatbot for real estate India","supporting":["real estate lead qualification chatbot","property enquiry automation"],"buyer":"Property sales team seeking enquiry qualification and CRM handoff","source":"https://thinklylabs.com/blogs/automate-real-estate-lead-qualification-india"}
+  ],
+  "policyReferences": ["https://developers.google.com/search/docs/essentials/spam-policies#doorway-abuse","https://business.whatsapp.com/policy","https://www.whatsapp.com/legal/business-solution-terms"],
+  "measurement": {
+    "implemented": "Contact links include the relevant page in the draft. An optional contact_intent dataLayer event includes only landing_page, contact_channel and contact_placement; no brief text. No analytics destination has been configured by this change.",
+    "remaining": ["Submit the sitemap and inspect the five URLs in the verified Search Console property.","Connect consent-appropriate analytics and record contact_intent as a click event, not a completed lead.","Track actual enquiries, qualified opportunities and won projects in the CRM with the source page.","Review real search queries and enquiry quality after sufficient data accumulates; revise copy and prioritise the best-performing offer.","Any paid acquisition experiment needs an explicitly approved budget; no ads were launched."]
+  }
+}

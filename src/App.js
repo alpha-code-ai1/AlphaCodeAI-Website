@@ -12,12 +12,15 @@ import ScrollProgress from './components/ui/ScrollProgress';
 import CursorGlow from './components/ui/CursorGlow';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import authorityPages from './data/authorityPages.json';
+import salesPages from './data/salesPages.json';
+import SalesLandingPage from './components/pages/SalesLandingPage';
 import './App.css';
 
 const AppContent = () => {
   const { theme, isLight } = useTheme();
   const location = useLocation();
   const isHomepage = location.pathname === '/';
+  const isSalesPage = salesPages.some(page => page.path === `${location.pathname.replace(/\/$/, '')}/`);
 
   useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -26,16 +29,16 @@ const AppContent = () => {
 
   return (
     <div className={`app-root app-${theme}${isHomepage ? ' app-home' : ''}`}>
-      {!isLight && !isHomepage && <CosmicBackground />}
-      <ScrollProgress />
-      <CursorGlow theme={theme} />
-      {!isLight && !isHomepage && <div className="noise-overlay" />}
-      <Navbar />
+      {!isLight && !isHomepage && !isSalesPage && <CosmicBackground />}
+      {!isSalesPage && <ScrollProgress />}
+      {!isSalesPage && <CursorGlow theme={theme} />}
+      {!isLight && !isHomepage && !isSalesPage && <div className="noise-overlay" />}
+      {!isSalesPage && <Navbar />}
 
       <AnimatePresence mode="wait">
         <motion.div
-          key={`${theme}-${location.pathname}`}
-          initial={{ opacity: 0 }}
+          key={`${isSalesPage ? 'sales' : theme}-${location.pathname}`}
+          initial={isSalesPage ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.28 }}
@@ -44,15 +47,16 @@ const AppContent = () => {
           <Routes location={location}>
             <Route path="/" element={<LightExperience />} />
             <Route path="/article/:id" element={<ArticlePage />} />
+            {salesPages.map(page => <Route key={page.path} path={page.path} element={<SalesLandingPage page={page} />} />)}
             {authorityPages.map((page) => (
               <Route key={page.path} path={page.path} element={<AuthorityPage />} />
             ))}
           </Routes>
-          {!isHomepage && <Footer />}
+          {!isHomepage && !isSalesPage && <Footer />}
         </motion.div>
       </AnimatePresence>
 
-      <FloatingWhatsApp />
+      {!isSalesPage && <FloatingWhatsApp />}
     </div>
   );
 };

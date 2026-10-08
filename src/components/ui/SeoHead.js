@@ -29,7 +29,8 @@ const SeoHead = ({ page }) => {
 
     const canonical = `${SITE_URL}${page.path}`;
     const title = `${page.title} | AlphaCodeAI`;
-    const image = page.heroImage ? `${SITE_URL}${page.heroImage}` : DEFAULT_IMAGE;
+    const pageImage = page.heroImage || page.proof?.image;
+    const image = pageImage ? `${SITE_URL}${pageImage}` : DEFAULT_IMAGE;
     const schema = page.kind === 'case-study'
       ? {
           '@context': 'https://schema.org',
@@ -87,7 +88,19 @@ const SeoHead = ({ page }) => {
       structuredData.dataset.seoStructured = 'true';
       document.head.appendChild(structuredData);
     }
-    structuredData.textContent = JSON.stringify(schema);
+    structuredData.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [schema, {
+        '@type': 'FAQPage',
+        mainEntity: (page.faqs || []).map(faq => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } }))
+      }, {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'AlphaCodeAI', item: SITE_URL },
+          { '@type': 'ListItem', position: 2, name: page.title, item: canonical }
+        ]
+      }]
+    });
 
     return () => {
       structuredData?.remove();

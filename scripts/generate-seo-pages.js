@@ -3,11 +3,32 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const SITE_URL = 'https://www.alphacodeai.com';
-const pages = JSON.parse(
+const authorityPages = JSON.parse(
   fs.readFileSync(path.join(ROOT, 'src', 'data', 'authorityPages.json'), 'utf8')
 );
+const salesPages = require('../src/data/salesPages.json');
+const pages = [...authorityPages, ...salesPages];
 const mode = process.argv[2] || 'public';
 const targetRoot = path.join(ROOT, mode === 'build' ? 'build' : 'public');
+
+// Render the same React content for crawlers, no-JS visitors and the client app.
+let SalesPageContent;
+if (mode === 'build') {
+  const Module = require('module');
+  const filename = path.join(ROOT, 'src/components/pages/SalesPageContent.js');
+  const compiled = require('@babel/core').transformFileSync(filename, {
+    babelrc: false, configFile: false,
+    presets: [require.resolve('@babel/preset-react')],
+    plugins: [require.resolve('@babel/plugin-transform-modules-commonjs')]
+  });
+  const templateModule = new Module(filename, module);
+  templateModule.filename = filename;
+  templateModule.paths = module.paths;
+  templateModule._compile(compiled.code, filename);
+  SalesPageContent = templateModule.exports.default;
+}
+
+const relatedServices = page => [...page.services, ...salesPages.filter(service => service.parent === page.path).map(service => ({ label: service.title, href: service.path }))];
 
 const escapeHtml = (value = '') => String(value)
   .replaceAll('&', '&amp;')
@@ -94,7 +115,7 @@ const renderStaticBody = (page) => `
     </div>
   </header>
   ${page.heroImage ? `<div class="authority-shell authority-project-image"><img src="${escapeHtml(page.heroImage)}" alt="${escapeHtml(page.title)} project view" width="1536" height="1024"></div>` : ''}
-  <section class="authority-service-nav" aria-label="Related capabilities"><div class="authority-shell"><span>Explore</span><div>${page.services.map((service) => `<a href="${escapeHtml(service.href)}">${escapeHtml(service.label)}</a>`).join('')}</div></div></section>
+  <section class="authority-service-nav" aria-label="Related capabilities"><div class="authority-shell"><span>Explore</span><div>${relatedServices(page).map((service) => `<a href="${escapeHtml(service.href)}">${escapeHtml(service.label)}</a>`).join('')}</div></div></section>
   <div class="authority-shell authority-sections">
     ${page.sections.map((section, index) => `
       <section class="authority-section">
@@ -110,10 +131,15 @@ const renderStaticBody = (page) => `
 const updateHead = (html, page) => {
   const title = `${page.title} | AlphaCodeAI`;
   const canonical = absoluteUrl(page.path);
-  const image = absoluteUrl(page.heroImage || '/cosmic-hero-poster.webp');
+  const image = absoluteUrl(page.heroImage || page.proof?.image || '/cosmic-hero-poster.webp');
   const structuredData = JSON.stringify(renderSchema(page)).replaceAll('<', '\\u003c');
+  const body = page.theme
+    ? require('react-dom/server').renderToStaticMarkup(require('react').createElement(SalesPageContent, { page }))
+    : renderStaticBody(page);
 
   return html
+    .replace(/<meta\b[^>]*(?:name="(?:robots|twitter:[^"]+)"|property="og:[^"]+")[^>]*>/gi, '')
+    .replace(/<link\b[^>]*rel="canonical"[^>]*>/gi, '')
     .replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(title)}</title>`)
     .replace(/<meta\s+name="description"[\s\S]*?>/i, `<meta name="description" content="${escapeHtml(page.description)}" />`)
     .replace('</head>', `  <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -126,14 +152,15 @@ const updateHead = (html, page) => {
     <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json" data-seo-structured>${structuredData}</script>
   </head>`)
-    .replace(/<div id="root"><\/div>/i, `<div id="root">${renderStaticBody(page)}</div>`);
+    .replace('<noscript>You need to enable JavaScript to run this app.</noscript>', '')
+    .replace(/<div id="root"><\/div>/i, `<div id="root">${body}</div>`);
 };
 
 const renderSitemap = () => {
   const urls = ['/', ...pages.map((page) => page.path)];
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map((url) => `  <url><loc>${absoluteUrl(url)}</loc><lastmod>2026-09-19</lastmod><changefreq>${url === '/' ? 'weekly' : 'monthly'}</changefreq></url>`).join('\n')}
+${urls.map((url) => `  <url><loc>${absoluteUrl(url)}</loc><changefreq>${url === '/' ? 'weekly' : 'monthly'}</changefreq></url>`).join('\n')}
 </urlset>\n`;
 };
 

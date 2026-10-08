@@ -1,6 +1,7 @@
 import { ArrowRightIcon, ArrowUpRightIcon, CheckIcon } from '@heroicons/react/24/outline';
 import { Link, useLocation } from 'react-router-dom';
 import authorityPages from '../../data/authorityPages.json';
+import salesPages from '../../data/salesPages.json';
 import SeoHead from '../ui/SeoHead';
 import './AuthorityPage.css';
 
@@ -76,6 +77,9 @@ const AuthorityPage = () => {
           <div>
             {page.services.map((service) => (
               <Link key={service.href} to={service.href}>{service.label}</Link>
+            ))}
+            {salesPages.filter(service => service.parent === page.path).map(service => (
+              <Link key={service.path} to={service.path}>{service.title}</Link>
             ))}
           </div>
         </div>

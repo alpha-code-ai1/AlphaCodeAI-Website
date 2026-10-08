@@ -1,0 +1,84 @@
+import { fireEvent, render, screen } from "@testing-library/react";
+import SalesPageContent from "./components/pages/SalesPageContent";
+import {
+  ProjectBrief,
+  buildBrief,
+  trackContact,
+} from "./components/pages/SalesLandingPage";
+import salesPages from "./data/salesPages.json";
+import authorityPages from "./data/authorityPages.json";
+
+test("five distinct, reachable buying journeys with useful content", () => {
+  expect(salesPages).toHaveLength(5);
+  expect(
+    new Set([...salesPages, ...authorityPages].map((page) => page.path)).size,
+  ).toBe(15);
+  salesPages.forEach((page) => {
+    expect(authorityPages.some((parent) => parent.path === page.parent)).toBe(
+      true,
+    );
+    expect(page.keywords.length).toBeGreaterThanOrEqual(3);
+    expect(page.faqs.length).toBeGreaterThanOrEqual(4);
+    expect(page.scope).toHaveLength(5);
+    expect(page.uses).toHaveLength(3);
+    expect(page.description.length).toBeGreaterThan(100);
+    expect(authorityPages.some((proof) => proof.path === page.proof.href)).toBe(
+      true,
+    );
+  });
+});
+
+test.each(salesPages)("$title has one h1, contact and proof routes", (page) => {
+  render(<SalesPageContent page={page} />);
+  expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
+  expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+    page.title,
+  );
+  expect(
+    screen.getByRole("link", { name: page.cta, exact: true }),
+  ).toHaveAttribute("href", "#project-brief");
+  expect(
+    screen.getByRole("link", { name: "Start on WhatsApp ↗" }).href,
+  ).toContain("https://wa.me/918850313109?text=");
+  expect(
+    screen.getByRole("link", { name: /Back to the main site/ }),
+  ).toHaveAttribute("href", "/");
+});
+
+test("optional brief creates correctly encoded drafts without claiming submission", () => {
+  const page = salesPages[0];
+  render(<ProjectBrief page={page} />);
+  fireEvent.click(screen.getByLabelText("Lead routing"));
+  fireEvent.change(screen.getByLabelText(page.briefLabel), {
+    target: { value: "CRM & forms + approvals?" },
+  });
+  fireEvent.change(screen.getByLabelText("When are you looking to start?"), {
+    target: { value: "In the next 1–3 months" },
+  });
+  const whatsapp = screen.getByRole("link", { name: "Open WhatsApp draft ↗" });
+  const draft = new URL(whatsapp.href).searchParams.get("text");
+  expect(draft).toContain("CRM & forms + approvals?");
+  expect(draft).toContain("Focus: Lead routing");
+  expect(draft).toContain(page.path);
+  expect(
+    screen.getByRole("link", { name: "Open email draft ↗" }).href,
+  ).toContain(encodeURIComponent(draft));
+  expect(screen.getByRole("status")).toHaveTextContent(
+    "No automatic submission",
+  );
+});
+
+test("empty brief is useful and analytics never include entered content", () => {
+  expect(buildBrief(salesPages[0])).not.toContain("undefined");
+  window.dataLayer = [];
+  trackContact(salesPages[0], "whatsapp", "brief");
+  expect(window.dataLayer).toEqual([
+    {
+      event: "contact_intent",
+      landing_page: salesPages[0].path,
+      contact_channel: "whatsapp",
+      contact_placement: "brief",
+    },
+  ]);
+  delete window.dataLayer;
+});

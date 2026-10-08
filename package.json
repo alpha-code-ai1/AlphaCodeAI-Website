@@ -28,7 +28,7 @@
     "start": "react-scripts start",
     "prebuild": "npm run generate:seo",
     "build": "react-scripts build",
-    "postbuild": "node scripts/generate-seo-pages.js build",
+    "postbuild": "node scripts/generate-seo-pages.js build && node scripts/verify-seo-pages.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -51,6 +51,9 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/core": "7.26.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/plugin-transform-modules-commonjs": "7.25.9",
+    "@babel/preset-react": "7.25.9"
   }
 }
