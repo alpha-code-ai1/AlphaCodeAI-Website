@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import offers from "../../data/funnelOffers.json";
+import plans from "../../data/funnelPlans.json";
 
 const Arrow = () => <span aria-hidden="true">↗</span>;
 const Check = () => (
@@ -234,6 +235,7 @@ export function ProductPreview({ page }) {
 // Shared by client and static rendering, including all public offer and FAQ content.
 export default function SalesPageContent({ page, contact, themeControl }) {
   const offer = offers[page.theme];
+  const plan = plans[page.theme];
   const whatsapp = `https://wa.me/918850313109?text=${encodeURIComponent(`Hi AlphaCodeAI, I'd like to discuss ${page.title}.\nPage: https://www.alphacodeai.com${page.path}`)}`;
   const cta = (
     <>
@@ -251,7 +253,8 @@ export default function SalesPageContent({ page, contact, themeControl }) {
           <span className="funnel-logo" aria-hidden="true">
             a
           </span>
-          AlphaCodeAI<span className="funnel-brand-label">FOR BUSINESS</span>
+          AlphaCodeAI
+          <span className="funnel-brand-label">BUILD BETTER BUSINESS</span>
         </a>
         <div className="sales-header-actions">
           {themeControl}
@@ -281,7 +284,7 @@ export default function SalesPageContent({ page, contact, themeControl }) {
                 {cta}
               </a>
               <p className="sales-quiet">
-                Talk directly to the builders. No obligation to start a project.
+                Free instant checklist. No email gate. No obligation.
               </p>
               <ul className="funnel-hero-benefits">
                 {offer.benefits.map((benefit) => (
@@ -291,8 +294,58 @@ export default function SalesPageContent({ page, contact, themeControl }) {
                   </li>
                 ))}
               </ul>
+              <a className="campaign-proof-link" href={page.proof.href}>
+                <span className="campaign-proof-monogram" aria-hidden="true">
+                  {page.proof.client.slice(0, 1)}
+                </span>
+                <span>
+                  <small>{plan.proofLabel}</small>
+                  <strong>Explore our {page.proof.client} work ↗</strong>
+                </span>
+              </a>
             </div>
-            <ProductPreview page={page} />
+            <div className="campaign-planner" id="project-brief">
+              <div className="campaign-planner-label">
+                <span>YOUR NEXT MOVE, MADE CLEAR</span>
+                <span>↘</span>
+              </div>
+              <div className="sales-brief-card">
+                {contact || (
+                  <>
+                    <span className="funnel-small-label">{plan.label}</span>
+                    <h3>A useful starting point. No guesswork.</h3>
+                    <p>
+                      {plan.deliverable} With JavaScript enabled, choose your
+                      focus to build it instantly. Or speak directly to the
+                      builders:
+                    </p>
+                    <ol className="campaign-plan-list">
+                      <li>{plan.focusActions[3]}</li>
+                      <li>{plan.actions[0]}</li>
+                      <li>{plan.checkpoint}</li>
+                    </ol>
+                    <a
+                      className="sales-button"
+                      href={whatsapp}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Start on WhatsApp ↗
+                    </a>
+                    <a
+                      className="sales-text-link"
+                      href={`mailto:aryanchandwani@gmail.com?subject=${encodeURIComponent(page.title)}`}
+                    >
+                      Or email Aryan ↗
+                    </a>
+                  </>
+                )}
+              </div>
+              <p className="campaign-planner-note">
+                01 / Choose your focus <span>→</span> 02 / Get your starting
+                plan
+              </p>
+            </div>
           </section>
         </div>
         <section
@@ -300,11 +353,11 @@ export default function SalesPageContent({ page, contact, themeControl }) {
           aria-label="Selected product work"
         >
           <div>
-            <span>BUILT BY ALPHACODEAI</span>
+            <span>SELECTED CLIENT WORK</span>
             <p>
-              Product thinking.
+              From the team behind
               <br />
-              <strong>Real engineering.</strong>
+              <strong>real shipped products.</strong>
             </p>
           </div>
           <div className="funnel-work-names">
@@ -329,7 +382,7 @@ export default function SalesPageContent({ page, contact, themeControl }) {
           aria-labelledby="sales-problem"
         >
           <div className="sales-section-heading">
-            <p className="sales-eyebrow">A better way to work</p>
+            <p className="sales-eyebrow">01 / The business case</p>
             <h2 id="sales-problem">{offer.transition}</h2>
             <p>{page.problemBody}</p>
           </div>
@@ -360,6 +413,24 @@ export default function SalesPageContent({ page, contact, themeControl }) {
             </div>
           </div>
         </section>
+        <section className="campaign-solution sales-shell">
+          <div>
+            <p className="sales-eyebrow">
+              02 / What the solution could look like
+            </p>
+            <h2>{plan.fitTitle}</h2>
+            <p>{page.fit}</p>
+            <div className="campaign-measure">
+              <span>AGREE SUCCESS BEFORE BUILDING</span>
+              <strong>{plan.metric}</strong>
+            </div>
+            <p className="campaign-caveat">{page.notFit}</p>
+            <a href="#project-brief" className="sales-text-link">
+              Find your starting point <Arrow />
+            </a>
+          </div>
+          <ProductPreview page={page} />
+        </section>
         <section className="funnel-proof-band">
           <div className="sales-shell sales-proof">
             <div className="sales-proof-art">
@@ -382,9 +453,7 @@ export default function SalesPageContent({ page, contact, themeControl }) {
               <span>SELECTED WORK / {page.proof.client}</span>
             </div>
             <div>
-              <p className="sales-eyebrow">
-                See how we think. Not just what we promise.
-              </p>
+              <p className="sales-eyebrow">03 / {plan.proofLabel}</p>
               <h2>{page.proof.title}</h2>
               <p>{page.proof.body}</p>
               <a href={page.proof.href} className="sales-text-link">
@@ -395,7 +464,7 @@ export default function SalesPageContent({ page, contact, themeControl }) {
         </section>
         <section className="sales-section sales-shell funnel-value">
           <div className="sales-section-heading">
-            <p className="sales-eyebrow">Built around the job you need done</p>
+            <p className="sales-eyebrow">04 / A focused implementation</p>
             <h2>{page.scopeTitle}</h2>
           </div>
           <div className="sales-use-grid">
@@ -412,12 +481,13 @@ export default function SalesPageContent({ page, contact, themeControl }) {
         </section>
         <section
           className="sales-contact-band"
-          id="project-brief"
           aria-labelledby="sales-contact-heading"
         >
           <div className="sales-shell sales-contact-grid">
             <div className="funnel-offer-copy">
-              <p className="sales-eyebrow">Let’s find your starting point</p>
+              <p className="sales-eyebrow">
+                05 / From starting plan to scoped project
+              </p>
               <h2 id="sales-contact-heading">{offer.offerIntro}</h2>
               <p className="funnel-offer-lede">
                 You bring the business problem. We’ll talk through:
@@ -446,38 +516,47 @@ export default function SalesPageContent({ page, contact, themeControl }) {
                 Prefer to call? +91 88503 13109 <Arrow />
               </a>
             </div>
-            <div className="sales-brief-card">
-              {contact || (
-                <>
-                  <span className="funnel-small-label">{offer.offerName}</span>
-                  <h3>Tell us what you’re working on.</h3>
-                  <p>A short description is enough to start.</p>
-                  <a
-                    className="sales-button"
-                    href={whatsapp}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Start on WhatsApp ↗
-                  </a>
-                  <a
-                    className="sales-text-link"
-                    href={`mailto:aryanchandwani@gmail.com?subject=${encodeURIComponent(page.title)}`}
-                  >
-                    Or email Aryan ↗
-                  </a>
-                </>
-              )}
+            <div className="campaign-engagement">
+              <span className="funnel-small-label">
+                KNOW WHAT YOU’RE SAYING YES TO
+              </span>
+              <h3>
+                Small scope first.
+                <br />
+                Clear costs before you commit.
+              </h3>
+              <p>{page.cost}</p>
+              <dl>
+                <div>
+                  <dt>Bring to the conversation</dt>
+                  <dd>{plan.bring}</dd>
+                </div>
+                <div>
+                  <dt>Before a paid build</dt>
+                  <dd>
+                    Agree deliverables, dependencies, acceptance checks, timing
+                    and an estimate. Recurring tool and model costs are
+                    considered separately.
+                  </dd>
+                </div>
+              </dl>
+              <a className="sales-button" href="#project-brief">
+                {cta}
+              </a>
+              <p className="campaign-engagement-note">
+                The instant checklist is free. Custom implementation is quoted
+                after scope review.
+              </p>
             </div>
           </div>
         </section>
         <section className="sales-section sales-shell funnel-expectations">
           <div className="sales-section-heading">
-            <p className="sales-eyebrow">What happens after you reach out?</p>
+            <p className="sales-eyebrow">06 / If we decide to work together</p>
             <h2>
-              No mystery process.
+              Start focused.
               <br />
-              Just a clear next step.
+              Expand on evidence.
             </h2>
           </div>
           <ol className="sales-process-grid">
@@ -546,7 +625,10 @@ export default function SalesPageContent({ page, contact, themeControl }) {
           <a href="#project-brief" className="sales-button">
             {cta}
           </a>
-          <p>No sign-up. No long brief. Just a useful first conversation.</p>
+          <p>
+            Get your starting checklist now. Talk to the builders when you’re
+            ready.
+          </p>
         </section>
       </main>
       <footer className="sales-footer sales-shell">
@@ -562,11 +644,11 @@ export default function SalesPageContent({ page, contact, themeControl }) {
       </footer>
       <div className="funnel-sticky">
         <div>
-          <strong>{offer.offerName}</strong>
-          <span>Start with a conversation.</span>
+          <strong>{plan.label}</strong>
+          <span>Free. Instant. No email gate.</span>
         </div>
         <a href="#project-brief" className="sales-button">
-          Let’s talk <Arrow />
+          Get my plan <Arrow />
         </a>
       </div>
     </div>

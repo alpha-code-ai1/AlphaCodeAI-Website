@@ -1,0 +1,157 @@
+{
+  "workflow": {
+    "label": "Automation starter plan",
+    "question": "How defined is the process today?",
+    "stages": [
+      "It changes or lives in people’s heads",
+      "The steps are clear, but manual",
+      "We already have tools to connect"
+    ],
+    "directions": [
+      "Map the process before buying automation.",
+      "Pilot one repeatable handoff.",
+      "Check the integrations before expanding."
+    ],
+    "actions": [
+      "Document the trigger, owner and exception path using one real example.",
+      "Measure current handling time and choose one success measure for a pilot.",
+      "Confirm API access, permissions and a manual fallback for each connected tool."
+    ],
+    "focusActions": [
+      "Trace one enquiry from arrival to an assigned CRM owner.",
+      "Pick one repeated request and list the approvals it needs.",
+      "Choose one report, its source systems and who approves the summary.",
+      "Choose one repeated task with a clear input and finish line."
+    ],
+    "checkpoint": "Decide which actions always require a person’s approval.",
+    "bring": "A process example, the tools involved and an approximate weekly volume.",
+    "deliverable": "A first-workflow checklist with the next decision to make.",
+    "proofLabel": "Workflow engineering in practice",
+    "fitTitle": "One repeatable process. One accountable owner.",
+    "metric": "Handling time, corrections and exception rate"
+  },
+  "whatsapp": {
+    "label": "WhatsApp chatbot starter plan",
+    "question": "Where are you starting from?",
+    "stages": [
+      "An idea or personal WhatsApp number",
+      "Business account and approved FAQs",
+      "Business Platform access and a CRM"
+    ],
+    "directions": [
+      "Define the conversation before connecting a bot.",
+      "Pilot a narrow FAQ and handoff flow.",
+      "Validate the CRM handoff first."
+    ],
+    "actions": [
+      "List approved answers and assess Business Platform setup with your account owner.",
+      "Test common questions, unknown answers and an explicit request for a person.",
+      "Check API permissions, duplicate handling and who owns the conversation after handoff."
+    ],
+    "focusActions": [
+      "List the customer questions the assistant can answer and when it must stop.",
+      "Write the minimum questions needed to route a sales enquiry.",
+      "Separate a booking request from a confirmed calendar appointment.",
+      "Choose one conversation type and define its useful next step."
+    ],
+    "checkpoint": "Agree the human handoff and check applicable messaging requirements before launch.",
+    "bring": "Five common questions, your current WhatsApp setup and the destination for enquiries.",
+    "deliverable": "A conversation checklist with setup and handoff priorities.",
+    "proofLabel": "Related enquiry-flow work, not a WhatsApp deployment",
+    "fitTitle": "Recurring questions. A team ready to take over.",
+    "metric": "Useful enquiry details and successful human handoffs"
+  },
+  "mvp": {
+    "label": "AI MVP starter plan",
+    "question": "How far along is your idea?",
+    "stages": [
+      "An idea that needs focus",
+      "A clear user and problem",
+      "A prototype with early feedback"
+    ],
+    "directions": [
+      "Validate the user problem before the feature list.",
+      "Build one complete user journey.",
+      "Test reliability before adding more features."
+    ],
+    "actions": [
+      "Describe the user, the job they need done and how they handle it today.",
+      "Define the smallest end-to-end release and explicitly exclude the rest.",
+      "Turn feedback and failure examples into acceptance tests for the next release."
+    ],
+    "focusActions": [
+      "Write one user story and the result the user should leave with.",
+      "Identify the biggest failure mode in the existing prototype.",
+      "Separate the AI task from the interface and rules around it.",
+      "Choose one assumption the first release needs to test."
+    ],
+    "checkpoint": "Use realistic inputs to evaluate output quality, latency and recurring model costs.",
+    "bring": "A target user, one core use case and any non-confidential prototype or feedback.",
+    "deliverable": "A first-release checklist with a scope boundary and evaluation checkpoint.",
+    "proofLabel": "Product delivery experience",
+    "fitTitle": "A specific user. A problem worth testing.",
+    "metric": "Task completion, AI quality and user feedback"
+  },
+  "documents": {
+    "label": "Document automation starter plan",
+    "question": "What do you have ready?",
+    "stages": [
+      "A document problem to explore",
+      "Sample formats and required fields",
+      "An extraction tool that needs improvement"
+    ],
+    "directions": [
+      "Define the document and its output first.",
+      "Run a field-level pilot before integration.",
+      "Inspect exceptions before increasing volume."
+    ],
+    "actions": [
+      "Choose one repeated document type and list the exact fields you need.",
+      "Prepare representative, redacted samples and agree field-level acceptance criteria.",
+      "Review incorrect and missing values by layout, scan quality and field type."
+    ],
+    "focusActions": [
+      "Separate header totals from line items and define reconciliation checks.",
+      "Mark required fields and decide how incomplete forms should be handled.",
+      "Attach a source reference to each extracted field or finding.",
+      "Define a consistent output schema for one document family."
+    ],
+    "checkpoint": "Keep uncertain results in a human review queue before they reach another system.",
+    "bring": "Document types, approximate volume and required fields. No confidential files needed to enquire.",
+    "deliverable": "A pilot checklist with data requirements and review checkpoints.",
+    "proofLabel": "Related structured-workflow work, not an OCR benchmark",
+    "fitTitle": "Repeated documents. A clear definition of correct.",
+    "metric": "Field-level quality, correction time and processing cost"
+  },
+  "property": {
+    "label": "Property enquiry starter plan",
+    "question": "How ready is your enquiry process?",
+    "stages": [
+      "We need to define the buyer journey",
+      "Project information and a sales owner",
+      "A CRM and an existing lead flow"
+    ],
+    "directions": [
+      "Define one project’s enquiry journey.",
+      "Pilot buyer questions and qualification.",
+      "Test lead ownership and visit requests."
+    ],
+    "actions": [
+      "Choose one project and approve what the assistant may say about it.",
+      "Agree the buyer requirements to collect and when a sales person takes over.",
+      "Validate CRM field mapping, duplicates and who confirms each site visit."
+    ],
+    "focusActions": [
+      "Create a maintained source for one project’s approved information.",
+      "Define how buyer requirements map to the properties your team handles.",
+      "Separate service enquiries from buying or renting enquiries.",
+      "Choose one buyer journey and its sales handoff."
+    ],
+    "checkpoint": "Never imply live prices, availability or confirmed visits without a reliable source.",
+    "bring": "One project or service, your enquiry channels and the person responsible for follow-up.",
+    "deliverable": "A buyer-journey checklist with qualification and routing priorities.",
+    "proofLabel": "Related property-sector experience",
+    "fitTitle": "Incoming interest. Maintained project information.",
+    "metric": "Lead completeness, routing reliability and follow-up quality"
+  }
+}

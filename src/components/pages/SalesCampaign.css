@@ -1,0 +1,548 @@
+/* Campaign-only design system. The main website keeps its own themes. */
+.sales-page[class] {
+  --paper: #f7f7f0;
+  --ink: #1c2a24;
+  --muted: #56625a;
+  --panel: #fff;
+  --soft: #eeefe6;
+  --line: #d7dcd1;
+  --accent: #355d45;
+  --accent-soft: #e5edde;
+  --button: #d6f565;
+  --button-ink: #19291b;
+  --deep: #1b2c24;
+  --deep-text: #f7f8ee;
+  --deep-muted: #b8c8b9;
+}
+.app-dark .sales-page[class] {
+  --paper: #111b17;
+  --ink: #f0f4e9;
+  --muted: #b0bdb1;
+  --panel: #1b2922;
+  --soft: #17231c;
+  --line: #38483c;
+  --accent: #cce78d;
+  --accent-soft: #283a2b;
+  --button: #d6f565;
+  --button-ink: #19291b;
+  --deep: #0c1510;
+  --deep-text: #f7f8ee;
+  --deep-muted: #b8c8b9;
+}
+.sales-page .sales-shell {
+  width: min(1240px, calc(100% - 80px));
+}
+.sales-page .sales-header {
+  height: 84px;
+  border-bottom: 0;
+}
+.sales-page .funnel-logo {
+  border-radius: 50%;
+}
+.sales-page .sales-button {
+  border-radius: 6px;
+  border: 1px solid #253a2526;
+  font-weight: 750;
+  box-shadow: none;
+}
+.sales-page .sales-button:hover {
+  background: #c6e753;
+  transform: translateY(-2px);
+}
+.sales-page .sales-button--small {
+  background: var(--ink);
+  color: var(--paper) !important;
+}
+.sales-page .sales-button--small:hover {
+  background: var(--accent);
+}
+.sales-page .funnel-hero-band {
+  background: var(--paper);
+}
+.sales-page .sales-hero {
+  grid-template-columns: 1.15fr 1fr;
+  gap: 80px;
+  align-items: start;
+  padding-block: 58px 70px;
+}
+.sales-page .sales-hero h1 {
+  font-size: clamp(2.9rem, 4.2vw, 4.2rem);
+  font-weight: 750;
+  line-height: 1.055;
+  letter-spacing: -0.065em;
+}
+.sales-page .sales-hero h1 em {
+  color: var(--accent);
+  margin-top: 9px;
+}
+.sales-page .sales-eyebrow {
+  font-size: 0.66rem !important;
+  letter-spacing: 0.1em;
+}
+.sales-page .sales-lede {
+  font-size: 1.02rem;
+  max-width: 550px;
+}
+.sales-page .sales-quiet {
+  font-size: 0.76rem;
+}
+.sales-page .funnel-hero-benefits {
+  gap: 9px;
+  margin-top: 24px;
+}
+.sales-page .funnel-hero-benefits li {
+  font-size: 0.79rem;
+}
+.campaign-proof-link {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  text-decoration: none;
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+.campaign-proof-monogram {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 750;
+}
+.campaign-proof-link small,
+.campaign-proof-link strong {
+  display: block;
+}
+.campaign-proof-link small {
+  font-size: 0.64rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+.campaign-proof-link strong {
+  font-size: 0.77rem;
+}
+.campaign-proof-link:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.campaign-planner {
+  min-width: 0;
+  scroll-margin-top: 28px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 12px;
+  box-shadow: 0 24px 55px #1d2c2110;
+  overflow: hidden;
+}
+.campaign-planner-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  background: var(--deep);
+  color: #d6f565;
+  padding: 16px 30px;
+  border-top: 4px solid #d6f565;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  font-weight: 650;
+}
+.campaign-planner-label > span:last-child {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+.campaign-planner .sales-brief-card {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 30px;
+}
+.campaign-planner .sales-brief h2 {
+  font-size: 1.8rem;
+  letter-spacing: -0.04em;
+  margin: 0 0 12px;
+  line-height: 1.35;
+}
+.campaign-planner .sales-brief .sales-quiet {
+  font-size: 0.82rem;
+  margin-bottom: 22px;
+}
+.campaign-planner .sales-brief .sales-eyebrow {
+  font-size: 0.61rem !important;
+}
+.campaign-planner .sales-choices span {
+  min-height: 52px;
+  font-size: 0.78rem;
+  border-radius: 5px;
+  background: var(--panel);
+}
+.campaign-planner .sales-choices input:checked + span {
+  background: var(--accent-soft);
+}
+.campaign-planner .sales-field,
+.campaign-planner legend {
+  font-size: 0.8rem;
+}
+.campaign-planner .sales-field select {
+  font-size: 0.8rem;
+}
+.campaign-planner .funnel-form-progress {
+  margin-bottom: 21px;
+}
+.campaign-planner .funnel-continue {
+  padding: 16px;
+  font-size: 0.86rem;
+}
+.campaign-planner .sales-draft-status {
+  font-size: 0.67rem !important;
+}
+.campaign-planner-note {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  font-size: 0.61rem;
+  margin: 0;
+  border-top: 1px solid var(--line);
+  padding: 15px 12px;
+  color: var(--muted);
+  background: var(--soft);
+}
+.campaign-plan-result {
+  background: var(--soft);
+  border: 1px solid var(--line);
+  padding: 20px;
+  border-radius: 7px;
+  margin-bottom: 25px;
+}
+.campaign-plan-result h4 {
+  font-size: 1.08rem;
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+  margin: 9px 0 15px;
+}
+.campaign-plan-list {
+  list-style: decimal;
+  padding: 0 0 0 20px;
+  margin: 14px 0 20px;
+}
+.campaign-plan-list li {
+  padding-left: 4px;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  margin-block: 12px;
+  color: var(--muted);
+}
+.campaign-plan-list li::marker {
+  font-weight: 700;
+  color: var(--accent);
+}
+.campaign-plan-result > p {
+  color: var(--muted);
+  font-size: 0.66rem;
+  margin: 13px 0 0;
+}
+.campaign-plan-result .sales-text-link {
+  font-size: 0.76rem;
+}
+.campaign-human-handoff {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.campaign-human-handoff > span {
+  display: grid;
+  place-items: center;
+  width: 37px;
+  height: 37px;
+  flex-shrink: 0;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 50%;
+  font-size: 0.67rem;
+  font-weight: 750;
+}
+.campaign-human-handoff strong {
+  display: block;
+  font-size: 0.79rem;
+  line-height: 1.5;
+}
+.campaign-human-handoff p {
+  color: var(--muted);
+  font-size: 0.72rem;
+  margin: 3px 0 0;
+}
+.campaign-add-context {
+  border-block: 1px solid var(--line);
+  margin-bottom: 18px;
+}
+.campaign-add-context summary {
+  padding: 15px 0;
+  cursor: pointer;
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.campaign-add-context .sales-field {
+  margin-top: 15px;
+}
+.campaign-next-step {
+  font-size: 0.68rem;
+  color: var(--muted);
+  margin: 12px 0 20px;
+}
+.sales-page .funnel-credibility {
+  padding-block: 32px;
+  border-bottom: 1px solid var(--line);
+}
+.sales-page .funnel-credibility > div:first-child > span {
+  color: var(--muted);
+}
+.sales-page .funnel-change {
+  padding-block: 85px;
+}
+.sales-page .funnel-change .sales-section-heading {
+  max-width: 750px;
+  margin-inline: auto;
+}
+.sales-page .funnel-comparison > div {
+  border-radius: 8px;
+  box-shadow: none;
+}
+.sales-page .funnel-before {
+  background: var(--panel);
+}
+.sales-page .funnel-after {
+  background: var(--accent-soft);
+}
+.campaign-solution {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 90px;
+  align-items: center;
+  padding-block: 20px 85px;
+}
+.campaign-solution > div > p:not(.sales-eyebrow) {
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+.campaign-solution .funnel-preview {
+  padding: 0;
+}
+.campaign-solution .funnel-preview-glow {
+  display: none;
+}
+.campaign-solution .funnel-product {
+  transform: none;
+  box-shadow: 0 18px 50px #1c302012;
+  border-radius: 10px;
+}
+.campaign-measure {
+  padding: 22px 0;
+  margin: 24px 0 10px;
+  border-block: 1px solid var(--line);
+}
+.campaign-measure span {
+  display: block;
+  font-size: 0.59rem;
+  letter-spacing: 0.09em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.campaign-measure strong {
+  font-size: 0.96rem;
+  line-height: 1.5;
+  display: block;
+}
+.campaign-solution .campaign-caveat {
+  font-size: 0.76rem;
+  margin-bottom: 23px;
+}
+.sales-page .funnel-proof-band {
+  background: var(--soft);
+  border-block: 1px solid var(--line);
+}
+.sales-page .sales-proof-art {
+  border-radius: 8px;
+}
+.sales-page .sales-use-card {
+  border-radius: 8px;
+  padding: 30px;
+  border-top: 3px solid var(--accent);
+}
+.sales-page .funnel-value-icon {
+  border-radius: 50%;
+  background: var(--soft);
+}
+.sales-page .sales-contact-grid {
+  gap: 70px;
+}
+.campaign-engagement {
+  border: 1px solid #b5c9ae38;
+  background: #ffffff06;
+  padding: 36px;
+  border-radius: 8px;
+}
+.campaign-engagement .funnel-small-label {
+  color: #d6f565;
+}
+.campaign-engagement h3 {
+  font-size: 1.9rem;
+  margin: 20px 0;
+}
+.campaign-engagement > p,
+.campaign-engagement dd {
+  font-size: 0.83rem;
+  color: var(--deep-muted);
+}
+.campaign-engagement dl {
+  margin: 25px 0;
+}
+.campaign-engagement dl > div {
+  border-top: 1px solid #b5c9ae38;
+  padding-block: 18px;
+}
+.campaign-engagement dt {
+  font-size: 0.77rem;
+  font-weight: 650;
+  margin-bottom: 8px;
+}
+.campaign-engagement dd {
+  margin: 0;
+  line-height: 1.6;
+}
+.campaign-engagement .sales-button {
+  width: 100%;
+  font-size: 0.85rem;
+}
+.campaign-engagement .campaign-engagement-note {
+  font-size: 0.68rem;
+  margin: 16px 0 0;
+}
+.sales-page .funnel-final {
+  border-radius: 8px;
+  background: var(--deep);
+  color: var(--deep-text);
+  padding-block: 66px;
+}
+.sales-page .funnel-final em,
+.sales-page .funnel-final .funnel-small-label {
+  color: #d6f565;
+}
+.sales-page .funnel-final p {
+  color: var(--deep-muted);
+}
+.sales-page .funnel-sticky .sales-button {
+  color: #19291b !important;
+}
+@media (max-width: 1050px) {
+  .sales-page .sales-shell {
+    width: calc(100% - 48px);
+  }
+  .sales-page .sales-hero {
+    gap: 35px;
+    padding-block: 45px;
+  }
+  .sales-page .sales-hero h1 {
+    font-size: 3.05rem;
+  }
+  .campaign-planner .sales-brief-card {
+    padding: 25px;
+  }
+  .campaign-solution,
+  .sales-page .sales-contact-grid {
+    gap: 40px;
+  }
+  .campaign-engagement {
+    padding: 26px;
+  }
+}
+@media (max-width: 760px) {
+  .sales-page .sales-shell {
+    width: calc(100% - 40px);
+  }
+  .sales-page .sales-header {
+    height: 70px;
+  }
+  .sales-page .sales-hero {
+    grid-template-columns: 1fr;
+    padding-block: 26px 40px;
+    gap: 32px;
+  }
+  .sales-page .sales-hero h1 {
+    font-size: clamp(2.5rem, 9.4vw, 3.8rem);
+    line-height: 1.08;
+  }
+  .sales-page .sales-lede {
+    font-size: 0.95rem;
+  }
+  .sales-page .sales-eyebrow {
+    font-size: 0.59rem !important;
+  }
+  .sales-page .funnel-hero-benefits {
+    display: none;
+  }
+  .campaign-proof-link {
+    margin-top: 22px;
+    padding-top: 19px;
+  }
+  .campaign-proof-link small {
+    font-size: 0.61rem;
+  }
+  .campaign-planner .sales-brief-card {
+    padding: 24px 20px;
+  }
+  .campaign-planner-label {
+    padding-inline: 20px;
+  }
+  .campaign-planner .sales-brief h2 {
+    font-size: 1.65rem;
+  }
+  .campaign-planner .sales-field select {
+    font-size: 16px;
+  }
+  .campaign-planner-note {
+    font-size: 0.55rem;
+    gap: 8px;
+  }
+  .campaign-planner .sales-choices span {
+    font-size: 0.76rem;
+  }
+  .sales-page .funnel-change {
+    padding-block: 55px;
+  }
+  .campaign-solution {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding-block: 0 55px;
+  }
+  .sales-page .sales-contact-grid {
+    gap: 25px;
+  }
+  .campaign-engagement {
+    padding: 25px;
+  }
+  .campaign-engagement h3 {
+    font-size: 1.7rem;
+  }
+  .sales-page .funnel-final {
+    padding: 40px 24px;
+  }
+  .sales-page .funnel-sticky {
+    gap: 8px;
+  }
+  .sales-page .funnel-sticky strong {
+    max-width: 170px;
+    font-size: 0.64rem;
+  }
+  .sales-page .funnel-sticky .sales-button {
+    font-size: 0.7rem;
+    padding: 13px;
+  }
+}
