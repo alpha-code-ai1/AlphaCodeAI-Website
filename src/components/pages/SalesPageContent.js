@@ -24,7 +24,7 @@ export function ProductPreview({ page }) {
       <div className="funnel-preview-glow" aria-hidden="true" />
       <div className="funnel-product">
         <div className="funnel-product-chrome">
-          <span className="funnel-product-mark">a</span>
+          <span className="funnel-product-mark"><img className="campaign-brand-icon" src="/alpha.png" alt="" width="32" height="32" /></span>
           <span>
             {page.theme === "whatsapp"
               ? "Your business on WhatsApp"
@@ -114,7 +114,7 @@ export function ProductPreview({ page }) {
           ) : page.theme === "mvp" ? (
             <div className="funnel-mvp-demo">
               <div className="funnel-mini-sidebar" aria-hidden="true">
-                <b>a</b>
+                <b><img className="campaign-brand-icon" src="/alpha.png" alt="" width="32" height="32" /></b>
                 <i />
                 <i />
                 <i />
@@ -251,7 +251,7 @@ export default function SalesPageContent({ page, contact, themeControl }) {
       <header className="sales-header sales-shell">
         <a href="/" className="sales-brand" aria-label="AlphaCodeAI home">
           <span className="funnel-logo" aria-hidden="true">
-            a
+            <img className="campaign-brand-icon" src="/alpha.png" alt="" width="40" height="40" />
           </span>
           AlphaCodeAI
           <span className="funnel-brand-label">BUILD BETTER BUSINESS</span>
@@ -633,6 +633,7 @@ export default function SalesPageContent({ page, contact, themeControl }) {
       </main>
       <footer className="sales-footer sales-shell">
         <a href="/" className="sales-brand">
+          <span className="funnel-logo" aria-hidden="true"><img className="campaign-brand-icon" src="/alpha.png" alt="" width="40" height="40" /></span>
           AlphaCodeAI
         </a>
         <div>

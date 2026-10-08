@@ -1,11 +1,47 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import App from './App';
+import salesPages from './data/salesPages.json';
 
 jest.mock('./components/ui/CosmicBackground', () => () => null);
 jest.mock('./components/ui/CursorGlow', () => () => null);
 
 beforeEach(() => {
   window.localStorage.clear();
+  window.history.replaceState({}, '', '/');
+});
+
+afterEach(() => window.history.replaceState({}, '', '/'));
+
+test.each(salesPages)('$title starts dark and keeps the planner when switched to light', (page) => {
+  window.localStorage.setItem('alphacodeai-theme', 'light');
+  window.history.replaceState({}, '', page.path);
+  const { container } = render(<App />);
+  const themeSwitch = screen.getByRole('switch', { name: /switch to light experience/i });
+  expect(container.querySelector('.app-root')).toHaveClass('app-dark');
+  expect(document.documentElement.dataset.theme).toBe('dark');
+  const brand = screen.getByRole('link', { name: 'AlphaCodeAI home' });
+  expect(brand.querySelector('img')).toHaveAttribute('src', '/alpha.png');
+  fireEvent.click(screen.getByLabelText(page.choices[0]));
+  fireEvent.click(themeSwitch);
+  expect(container.querySelector('.app-root')).toHaveClass('app-light');
+  expect(screen.getByLabelText(page.choices[0])).toBeChecked();
+});
+
+test('campaign defaults apply without a trailing slash and do not change the main-site default', () => {
+  window.history.replaceState({}, '', '/real-estate-ai-chatbot');
+  const { container } = render(<App />);
+  expect(container.querySelector('.app-root')).toHaveClass('app-dark');
+  act(() => {
+    window.history.pushState({}, '', '/');
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  });
+  expect(container.querySelector('.app-root')).toHaveClass('app-light');
+  expect(screen.getByRole('switch', { name: /switch to dark experience/i })).toBeInTheDocument();
+  act(() => {
+    window.history.pushState({}, '', '/ai-mvp-development/');
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  });
+  expect(container.querySelector('.app-root')).toHaveClass('app-dark');
 });
 
 test('defaults to the light experience and can switch themes', async () => {

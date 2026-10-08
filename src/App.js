@@ -16,11 +16,15 @@ import salesPages from './data/salesPages.json';
 import SalesLandingPage from './components/pages/SalesLandingPage';
 import './App.css';
 
+const isSalesRoute = (pathname) => salesPages.some(page =>
+  page.path === `${pathname.toLowerCase().replace(/\/$/, '')}/`
+);
+
 const AppContent = () => {
   const { theme, isLight } = useTheme();
   const location = useLocation();
   const isHomepage = location.pathname === '/';
-  const isSalesPage = salesPages.some(page => page.path === `${location.pathname.replace(/\/$/, '')}/`);
+  const isSalesPage = isSalesRoute(location.pathname);
 
   useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -61,13 +65,22 @@ const AppContent = () => {
   );
 };
 
+// Keep campaign defaults and manual toggles independent from the main site.
+const RouteTheme = () => {
+  const { pathname } = useLocation();
+  const campaign = isSalesRoute(pathname);
+  return (
+    <ThemeProvider key={campaign ? 'campaign' : 'site'} initialTheme={campaign ? 'dark' : 'light'} campaign={campaign}>
+      <AppContent />
+    </ThemeProvider>
+  );
+};
+
 function App() {
   return (
-    <ThemeProvider>
-      <Router>
-        <AppContent />
-      </Router>
-    </ThemeProvider>
+    <Router>
+      <RouteTheme />
+    </Router>
   );
 }
 

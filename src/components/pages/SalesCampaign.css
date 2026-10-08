@@ -37,7 +37,25 @@
   border-bottom: 0;
 }
 .sales-page .funnel-logo {
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+.sales-page .campaign-brand-icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* The original asset has transparent padding; reveal its mark at UI size. */
+  transform: scale(1.7);
+}
+.sales-page .funnel-product-mark,
+.sales-page .funnel-mini-sidebar b,
+.sales-page .campaign-human-handoff > span {
+  background: transparent;
 }
 .sales-page .sales-button {
   border-radius: 6px;

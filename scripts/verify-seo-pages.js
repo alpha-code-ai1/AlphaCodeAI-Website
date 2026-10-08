@@ -45,6 +45,9 @@ for (const page of allPages) {
     page.faqs.length,
   );
   if (page.theme) {
+    assert.ok(html.includes('data-theme="dark"'), `${page.path}: dark first paint`);
+    assert.ok(html.includes('class="app-root app-dark"'), `${page.path}: dark static content`);
+    assert.ok(html.includes('class="campaign-brand-icon" src="/alpha.png"'), `${page.path}: original logo`);
     assert.ok(html.includes(offers[page.theme].headline.replaceAll("'", '&#x27;')));
     assert.ok(html.includes(offers[page.theme].highlight.replaceAll("'", '&#x27;')));
     assert.ok(html.includes("https://wa.me/918850313109?text="));

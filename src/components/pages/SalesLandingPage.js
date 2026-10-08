@@ -226,7 +226,7 @@ export function ProjectBrief({ page }) {
             </p>
           </div>
           <div className="campaign-human-handoff">
-            <span aria-hidden="true">AC</span>
+            <span aria-hidden="true"><img className="campaign-brand-icon" src="/alpha.png" alt="" width="37" height="37" /></span>
             <div>
               <strong>Want help putting this into practice?</strong>
               <p>Discuss your plan with the AlphaCodeAI team.</p>

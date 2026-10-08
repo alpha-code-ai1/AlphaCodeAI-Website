@@ -3,19 +3,19 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 const ThemeContext = createContext(null);
 const STORAGE_KEY = 'alphacodeai-theme';
 
-const getInitialTheme = () => 'light';
-
-export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(getInitialTheme);
+export const ThemeProvider = ({ children, initialTheme = 'light', campaign = false }) => {
+  const [theme, setTheme] = useState(initialTheme);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme;
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', theme === 'light' ? '#f4f0e6' : '#050014');
+      ?.setAttribute('content', campaign
+        ? (theme === 'light' ? '#f7f7f0' : '#111b17')
+        : (theme === 'light' ? '#f4f0e6' : '#050014'));
     window.localStorage.setItem(STORAGE_KEY, theme);
-  }, [theme]);
+  }, [theme, campaign]);
 
   const value = useMemo(
     () => ({

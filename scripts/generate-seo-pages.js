@@ -134,8 +134,15 @@ const updateHead = (html, page) => {
   const image = absoluteUrl(page.heroImage || page.proof?.image || '/cosmic-hero-poster.webp');
   const structuredData = JSON.stringify(renderSchema(page)).replaceAll('<', '\\u003c');
   const body = page.theme
-    ? require('react-dom/server').renderToStaticMarkup(require('react').createElement(SalesPageContent, { page }))
+    ? `<div class="app-root app-dark">${require('react-dom/server').renderToStaticMarkup(require('react').createElement(SalesPageContent, { page }))}</div>`
     : renderStaticBody(page);
+
+  if (page.theme) {
+    html = html
+      .replace('data-theme="light"', 'data-theme="dark"')
+      .replace(/<meta\s+name="theme-color"[^>]*>/i, '<meta name="theme-color" content="#111b17" />')
+      .replace('</head>', '<style>html[data-theme="dark"]:has(.sales-page),html[data-theme="dark"]:has(.sales-page) body{background:#111b17;color-scheme:dark}</style></head>');
+  }
 
   return html
     .replace(/<meta\b[^>]*(?:name="(?:robots|twitter:[^"]+)"|property="og:[^"]+")[^>]*>/gi, '')
